@@ -1,5 +1,10 @@
-<!-- docs/_sidebar.md -->
+* [Java](java/README.md)
 
-* [Home](/)
-* [bigdata](bigdata/README.md "best Guide")
+* [大数据](bigdata/README.md)
+
+* [工作笔记](work-note/README.md)
+
+* [技术资料](tech-collect/README.md)
+
+* [有趣的事](funny-things/README.md)
 
