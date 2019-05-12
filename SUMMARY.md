@@ -6,5 +6,5 @@
 
 * [技术资料](tech-collect/README.md)
 
-* [有趣的事](funny-things/README.md)
+* [有趣的事](funny-thing/README.md)
 
