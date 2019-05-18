@@ -10,6 +10,26 @@ maven这个词可能有以下几个意思：
 
 pom.xml描述了如何构建一个maven项目，通过各种标签我们可以灵活而高效地配置maven项目的构建。
 
+#### 字符编码异常
+
+```
+Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+```
+
+Maven作为build工具时经常出现此问题，原因是未指定具体编码方式，通过在pom.xml指定编码方式可解决此问题。
+
+```
+<project>  
+  ...  
+  <properties>  
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>  
+  </properties>  
+  ...  
+</project>
+```
+
+Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!”](http://maven.apache.org/general.html#encoding-warning)
+
 #### 配置maven插件
 
 在一些开源项目可能会看到依赖中有一些`xxx-test.jar`，这是对应的项目中的测试类单独打成的jar包，以便于在其他项目的测试类中引用。这些test jar使用下面的方式生成：
@@ -58,6 +78,30 @@ pom.xml描述了如何构建一个maven项目，通过各种标签我们可以�
 </plugin>
 ```
 
+将classpath信息加入生成的jar中，同时指定依赖jar包的目录前缀：
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    ...
+    <configuration>
+      <archive>
+        <manifest>
+          <!-- 将classpath信息加入生成的jar中 -->
+          <addClasspath>true</addClasspath>
+          <!-- 指定快照版jar名称方式 -->
+          <useUniqueVersions>false</useUniqueVersions>
+          <!-- 指定依赖jar包的目录前缀 -->
+          <classpathPrefix>lib/</classpathPrefix>
+        </manifest>
+      </archive>
+    </configuration>
+    ...
+  </plugin>
+```
+如果不指定`useUniqueVersions`为`false`，那么classpath中快照版的jar名称就变为`${artifactId}-${version}-20150316.032502-62.jar`这种maven库里能唯一定位的形式，而不是`${artifactId}-${version}-SNAPSHOT.jar`这种形式，这会导致运行时ClassNotFoundException。
+
 将依赖的库拷贝到输出目录下：
 
 ```xml
@@ -105,6 +149,8 @@ pom.xml描述了如何构建一个maven项目，通过各种标签我们可以�
     </configuration>
 </plugin>
 ```
+
+
 
 #### 配置资源目录
 
@@ -183,6 +229,29 @@ mvn -U package
 在使用mvn package进行编译打包时，Maven默认会执行src/test/java中的JUnit测试用例，有时为了跳过测试，会使用参数`-DskipTests`或`-Dmaven.test.skip=true`，这两个参数的主要区别是：
 
 - **-DskipTests**，不执行测试用例，但编译测试用例类生成相应的class文件至target/test-classes下。   
-
 - **-Dmaven.test.skip=true**，不执行测试用例，也不编译测试用例类。
+
+#### 生成Scala项目模板
+
+命令如下:
+
+     mvn archetype:generate
+
+然后会提示你选择一个模板:
+
+    Choose a number or apply filter (format: [groupId:]artifactId, case sensitive contains): 3: 
+
+输入模板对应数字55后，提示选择一个版本:
+
+	Choose net.alchim31.maven:scala-archetype-simple version: 
+	1: 1.4
+	2: 1.5
+	3: 1.6
+然后是一堆jar包坐标的信息:
+​    
+	Define value for property 'groupId': test
+	Define value for property 'artifactId': test
+	Define value for property 'version' 1.0-SNAPSHOT: : 
+	Define value for property 'package' test: : test
+确认后即可.
 
