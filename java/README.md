@@ -1,6 +1,6 @@
 我的java学习笔记, 欢迎评论。
 
-### Java环境
+### Java
 
 - [类路径ClassPath](java/java-env/class_path.md)
 - [JDK命令工具](java/java-env/jdk_tools.md)
