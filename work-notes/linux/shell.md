@@ -220,3 +220,16 @@ test is a shell builtin
 echo -e "OK! \n" # -e 开启转义
 echo "It is a test"
 ```
+
+### Grep
+
+匹配的内容中有"--"：
+
+```
+grep "\-\-"  file
+#或者
+grep \\-\\- file
+#或者
+grep "^.*--.*$" file
+```
+
