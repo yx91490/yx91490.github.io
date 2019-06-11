@@ -5,6 +5,7 @@
  - [slf4j NOP问题](work-notes/java/slf4j_nop.md)
  - [Tomcat服务器返回400](work-notes/java/tomcat_400.md)
  - [代码抛出错误导致的问题](work-notes/java/no_such_method_error.md)
+ - [HttpClient fluent API使用小坑](work-notes/java/httpclient_fluent_trap.md)
  - [优雅地修改多模块项目中的版本号](work-notes/java/maven_modules.md)
  - [POI导出Excel文件Full GC的解决办法](work-notes/java/poi_full_gc.md)
  - [JSON中的控制字符导致jQuery无法正常解析](work-notes/java/ctrl_char_in_json.md)

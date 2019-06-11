@@ -63,8 +63,10 @@ JVM引入动态年龄计算，主要基于如下两点考虑：
 
 - -XX:+UseSerialGC
 
-  0.844: [GC 0.844: [DefNew: 17472K->2176K(19648K), 0.0188339 secs] 17472K->2375K(63360K), 0.0189186 secs][Times: user=0.01 sys=0.00, real=0.02 secs]
+```
+0.844: [GC 0.844: [DefNew: 17472K->2176K(19648K), 0.0188339 secs] 17472K->2375K(63360K), 0.0189186 secs][Times: user=0.01 sys=0.00, real=0.02 secs]
   8.259: [Full GC 8.259: [Tenured: 43711K->40302K(43712K), 0.2960477 secs] 63350K->40302K(63360K), [Perm : 17836K->17836K(32768K)], 0.2961554 secs][Times: user=0.28 sys=0.02, real=0.30 secs]
+```
 
 #### ParNew收集器
 
@@ -76,7 +78,9 @@ JVM引入动态年龄计算，主要基于如下两点考虑：
 
 - -XX:+UseParNewGC
 
-  0.834: [GC 0.834: [ParNew: 13184K->1600K(14784K), 0.0092203 secs] 13184K->1921K(63936K), 0.0093401 secs][Times: user=0.00 sys=0.00, real=0.00 secs]
+```
+0.834: [GC 0.834: [ParNew: 13184K->1600K(14784K), 0.0092203 secs] 13184K->1921K(63936K), 0.0093401 secs][Times: user=0.00 sys=0.00, real=0.00 secs]
+```
 
 #### Parallel Scavenge收集器
 
@@ -98,7 +102,9 @@ JVM引入动态年龄计算，主要基于如下两点考虑：
 
 - -XX:+UseParallelOldGC 使用Parallel收集器+ 老年代并行
 
-  1.500: [Full GC [PSYoungGen: 2682K->0K(19136K)] [ParOldGen: 28035K->30437K(43712K)] 30717K->30437K(62848K) [PSPermGen: 10943K->10928K(32768K)], 0.2902791 secs][Times: user=1.44 sys=0.03, real=0.30 secs]
+```
+1.500: [Full GC [PSYoungGen: 2682K->0K(19136K)] [ParOldGen: 28035K->30437K(43712K)] 30717K->30437K(62848K) [PSPermGen: 10943K->10928K(32768K)], 0.2902791 secs][Times: user=1.44 sys=0.03, real=0.30 secs]
+```
 
 #### CMS收集器
 
@@ -129,16 +135,18 @@ JVM引入动态年龄计算，主要基于如下两点考虑：
 
 **CMS log**
 
-   1.662: [GC [1 CMS-initial-mark: 28122K(49152K)] 29959K(63936K), 0.0046877 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
-   1.666: [CMS-concurrent-mark-start]
-   1.699: [CMS-concurrent-mark: 0.033/0.033 secs][Times: user=0.25 sys=0.00, real=0.03 secs] 
-   1.699: [CMS-concurrent-preclean-start]
-   1.700: [CMS-concurrent-preclean: 0.000/0.000 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
-   1.700: [GC[YG occupancy: 1837 K (14784 K)]1.700: [Rescan (parallel) , 0.0009330 secs]1.701: [weak refs processing, 0.0000180 secs] [1 CMS-remark: 28122K(49152K)] 29959K(63936K), 0.0010248 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
-   1.702: [CMS-concurrent-sweep-start]
-   1.739: [CMS-concurrent-sweep: 0.035/0.037 secs][Times: user=0.11 sys=0.02, real=0.05 secs] 
-   1.739: [CMS-concurrent-reset-start]
-   1.741: [CMS-concurrent-reset: 0.001/0.001 secs][Times: user=0.00 sys=0.00, real=0.00 secs]
+```
+1.662: [GC [1 CMS-initial-mark: 28122K(49152K)] 29959K(63936K), 0.0046877 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
+1.666: [CMS-concurrent-mark-start]
+1.699: [CMS-concurrent-mark: 0.033/0.033 secs][Times: user=0.25 sys=0.00, real=0.03 secs] 
+1.699: [CMS-concurrent-preclean-start]
+1.700: [CMS-concurrent-preclean: 0.000/0.000 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
+1.700: [GC[YG occupancy: 1837 K (14784 K)]1.700: [Rescan (parallel) , 0.0009330 secs]1.701: [weak refs processing, 0.0000180 secs] [1 CMS-remark: 28122K(49152K)] 29959K(63936K), 0.0010248 secs][Times: user=0.00 sys=0.00, real=0.00 secs] 
+1.702: [CMS-concurrent-sweep-start]
+1.739: [CMS-concurrent-sweep: 0.035/0.037 secs][Times: user=0.11 sys=0.02, real=0.05 secs] 
+1.739: [CMS-concurrent-reset-start]
+1.741: [CMS-concurrent-reset: 0.001/0.001 secs][Times: user=0.00 sys=0.00, real=0.00 secs]
+```
 
 **real time > usr time + sys time**
 
