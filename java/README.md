@@ -8,6 +8,7 @@
 ### JDK
 
 - [类加载器](java/jdk/ClassLoader.md)
+- [JDK各版本新特性](java/jdk/jdk_new_features.md)
 - [ConcurrentHashMap](java/jdk/ConcurrentHashMap.md)
 - [Enum枚举](java/jdk/Enum.md)
 - [HashMap实现](java/jdk/HashMap.md)
