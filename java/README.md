@@ -4,6 +4,7 @@
 
 - [类路径ClassPath](java/java-env/class_path.md)
 - [JDK命令工具](java/java-env/jdk_tools.md)
+- [命令行分析Heap Dump文件](java/java-env/mat_cmd_tool.md)
 
 ### JDK
 
