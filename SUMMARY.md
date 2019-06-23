@@ -4,10 +4,12 @@
 
 * [工作笔记](work-notes/README.md)
 
-* [技术资料](tech-collect/README.md)
+* [资料收藏](collect/README.md)
 
-* [有趣的事](funny-thing/README.md)
+* [有趣的事](fun/README.md)
 
-* [大好河山](the-magnificent-country/README.md)
+* [大好河山](scenery/README.md)
 
-* [给我留言](https://github.com/yx91490/yx91490.github.io/issues/new)
+* [**给我留言**](https://github.com/yx91490/yx91490.github.io/issues)
+
+* [Github主页](https://github.com/yx91490)
