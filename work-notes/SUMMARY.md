@@ -22,11 +22,13 @@
  - [MySQL授权](work-notes/sql/mysql_grant.md)
  - [MySQL导入导出数据](work-notes/sql/mysql_import_export.md)
  - [MySQL字段的显示宽度](work-notes/sql/mysql_column_width.md)
+ - [CentOS安装MySQL官方版](work-notes/sql/mysql_installation.md)
  - [MySQL的group_concat()函数的使用](work-notes/sql/mysql_group_concat.md)
 
-- Linux
+-  Linux
  - [netstat参数分析](work-notes/linux/netstat.md)
  - [systemd作者博客](work-notes/other/systemd_blog.md)
+ - [CentOS6和CentOS7对比](work-notes/linux/centos6_centos7_diff.md)
  - [freedesktop.org对systemd的wiki](work-notes/other/systemd_wiki.md)
  - [安装genymotion模拟器](work-notes/other/genymotion_install.md)
  - [升级win10周年导致双系统grub挂掉](work-notes/other/win10_grub.md)
