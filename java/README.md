@@ -19,10 +19,11 @@
 
 ### JVM
 
+- [JVM参数](java/jvm/jvm_parameter.md)
 - [JVM垃圾回收机制](java/jvm/gc.md)
+- [CMS GC日志格式](java/jvm/cms_parnew_gc_log_format.md)
 - [java内存模型](java/jvm/java_memory_model.md)
 - [java运行时数据区](java/jvm/java_runtime_data_region.md)
-- [JVM参数](java/jvm/jvm_parameter.md)
 
 ### 常用库
 
