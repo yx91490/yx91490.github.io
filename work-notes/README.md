@@ -10,13 +10,18 @@
  - [POI导出Excel文件Full GC的解决办法](work-notes/java/poi_full_gc.md)
  - [JSON中的控制字符导致jQuery无法正常解析](work-notes/java/ctrl_char_in_json.md)
 
+### 架构
+
+- [Redis实现分布式锁]( work-notes/architecture/redis_distributelock.md)
+
 ### 开发工具
 
  - [Idea代码模板初探](work-notes/tools/idea_template.md)
  - [SVN提交到老分支补救指南](work-notes/tools/svn_commit_old_branch.md)
  - [SVN如何从版本控制中删除文件](work-notes/tools/svn_local_delete.md)
+ - [发布jar包到maven中央仓库教程](work-notes/tools/maven_release_jar.md)
  - [Typora:可能是地球上最好用的Markdown编辑器了](work-notes/tools/typora.md)
- 
+
 ### SQL
  - [SQL连接](work-notes/sql/sql_join.md)
  - [MySQL授权](work-notes/sql/mysql_grant.md)
@@ -40,7 +45,7 @@
  - [Debian中VirtualBox增强功能的相关配置](work-notes/other/virtualbox_debian.md)
  - [在debian stretch上编译安装ibus-libpinyin_V1.7](work-notes/other/compile_ibus-libpinyin.md)
  - [源中的 backports proposed security updates 什么意思?](work-notes/other/soucelist_in_ubuntu.md)
- 
+
 ### C
 
  - [c语言qsort()函数](work-notes/clang/c_qsort.md)

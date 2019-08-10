@@ -1,7 +1,5 @@
 - [**← 首页**](/)
-
 - Java
-
  - [slf4j NOP问题](work-notes/java/slf4j_nop.md)
  - [Tomcat服务器返回400](work-notes/java/tomcat_400.md)
  - [代码抛出错误导致的问题](work-notes/java/no_such_method_error.md)
@@ -9,14 +7,13 @@
  - [优雅地修改多模块项目中的版本号](work-notes/java/maven_modules.md)
  - [POI导出Excel文件Full GC的解决办法](work-notes/java/poi_full_gc.md)
  - [JSON中的控制字符导致jQuery无法正常解析](work-notes/java/ctrl_char_in_json.md)
-
+- 架构
+ - [Redis实现分布式锁](work-notes/architecture/redis_distributelock.md)
 - 开发工具
-
  - [Idea代码模板初探](work-notes/tools/idea_template.md)
  - [SVN提交到老分支补救指南](work-notes/tools/svn_commit_old_branch.md)
  - [SVN如何从版本控制中删除文件](work-notes/tools/svn_local_delete.md)
  - [Typora:可能是地球上最好用的Markdown编辑器了](work-notes/tools/typora.md)
- 
 - SQL
  - [SQL连接](work-notes/sql/sql_join.md)
  - [MySQL授权](work-notes/sql/mysql_grant.md)
@@ -24,7 +21,6 @@
  - [MySQL字段的显示宽度](work-notes/sql/mysql_column_width.md)
  - [CentOS安装MySQL官方版](work-notes/sql/mysql_installation.md)
  - [MySQL的group_concat()函数的使用](work-notes/sql/mysql_group_concat.md)
-
 -  Linux
  - [netstat参数分析](work-notes/linux/netstat.md)
  - [systemd作者博客](work-notes/other/systemd_blog.md)
@@ -40,9 +36,7 @@
  - [Debian中VirtualBox增强功能的相关配置](work-notes/other/virtualbox_debian.md)
  - [在debian stretch上编译安装ibus-libpinyin_V1.7](work-notes/other/compile_ibus-libpinyin.md)
  - [源中的 backports proposed security updates 什么意思?](work-notes/other/soucelist_in_ubuntu.md)
- 
 - C
-
  - [c语言qsort()函数](work-notes/clang/c_qsort.md)
  - [c语言的一些关键字](work-notes/clang/c_keyword.md)
  - [C语言内存模型相关](work-notes/clang/c_mem_model.md)
