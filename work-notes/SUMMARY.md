@@ -13,6 +13,7 @@
  - [Idea代码模板初探](work-notes/tools/idea_template.md)
  - [SVN提交到老分支补救指南](work-notes/tools/svn_commit_old_branch.md)
  - [SVN如何从版本控制中删除文件](work-notes/tools/svn_local_delete.md)
+ - [发布jar包到maven中央仓库教程](work-notes/tools/maven_release_jar.md)
  - [Typora:可能是地球上最好用的Markdown编辑器了](work-notes/tools/typora.md)
 - SQL
  - [SQL连接](work-notes/sql/sql_join.md)
