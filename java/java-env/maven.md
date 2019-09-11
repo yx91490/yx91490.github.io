@@ -248,10 +248,24 @@ mvn -U package
 	2: 1.5
 	3: 1.6
 然后是一堆jar包坐标的信息:
-​    
-	Define value for property 'groupId': test
-	Define value for property 'artifactId': test
-	Define value for property 'version' 1.0-SNAPSHOT: : 
-	Define value for property 'package' test: : test
+
+```
+Define value for property 'groupId': test
+Define value for property 'artifactId': test
+Define value for property 'version' 1.0-SNAPSHOT: : 
+Define value for property 'package' test: : test
+```
+
 确认后即可.
 
+#### 多模块项目编译指定模块
+
+- -pl, --projects 编译指定项目
+- -am, --also-make 同时编译指定项目依赖的项目
+
+```
+mvn install -pl $module1[,$module2] -am
+```
+
+- [Maven Modules + Building a Single Specific Module](https://stackoverflow.com/questions/1114026/maven-modules-building-a-single-specific-module)
+- [How to build maven parent and select number of modules?](https://stackoverflow.com/questions/7368600/how-to-build-maven-parent-and-select-number-of-modules)
