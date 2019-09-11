@@ -20,33 +20,13 @@ $ sudo rpm -ivh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rp
 $ sudo yum -y install mysql-community-server
 ```
 
-### 离线安装
-
-下载rpm包，CentOS6：
-
-```
-$ wget https://repo.mysql.com/yum/mysql-5.6-community/el/6/x86_64/mysql-community-server-5.6.44-2.el6.x86_64.rpm
-```
-
-CentOS7：
-
-```
-$ wget https://repo.mysql.com/yum/mysql-5.6-community/el/7/x86_64/mysql-community-server-5.6.44-2.el7.x86_64.rpm
-```
-
-安装：
-
-```
-$ sudo rpm -ivh mysql-community-server.rpm
-```
-
 ### 配置运行
 
 启动服务：
 
 ```
-$ sudo service mysqld start                       #centos6
-$ sudo systemctl start mysqld.service  #centos7
+$ sudo service mysqld start            # centos6
+$ sudo systemctl start mysqld.service  # centos7
 ```
 
 修改超级用户密码：
