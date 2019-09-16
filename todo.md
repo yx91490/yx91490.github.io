@@ -9,3 +9,5 @@ tcp netstat
 jstack
 
 spring:bean lifecycle, context lifecycle:@PostConstruct,@PreDestroy
+
+compute terms word cloud
