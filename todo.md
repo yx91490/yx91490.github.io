@@ -15,7 +15,9 @@ fileDB
 compute terms word cloud
 
 restful api
+https://google-cloud.gitbook.io/api-design-guide/resource_oriented_design
 oauth2
 DDD
 spring boot inejct
 java8 lambda
+hadoop command change user group
