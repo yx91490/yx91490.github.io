@@ -1,22 +1,30 @@
 Hadoop HDFS：
 
-| 默认端口 | 配置项                               | 备注         |
-| -------- | :----------------------------------- | ------------ |
-| 8020     | fs.defaultFS                         | hdfs:// 连接 |
-| 50090    | dfs.namenode.secondary.http-address  |              |
-| 50091    | dfs.namenode.secondary.https-address |              |
-| 50010    | dfs.datanode.address                 |              |
-| 50075    | dfs.datanode.http.address            | WebUI        |
-| 50020    | dfs.datanode.ipc.address             |              |
-| 50070    | dfs.namenode.http-address            |              |
-| 50475    | dfs.datanode.https.address           |              |
-| 50470    | dfs.namenode.https-address           |              |
-| 50100    | dfs.namenode.backup.address          |              |
-| 50105    | dfs.namenode.backup.http-address     |              |
-| 8485     | dfs.journalnode.rpc-address          |              |
-| 8480     | dfs.journalnode.http-address         |              |
-| 8481     | dfs.journalnode.https-address        |              |
-| 8019     | dfs.ha.zkfc.port                     |              |
+| 默认端口 | 配置项                                                       | 备注                                         |
+| -------- | :----------------------------------------------------------- | -------------------------------------------- |
+| 111      |                                                              | 端口映射（或 Rpcbind）端口                   |
+| 2049     | nfs3.server.port                                             | NFS Gateway 服务器端口                       |
+| 4242     | nfs3.mountd.port                                             | NFS Gateway MountD 端口                      |
+| 8019     | dfs.ha.zkfc.port                                             |                                              |
+| 8020     | fs.default.name, fs.defaultFS                                | NameNode 端口                                |
+| 8480     | dfs.journalnode.http-address                                 | JournalNode HTTP 端口                        |
+| 8481     | dfs.journalnode.https-address                                | 安全 JournalNode Web UI 端口 (TLS/SSL)       |
+| 8485     | dfs.journalnode.rpc-address                                  | JournalNode RPC 端口                         |
+| 14000    | hdfs.httpfs.http.port                                        | REST 端口                                    |
+| 14001    | hdfs.httpfs.admin.port                                       | 管理端口                                     |
+| 50020    | dfs.datanode.ipc.address                                     | DataNode 协议端口                            |
+| 50070    | dfs.http.address, dfs.namenode.http-address                  | NameNode Web UI 端口                         |
+| 50075    | dfs.datanode.http.address                                    | DataNode HTTP Web UI 端口                    |
+| 50079    | nfs.http.port                                                | NFS Gateway Web UI Port                      |
+| 50090    | dfs.secondary.http.address, dfs.namenode.secondary.http-address | SecondaryNameNode Web UI 端口                |
+| 50091    | dfs.namenode.secondary.https-address                         |                                              |
+| 50100    | dfs.namenode.backup.address                                  | DataNode 收发器端口                          |
+| 50105    | dfs.namenode.backup.http-address                             |                                              |
+| 50470    | dfs.https.port,dfs.namenode.https-address?                   | 安全 NameNode Web UI 端口 (TLS/SSL)          |
+| 50475    | dfs.datanode.https.address                                   | 安全 DataNode Web UI 端口 (TLS/SSL)          |
+| 50495    | dfs.secondary.https.port                                     | 安全 SecondaryNameNode Web UI 端口 (TLS/SSL) |
+| 50579    | nfs.https.port                                               | Secure NFS Gateway Web UI Port (TLS/SSL)     |
+
 
 Hadoop YARN:
 
