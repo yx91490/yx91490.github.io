@@ -98,3 +98,18 @@ O            在光标所在行的上一行增添新行
   :!shell_command   执行完 shell_command 后回到Vim
   ```
 
+- 文件编码
+
+  查看文件编码：
+
+  ```
+  :set fileencoding
+  ```
+
+  文件编码转换：
+
+  ```
+  :set fileencoding=utf-8
+  ```
+
+  
