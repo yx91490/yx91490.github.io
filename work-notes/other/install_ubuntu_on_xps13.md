@@ -1,3 +1,5 @@
+# 在dellXPS13(9350)上安装ubuntu15
+
 之前用的linux发行版是debian，但是考虑这个笔记本硬件太新，testing源不稳定，就准备安装个ubuntu。 
 
 1. 首先在win10中使用磁盘管理的压缩卷分出一部分空闲分区来供ubuntu使用。来供ubuntu 

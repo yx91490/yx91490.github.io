@@ -1,3 +1,5 @@
+# 命令行分析HeapDump文件
+
 在java程序遇到一些问题时，我们常常会把堆内存dump出来利用诸如Eclipse Memory Analyzer（MAT）这样的工具去分析。通常情况下dump文件可以在笔记本上运行MAT，但是遇到一些大内存的应用可能笔记本就分析不了了，这时候可以在服务器上用JDK自带的jhat命令，但是效率和效果都值得商榷；另一个办法就是使用MAT自带的`ParseHeapDump.sh`脚本来分析。
 
 ### 使用方法

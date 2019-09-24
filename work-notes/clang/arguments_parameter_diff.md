@@ -1,3 +1,5 @@
+# arguments和parameter的区别
+
 转自：[HTTP://WWW.BLOGJAVA.NET/FLYSKY19/ARTICLES/89963.HTML](http://www.blogjava.net/FLYSKY19/ARTICLES/89963.HTML)
 
 看《TIJ》时老看到“引数”这个词，觉得怪别扭的，但一直没去查引数和参数有何区别，先查资料终于明白了： 

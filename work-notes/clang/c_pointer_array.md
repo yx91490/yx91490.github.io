@@ -1,3 +1,5 @@
+# C语言指针与数组名
+
 > [http://c.biancheng.net/cpp/html/492.html](http://c.biancheng.net/cpp/html/492.html)
 
 # 一、通过数组名访问数组元素

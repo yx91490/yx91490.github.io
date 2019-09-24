@@ -1,3 +1,5 @@
+# sqoopHCatalog使用
+
 HCatalog 是 Hadoop 的一个 table 与存储管理的一个服务，用户可以更容易地使用不同的数据处理工具 Pig、MapReduce 和 Hive 读写数据。HCatalog 表的抽象呈现给用户一个 HDFS 分布式文件系统（HDFS）中的关系视图，用户不需要担心数据存储在哪里及数据的存储格式：RCFile 格式、text 文件、或者 SequenceFile。
 
 ### 参数

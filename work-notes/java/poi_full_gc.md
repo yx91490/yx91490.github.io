@@ -1,3 +1,5 @@
+# POI导出Excel文件FullGC的解决办法
+
 在java中生成Excel文件最常用的库是Apache POI，这也是目前为止生成Excel特别是2007以后的xlsx格式的Excel最好的工具。由于内部的实现原理大体是用对象映射单元格，当导出的Excel数据量非常大的时候，会导致JVM内存吃紧从而进行Full GC。解决的办法一是调整JVM参数，另一个可以参考官方的代码给出的解决方案: 
 [https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/usermodel/examples/BigGridDemo.java](https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/xssf/usermodel/examples/BigGridDemo.java)
 

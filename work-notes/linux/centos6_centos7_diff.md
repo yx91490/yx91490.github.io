@@ -1,3 +1,5 @@
+# CentOS6和CentOS7对比
+
 网络
 
 | 对比项     | CentOS 6               | CentOS 7      |

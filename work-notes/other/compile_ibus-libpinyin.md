@@ -1,3 +1,5 @@
+# 在debianstretch上编译安装ibus-libpinyin_V1.7
+
 ibus-libpinyin 的主页: https://github.com/libpinyin/ibus-libpinyin.
 
 编译软件一般的流程是:

@@ -1,3 +1,5 @@
+# slf4jNOP问题
+
 刚接手一个新项目,发现打日志竟然用System.out.println,果断用上slf4j的Logger,后来改动了一下pom发现日志打不出来了,服务启动的时候出现如下错误:
 ![log_error](https://static.oschina.net/uploads/img/201710/21145051_WLBk.png "slf4j NOP问题")
 

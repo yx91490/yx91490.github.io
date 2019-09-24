@@ -1,3 +1,5 @@
+# 如何优雅地使用win10的Linux子系统
+
 [http://www.rehack.cn/techshare/devtools/842.html](http://www.rehack.cn/techshare/devtools/842.html) 
 首先你要升级到win10周年更新版，然后安装linux子系统。 
 win10的linux子系统给了我们一个将linux的强大的shell命令和windows的流畅界面结合的体验，让我们可以不用在windows上纠结虚拟机运行linux的卡顿，和在linux下缺少win下对应软件的尴尬。但是win10的cmd命令提示符和powershell都不能满足我对字体的一些要求，这让我去寻找更适合的bash客户端。

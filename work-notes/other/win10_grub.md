@@ -1,3 +1,5 @@
+# 升级win10周年导致双系统grub挂掉
+
 机型：dell xps13 9350 
 win10+ubuntu 16.04 双系统，uefi启动。
 

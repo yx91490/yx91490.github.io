@@ -1,3 +1,5 @@
+# 关于debian发布周期和各库的作用
+
 [原文地址：http://my.oschina.net/u/1382972/blog/335983](http://my.oschina.net/u/1382972/blog/335983) 
 官方参考：[https://wiki.debian.org/StableUpdates](https://wiki.debian.org/StableUpdates) 
 [https://wiki.debian.org/Backports](https://wiki.debian.org/Backports) 

@@ -1,1 +1,3 @@
+# JSON中的控制字符导致jQuery无法正常解析
+
 最近遇到一个问题,前端调试发现ajax请求的json正常返回了,但是却没走success函数,在error函数中打印了一下错误原因是"parse error",也就是返回的json没法解析.经过排查发现是因为一个字符串中出现了不可见的控制字符,去掉这些控制字符后就能正常显示了.那么怎么解决这种问题呢?最后发现fastjson在序列化时候有个参数`SerializerFeature.BrowserCompatible`可以解决这个问题,它把控制字符和中文等字符转换成unicode的写法,前端就能正常解析了.

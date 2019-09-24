@@ -1,3 +1,5 @@
+# CMSGC日志格式
+
 ### Minor GC
 
 > 2015-05-26T16:23:07.219-0200<sup>1</sup>: 64.322<sup>2</sup>:\[GC<sup>3</sup>(Allocation Failure<sup>4</sup>) 64.322: \[ParNew<sup>5</sup>: 613404K->68068K<sup>6</sup>(613440K) <sup>7</sup>, 0.1020465 secs<sup>8</sup>] 10885349K->10880154K <sup>9</sup>(12514816K)<sup>10</sup>, 0.1021309 secs<sup>11</sup>][Times: user=0.78 sys=0.01, real=0.11 secs]<sup>12</sup>

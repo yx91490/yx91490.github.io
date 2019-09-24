@@ -1,3 +1,5 @@
+# Debian中VirtualBox增强功能的相关配置
+
 ## 提示没有找到VBoxGuestAdditions_4.3.18.iso
 
 下载速度很慢，于是手动下载然后重命名为`VBoxGuestAdditions.iso`放到`/usr/share/virtualbox`目录下即可。
