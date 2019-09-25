@@ -12,8 +12,8 @@ jobs:
 
     - name: Build Step
       run: |
-        npm install -g vuepress
-        vuepress build .
+        npm install -D vuepress
+        npx vuepress build .
       env:
         CI: true
 
