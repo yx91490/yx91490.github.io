@@ -60,7 +60,7 @@
 
 ### 线程的六种状态
 
-![](./thread_lifecycle.webp)
+![](./thread_lifecycle.png)
 
 （1）NEW 是指创建了线程类，但是还没有执行start方法时候的线程状态
 
