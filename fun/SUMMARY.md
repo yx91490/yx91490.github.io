@@ -1,1 +1,0 @@
-- [羽毛球规则](fun/badminton.md)
