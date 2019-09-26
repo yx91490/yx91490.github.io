@@ -10,18 +10,18 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Build Step
-      run: |
-        npm install -D vuepress
-        npx vuepress build .
-      env:
-        CI: true
+#    - name: Build Step
+#      run: |
+#        npm install -D vuepress
+#        npx vuepress build .
+#      env:
+#        CI: true
 
-    - name: Deploy Step
+    - name: Build And SDeploy Step
       uses: JamesIves/github-pages-deploy-action@master
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BASE_BRANCH: gh-pages
         BRANCH: master
         FOLDER: .vuepress/dist
-        BUILD_SCRIPT: npm install && npm run build
+        BUILD_SCRIPT: npm install -D vuepress && npx vuepress build .
