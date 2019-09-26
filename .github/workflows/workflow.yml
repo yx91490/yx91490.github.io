@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Build And SDeploy Step
+    - name: "Step2: Build And Deploy"
       uses: JamesIves/github-pages-deploy-action@master
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
