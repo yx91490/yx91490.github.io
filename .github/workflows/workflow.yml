@@ -10,13 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-#    - name: Build Step
-#      run: |
-#        npm install -D vuepress
-#        npx vuepress build .
-#      env:
-#        CI: true
-
     - name: Build And SDeploy Step
       uses: JamesIves/github-pages-deploy-action@master
       env:
