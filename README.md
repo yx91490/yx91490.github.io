@@ -1,6 +1,10 @@
+---
+title: yx91490的博客
+---
+
 ### 关于我
 
-大数据工程师
+一位大数据研发工程师
 
 ### 博客分类
 
@@ -10,8 +14,3 @@
 
 - [工作笔记](./work-notes/README.md)
 
-### 微信公众号
-
-图解代码
-
-<img style="width:100px;" src="./pic/our_code.png"/>

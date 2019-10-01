@@ -40,17 +40,18 @@ module.exports = {
       { text: 'Java', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
       { text: '工作笔记', link: '/work-notes/' },
+      { text: '资料收藏', link: '/collection/' },
       {
-        text: '更多',
-        ariaLabel: 'more',
+        text: '联系我',
+        ariaLabel: 'contactMe',
         items: [
-          { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
-          { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues' },
+          { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
+          { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
         ]
       }
     ],
 //    displayAllHeaders: true,
-//    activeHeaderLinks: false,
+    activeHeaderLinks: false,
   }
 }
