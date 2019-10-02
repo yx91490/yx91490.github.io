@@ -3,6 +3,7 @@ module.exports = {
   description: 'java, 大数据(hadoop, sqoop, kylin, zeppelin)相关技术, 工作经验记录',
   head: [
     ['meta', { name: 'google-site-verification', content: 'j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ'}],
+    ['meta', { name: 'baidu-site-verification', content: '4z2bGbjYMB'}],
     ['link', { rel: 'icon', href: '/logo.png' }]
   ],
   themeConfig: {
