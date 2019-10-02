@@ -1,3 +1,5 @@
+# Hadoop
+
 ### 列举出hadoop中定义的最常用的InputFormats.哪个是默认的？
 
 **TextInputFormat**(默认)用于读取纯文本文件，key是每一行的位置偏移量，是LongWritable类型的，value是每一行的内容，为Text类型

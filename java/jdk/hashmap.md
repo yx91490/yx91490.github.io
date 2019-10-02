@@ -1,4 +1,4 @@
-# JDK1.7 HashMap实现
+# JDK1.7 HashMap实现原理
 
 ### 概念
 

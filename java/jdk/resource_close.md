@@ -1,3 +1,5 @@
+# 资源关闭测试    
+
     import org.apache.commons.io.IOUtils;
     
     import java.io.File;

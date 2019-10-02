@@ -1,3 +1,5 @@
+# 阅读Kylin源码
+
 ### #1 Step Name: Create Intermediate Flat Hive Table
 
 1. SET TBLPROPERTIES('auto.purge'='true');

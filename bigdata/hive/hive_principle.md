@@ -1,3 +1,5 @@
+# Hive原理
+
 ### 架构
 
 从Facebook的图上可以看出，Hive主要有QL，MetaStore和Serde三大核心组件构成。QL就是编译器，也是Hive中最核心的部分。Serde就是Serializer和Deserializer的缩写，用于序列化和反序列化数据，即读写数据。MetaStore对外暴露Thrift API，用于元数据的修改。比如表的增删改查，分区的增删改查，表的属性的修改，分区的属性的修改等。等下我会简单介绍一下核心，QL。

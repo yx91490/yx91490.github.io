@@ -1,10 +1,12 @@
+# 设计模式
+
 ## UML类图
 
 在UML类图中，常见的有以下几种关系: 泛化（Generalization）， 实现（Realization），关联（Association)，聚合（Aggregation），组合(Composition)，依赖(Dependency)
 
 #### 泛化（Generalization）
 
- ![img](assets/0_1303436788Qi60.png)
+ ![img](./assets/0_1303436788Qi60.png)
 
 【箭头指向】：带三角箭头的实线，箭头指向父类
 
@@ -12,7 +14,7 @@
 
 #### 实现（Realization）
 
-![img](assets/0_13034367939K49.png)
+![img](./assets/0_13034367939K49.png)
 
 【箭头指向】：带三角箭头的虚线，箭头指向接口
 
@@ -20,7 +22,7 @@
 
 #### 组合(Composition)
 
-![img](assets/0_1303436817mqXK.png)
+![img](./assets/0_1303436817mqXK.png)
 
 【代码体现】：成员变量
 
@@ -30,7 +32,7 @@
 
 #### 聚合（Aggregation）
 
-![img](assets/0_1303436811y36B.png)
+![img](./assets/0_1303436811y36B.png)
 
 【代码体现】：成员变量
 
@@ -48,15 +50,15 @@
 
 下图中，老师与学生是双向关联，老师有多名学生，学生也可能有多名老师。但学生与某课程间的关系为单向关联，一名学生可能要上多门课程，课程是个抽象的东西他不拥有学生。
 
-![img](assets/0_1303436801W1kf.png) 
+![img](./assets/0_1303436801W1kf.png) 
 
 下图为自身关联：
 
-![img](assets/0_13034368062Ka3.png)
+![img](./assets/0_13034368062Ka3.png)
 
 #### 依赖(Dependency)
 
- ![img](assets/0_130343682580L6.png)
+ ![img](./assets/0_130343682580L6.png)
 
 【代码表现】：局部变量、方法的参数或者对静态方法的调用
 
@@ -70,7 +72,7 @@
 
 下面这张UML图，比较形象地展示了各种类图关系：
 
-![img](assets/0_1303439338z9D7.png)
+![img](./assets/0_1303439338z9D7.png)
 
 
 
@@ -127,7 +129,7 @@
 
 **简单工厂模式**：定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为**静态工厂方法模式**。
 
-![img](assets/20130711143612921.jpg)
+![img](./assets/20130711143612921.jpg)
 
 在简单工厂模式结构图中包含如下几个角色：
 
@@ -165,7 +167,7 @@
 
 简单工厂模式虽然简单，但存在一个很严重的问题。当系统中需要引入新产品时，由于静态工厂方法通过所传入参数的不同来创建不同的产品，这必定要修改工厂类的源代码，将违背“开闭原则”，如何实现增加新产品而不影响已有代码？工厂方法模式应运而生。
 
-![img](assets/20130712101002890.jpg)
+![img](./assets/20130712101002890.jpg)
 
 在工厂方法模式结构图中包含如下几个角色：
 
@@ -210,7 +212,7 @@
 
 在抽象工厂模式中，每一个具体工厂都提供了多个工厂方法用于产生多种不同类型的产品，这些产品构成了一个产品族，抽象工厂模式结构如图5所示：
 
-![img](assets/20130713163800203.jpg)
+![img](./assets/20130713163800203.jpg)
 
 图5 抽象工厂模式结构图
 
@@ -327,7 +329,7 @@
 
 适配器模式类图如下
 
-![Adapter.png (assets/Adapter.png)](http://www.jasongj.com/img/designpattern/adapter/Adapter.png)
+![Adapter.png (./assets/Adapter.png)](http://www.jasongj.com/img/designpattern/adapter/Adapter.png)
 
 在对象适配器模式结构图中包含如下几个角色：
 
@@ -363,7 +365,7 @@
 #### 类图
 
 桥接模式类图如下
-[![Bridge pattern class diagram](assets/Bridge.png)](http://www.jasongj.com/img/designpattern/bridge/Bridge.png)
+[![Bridge pattern class diagram](./assets/Bridge.png)](http://www.jasongj.com/img/designpattern/bridge/Bridge.png)
 
 从上图可知，当把每个维度拆分开来，只需要M*N个类，并且由于每个维度独立变化，基本不会出现重复代码。
 
@@ -386,7 +388,7 @@
 ### 组合模式
 
 #### 类图
-[![Composite pattern class diagram](assets/composite.png)](http://www.jasongj.com/img/designpattern/composite/composite.png)
+[![Composite pattern class diagram](./assets/composite.png)](http://www.jasongj.com/img/designpattern/composite/composite.png)
 
 #### 角色划分
 
@@ -423,7 +425,7 @@
 装饰模式(Decorator Pattern)：动态地给一个对象增加一些额外的职责，就增加对象功能来说，装饰模式比生成子类实现更为灵活。装饰模式是一种对象结构型模式。
 
 装饰模式类图如下
-[![Decorator pattern class diagram](assets/DecoratorPattern.png)](http://www.jasongj.com/img/designpattern/proxydecorator/DecoratorPattern.png)
+[![Decorator pattern class diagram](./assets/DecoratorPattern.png)](http://www.jasongj.com/img/designpattern/proxydecorator/DecoratorPattern.png)
 
 在装饰模式结构图中包含如下几个角色：
 

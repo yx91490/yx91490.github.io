@@ -1,3 +1,5 @@
+# Yong GC会导致stop-the-world
+
 同事在测试HBase的时候发现RegionServer无响应，查看进程发现不断的在进行young GC，GC日志中出现大量的Allocation Failure信息：
 
 ```

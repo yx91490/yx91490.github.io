@@ -1,3 +1,4 @@
+# HBase
 ### HBase怎么预分区？
 
 	create 't1', 'f1', SPLITS => ['10', '20', '30', '40']

@@ -1,3 +1,5 @@
+# HiveQL
+
 #### Hive下变量的使用
 
 Hive的变量前面有一个命名空间，包括hiveconf、system、env，还有一个hivevar

@@ -1,3 +1,5 @@
+# Maven assembly插件打包与Java spi机制问题
+
 ### 现象
 
 项目中要往HDFS写数据，但是执行的时候产生了下面的异常：
