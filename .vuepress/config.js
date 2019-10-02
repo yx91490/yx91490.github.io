@@ -306,6 +306,7 @@ module.exports = {
         text: '联系我',
         ariaLabel: 'contactMe',
         items: [
+          { text: '建站指南', link: '/work-notes/other/static_blog' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
           { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
