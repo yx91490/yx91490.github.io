@@ -139,7 +139,17 @@ jobs:
         BUILD_SCRIPT: npm install -D vuepress && npx vuepress build .
 ```
 
-具体可以参考我博客仓库的配置，欢迎留言讨论。
+### 评论功能
+
+评论功能目前可用的包括基于Github Issues的Gitment](https://github.com/imsun/gitment)，但是为了省事我只是添加了个留言的链接。
+
+### 统计功能
+
+暂未实现。
+
+### 总结
+
+具体细节可以参考我博客仓库的配置，欢迎留言讨论。
 
 ### 参考
 
