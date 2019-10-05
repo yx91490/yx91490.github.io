@@ -1,5 +1,7 @@
 # Github Pages + VuePress + Github Actions 搭建个人静态博客
 
+*2019年10月2日*
+
 ### 历程
 
 写博客对技术人员来说是一个好习惯，我是一个不太爱折腾的人，更倾向于托管博客而不是自己费事搭建（穷）。在此之前尝试过国内CSDN和OSChina的博客，文章的曝光量不错，但是后来要实名认证，然后发现了GitBook体验不错，但是升级之后成为一个商业性质产品，最终还是把目光落在Github Pages上。
@@ -141,7 +143,7 @@ jobs:
 
 ### 评论功能
 
-评论功能目前可用的包括基于Github Issues的Gitment](https://github.com/imsun/gitment)，但是为了省事我只是添加了个留言的链接。
+评论功能目前可用的包括基于Github Issues的[Gitment](https://github.com/imsun/gitment)，但是为了省事我只是添加了个留言的链接。
 
 ### 统计功能
 
