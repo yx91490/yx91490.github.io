@@ -32,7 +32,7 @@ Parquet的设计方案，整体来看，基本照搬了Dremel中对嵌套数据�
 
 从文件结构上来看，如下图所示：
 
-![img](assets/180912163528362.png)
+![img](./assets/180912163528362.png)
 
 基本上就是一个文件由多个列组组成，数据先按列组（rowgroup）分段（也就是先做行切割），然后在列组内部对每个列的数据分列连续存储（columnchunk）（也就第二步做列切割），每个列内部的数据，再细分成page（可以近似的认为是再做行切割），最后，在文件的尾部，存储所有列组的元数据信息
 
@@ -51,7 +51,7 @@ ORC文件格式的一些基础思想和Parquet很像，也是先按行水平切�
 
 一个ORC文件包含多个stripes（每个stripes由多组行数据组成的），一个包含辅助信息的file footer。在文件的结尾，一个postscript保存着压缩参数及被压缩的footer的长度。一个stripes缺省大小是250MB，其大小可以扩展的长度只受HDFS的约束。file footer包含文件中的一个记录stripes信息的列表、每个stripes中行的数目及每个列的数据类型，它也包含列级的聚合结果：count, min, max, and sum。
 
-![img](assets/180912163528363.png)
+![img](./assets/180912163528363.png)
 
 与Parquet不同的地方是，Parquet对嵌套型数据结构的打散和重构的算法，来源于Dremel，通过两种level信息(definition level,repetition level)来标识特定数据在数据结构中层次位置，这两种信息和具体的列数据直接绑定，仅依靠这些信息和对象整体的Schema就能重构出这一列信息原有的层次结构。
 
@@ -61,12 +61,12 @@ ORC文件格式的一些基础思想和Parquet很像，也是先按行水平切�
 
 比如String类型的列，如果使用字典编码，那么会生成4个stream，PRESENT Stream用来标识具体String元素是否为Null，DATA Stream，连续存储字符串自身，DICTIONARY_DATA Stream存储字典信息，LENGTH Stream存储每个元素的长度（用来从DATA Stream中定位和拆分数据）
 
-![img](assets/180912163528364.png)
+![img](./assets/180912163528364.png)
 
 再比如Map类型的列，使用一个PRESENT Stream来标识具体每个Map元素是否为Null，用LENGTH 
 Stream来标识每个Map元素内部有几个对象
 
-![img](assets/180912163528365.png)
+![img](./assets/180912163528365.png)
 
 这种处理方式对比Dremel，看起来的确老土很多，理论深度上被甩了不止一条街，不过如果对于嵌套层次不复杂的数据结构，也还是简单有效的。但是，ORC的风评最近感觉明显比Parquet要盛，这又是为什么呢？
 

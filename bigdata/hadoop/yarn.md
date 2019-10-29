@@ -21,6 +21,6 @@ Container是与特定节点绑定的，其包含了内存、CPU磁盘等逻辑�
 
 作业的完整运行如下所示：
 
-[![The YARN architecture](assets/The_YARN_architecture_iteblog.jpg)](https://www.iteblog.com/pic/hadoop/The_YARN_architecture_iteblog.jpg)
+[![The YARN architecture](./assets/The_YARN_architecture_iteblog.jpg)](https://www.iteblog.com/pic/hadoop/The_YARN_architecture_iteblog.jpg)
 
 

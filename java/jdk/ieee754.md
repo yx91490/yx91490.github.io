@@ -31,11 +31,11 @@ V = (-1)<sup>S</sup>× 2<sup>E-X</sup> × (1+M)
 
 IEEE 754规定，对于32位的浮点数，最高的1位是符号位s，接着的8位是指数E，剩下的23位为有效数字M。
 
-![ieee32](assets/ieee32.png)
+![ieee32](./assets/ieee32.png)
 
 对于64位的浮点数，最高的1位是符号位S，接着的11位是指数E，剩下的52位为有效数字M。
 
-![ieee64](assets/ieee64.png)
+![ieee64](./assets/ieee64.png)
 
 **规约形式的浮点数**
 
