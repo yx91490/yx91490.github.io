@@ -152,7 +152,45 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 </plugin>
 ```
 
+重命名包名：
 
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.1.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <artifactSet>
+                    <includes>
+                        <include>com.xxx:my-project</include>
+                    </includes>
+                </artifactSet>
+                <relocations>
+                    <relocation>
+                        <pattern>com.xxx</pattern>
+                        <shadedPattern>com.yyy</shadedPattern>
+                    </relocation>
+                </relocations>
+                <filters>
+                    <filter>
+                        <artifact>*:*</artifact>
+                        <excludes>
+                            <exclude>META-INF/**/*</exclude>
+                            <exclude>config/**/*</exclude>
+                        </excludes>
+                    </filter>
+                </filters>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
 
 #### 配置资源目录
 
@@ -176,6 +214,10 @@ ClassLoader.getResource("path-to-your-res");
 ```
 
 > [Resources and config loading in maven project](https://stackoverflow.com/questions/16374235/resources-and-config-loading-in-maven-project)
+>
+> [Maven (Surefire): copy test resources from src/test/java](https://stackoverflow.com/questions/4221285/maven-surefire-copy-test-resources-from-src-test-java)
+>
+> [利用maven中resources插件的copy-resources目标进行资源copy和过滤](https://www.tuicool.com/articles/JfaA7r)
 
 #### 配置Profile
 
@@ -213,6 +255,26 @@ profile可以让我们针对不同环境定义一系列的配置信息。这样�
 
 > [阿里云公共代理库](https://help.aliyun.com/document_detail/102512.html)
 
+有时候Maven会出现在build后会自动去Downloading 这个maven-metadata.xml文件，由于一些原因会一直卡在DOWNLOADING和retry。找到xml中的updatePolicy标签，改为never即可：
+
+```xml
+<repository>
+    <id>snapshots</id>
+    <name>Snapshots</name>
+    <url>url</url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+    <enabled>true</enabled>
+    <!-- 这个属性为更新策略，aways:每次，never:从不，daily:每日。-->
+    <updatePolicy>never</updatePolicy>
+    </snapshots>
+</repository>
+```
+
+> [maven build后Downloading maven-metadata.xml 的解决方法](https://blog.csdn.net/Joze_3/article/details/75402398)
+
 ### Maven命令行
 
 #### 强制拉取jar包
@@ -232,6 +294,15 @@ mvn -U package
 
 - **-DskipTests**，不执行测试用例，但编译测试用例类生成相应的class文件至target/test-classes下。   
 - **-Dmaven.test.skip=true**，不执行测试用例，也不编译测试用例类。
+
+也可以配置到pom.xml的属性里：
+
+```xml
+<properties>
+  <skipTests>true</skipTests>
+  <maven.test.skip>true</maven.test.skip>
+</properties>
+```
 
 #### 生成Scala项目模板
 
