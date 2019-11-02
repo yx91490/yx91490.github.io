@@ -1,4 +1,4 @@
-# CMSGC日志格式
+# CMS GC日志格式
 
 ### Minor GC
 

@@ -6,29 +6,13 @@
  - [Tomcat服务器返回400](./java/tomcat_400.md)
  - [代码抛出错误导致的问题](./java/no_such_method_error.md)
  - [HttpClient fluent API使用小坑](./java/httpclient_fluent_trap.md)
- - [优雅地修改多模块项目中的版本号](./java/maven_modules.md)
  - [POI导出Excel文件Full GC的解决办法](./java/poi_full_gc.md)
+ - [优雅地修改多模块项目中的版本号](./java/maven_modules.md)
  - [JSON中的控制字符导致jQuery无法正常解析](./java/ctrl_char_in_json.md)
 
 ### 架构
 
 - [Redis实现分布式锁]( work-notes/architecture/redis_distributelock.md)
-
-### 开发工具
-
- - [Idea代码模板初探](./tools/idea_template.md)
- - [SVN提交到老分支补救指南](./tools/svn_commit_old_branch.md)
- - [SVN如何从版本控制中删除文件](./tools/svn_local_delete.md)
- - [发布jar包到maven中央仓库教程](./tools/maven_release_jar.md)
- - [Typora:可能是地球上最好用的Markdown编辑器了](./tools/typora.md)
-
-### SQL
- - [SQL连接](./sql/sql_join.md)
- - [MySQL授权](./sql/mysql_grant.md)
- - [MySQL导入导出数据](./sql/mysql_import_export.md)
- - [MySQL字段的显示宽度](./sql/mysql_column_width.md)
- - [CentOS安装MySQL官方版](./sql/mysql_installation.md)
- - [MySQL的group_concat()函数的使用](./sql/mysql_group_concat.md)
 
 ### Linux
  - [netstat参数分析](./linux/netstat.md)
@@ -45,6 +29,22 @@
  - [Debian中VirtualBox增强功能的相关配置](./other/virtualbox_debian.md)
  - [在debian stretch上编译安装ibus-libpinyin_V1.7](./other/compile_ibus-libpinyin.md)
  - [源中的 backports proposed security updates 什么意思?](./other/soucelist_in_ubuntu.md)
+
+### SQL
+ - [SQL连接](./sql/sql_join.md)
+ - [MySQL授权](./sql/mysql_grant.md)
+ - [MySQL导入导出数据](./sql/mysql_import_export.md)
+ - [MySQL字段的显示宽度](./sql/mysql_column_width.md)
+ - [CentOS安装MySQL官方版](./sql/mysql_installation.md)
+ - [MySQL的group_concat()函数的使用](./sql/mysql_group_concat.md)
+
+### 开发工具
+
+ - [Idea代码模板初探](./tools/idea_template.md)
+ - [SVN提交到老分支补救指南](./tools/svn_commit_old_branch.md)
+ - [SVN如何从版本控制中删除文件](./tools/svn_local_delete.md)
+ - [发布jar包到maven中央仓库教程](./tools/maven_release_jar.md)
+ - [Typora:可能是地球上最好用的Markdown编辑器了](./tools/typora.md)
 
 ### C
 

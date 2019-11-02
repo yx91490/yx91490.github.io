@@ -1,4 +1,4 @@
-# Typora:可能是地球上最好用的Markdown编辑器了
+# Typora:最好用的Markdown编辑器
 
 [官网演示](http://typora.io/)
 

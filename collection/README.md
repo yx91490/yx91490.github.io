@@ -14,7 +14,3 @@
 - [每天一个linux命令（50）：crontab命令](https://www.cnblogs.com/peida/archive/2013/01/08/2850483.html)
 - [Linux crontab command](https://www.computerhope.com/unix/ucrontab.htm)
 - [crontab guru](https://crontab.guru)
-
-### 工具箱
-
-- [各种图示收集](./diagram.md)

@@ -31,6 +31,11 @@ $ sudo service mysqld start            # centos6
 $ sudo systemctl start mysqld.service  # centos7
 ```
 
+>  MySQL Server初始化过程会创建超级账户`'root'@'localhost'`，此账户的密码存储在错误日志文件中，查看方式：`$ sudo grep 'temporary password' /var/log/mysqld.log`
+>
+>  注意：别忘了执行`mysql_secure_installation`命令以提高MySQL5.6安全性，命令包括了设置root密码，移除匿名用户，禁止root远程登录，移除test库等操作。
+
+
 修改超级用户密码：
 
 ```
@@ -38,10 +43,6 @@ $ mysql -uroot -p
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPassword';
 ```
 
-
->  MySQL Server初始化过程会创建超级账户`'root'@'localhost'`，此账户的密码存储在错误日志文件中，查看方式：`$ sudo grep 'temporary password' /var/log/mysqld.log`
->
->  注意：别忘了执行`mysql_secure_installation`命令以提高MySQL5.6安全性，命令包括了设置root密码，移除匿名用户，禁止root远程登录，移除test库等操作。
 
 ### 参考
 

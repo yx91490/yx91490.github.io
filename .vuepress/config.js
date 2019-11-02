@@ -10,15 +10,6 @@ module.exports = {
     sidebar: {
     '/java': [ 
       {
-        title: 'Redis',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/java/redis/redis',
-          '/java/redis/cache', 
-        ]
-      },
-      {
         title: 'Java环境',
         collapsable: false,
         sidebarDepth: 0,
@@ -84,16 +75,57 @@ module.exports = {
           // '/java/spring/spring', 
         ]
       },
-    ],
-    '/bigdata': [
       {
-        title: '笔记',
+        title: '架构',
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/note/oss_note', 
+          '/work-notes/architecture/design_pattern',
+          '/work-notes/architecture/distributed_delay_queue',
+          '/work-notes/architecture/distribute_transaction',
+          '/work-notes/architecture/redis_distributelock',
+          '/work-notes/architecture/short_url_design', 
         ]
       },
+      {
+        title: '工作问题记录',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/work-notes/java/slf4j_nop',
+          '/work-notes/java/tomcat_400', 
+          '/work-notes/java/not_catch_throw_error',
+          '/work-notes/java/no_such_method_error',
+          '/work-notes/java/httpclient_fluent_trap',
+          '/work-notes/java/poi_full_gc',
+          '/work-notes/java/maven_modules',
+          '/work-notes/java/ctrl_char_in_json',
+          // '/work-notes/java/rest_api_design',
+          '/work-notes/java/date_time',
+          '/work-notes/java/spring_url_pattern',
+          '/work-notes/java/javamail',
+          '/work-notes/java/maven_assembly_spi',
+          '/work-notes/java/tomcat_host',
+        ]
+      },
+      {
+        title: '开发工具',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/work-notes/tools/git',
+          '/work-notes/tools/editor',
+          '/work-notes/tools/vim',
+          '/work-notes/tools/idea_template',
+          '/work-notes/tools/svn_commit_old_branch',
+          '/work-notes/tools/svn_local_delete', 
+          '/work-notes/tools/typora',
+          '/work-notes/tools/maven_release_jar',
+          // '/work-notes/tools/install_gnu_cli_on_macos',
+        ]
+      },
+    ],
+    '/bigdata': [
       {
         title: 'Zeppelin',
         collapsable: false,
@@ -180,50 +212,47 @@ module.exports = {
           '/bigdata/hbase/hbase_issue', 
         ]
       },
+      {
+        title: '笔记',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/note/oss_note', 
+        ]
+      },
     ],
     '/work-notes': [
-      {
-        title: 'Java',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/java/slf4j_nop',
-          '/work-notes/java/tomcat_400', 
-          '/work-notes/java/not_catch_throw_error',
-          '/work-notes/java/no_such_method_error',
-          '/work-notes/java/httpclient_fluent_trap',
-          '/work-notes/java/poi_full_gc',
-          '/work-notes/java/maven_modules',
-          '/work-notes/java/ctrl_char_in_json',
-          // '/work-notes/java/rest_api_design',
-          '/work-notes/java/date_time',
-          '/work-notes/java/spring_url_pattern',
-          '/work-notes/java/javamail',
-          '/work-notes/java/maven_assembly_spi',
-          '/work-notes/java/tomcat_host',
-        ]
-      },
-      {
-        title: '架构',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/architecture/design_pattern',
-          '/work-notes/architecture/distributed_delay_queue',
-          '/work-notes/architecture/distribute_transaction',
-          '/work-notes/architecture/redis_distributelock',
-          '/work-notes/architecture/short_url_design', 
-        ]
-      },
       {
         title: 'linux',
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/work-notes/linux/netstat',
-          '/work-notes/linux/centos6_centos7_diff',
           '/work-notes/linux/rpm_yum',
           '/work-notes/linux/shell', 
+          'work-notes/linux/netstat',
+          'work-notes/other/systemd_blog',
+          '/work-notes/other/genymotion_install',
+          'work-notes/linux/centos6_centos7_diff',
+          'work-notes/other/systemd_wiki',
+          'work-notes/other/genymotion_install',
+          'work-notes/other/win10_grub',
+          'work-notes/other/wsl',
+          'work-notes/other/debian_mirror',
+          'work-notes/other/debian_vm',
+          'work-notes/other/debian_apt_source',
+          'work-notes/other/install_ubuntu_on_xps13',
+          'work-notes/other/virtualbox_debian',
+          'work-notes/other/compile_ibus-libpinyin',
+          'work-notes/other/soucelist_in_ubuntu',
+        ]
+      },
+      {
+        title: '缓存',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/redis/redis',
+          '/java/redis/cache', 
         ]
       },
       {
@@ -242,51 +271,16 @@ module.exports = {
         ]
       },
       {
-        title: '开发工具',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/tools/git',
-          '/work-notes/tools/svn_local_delete', 
-          '/work-notes/tools/svn_commit_old_branch',
-          '/work-notes/tools/editor',
-          '/work-notes/tools/vim',
-          '/work-notes/tools/typora',
-          '/work-notes/tools/idea_template',
-          '/work-notes/tools/maven_release_jar',
-          // '/work-notes/tools/install_gnu_cli_on_macos',
-        ]
-      },
-      {
         title: 'C语言',
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/work-notes/clang/c_keyword',
           '/work-notes/clang/c_qsort',
-          '/work-notes/clang/arguments_parameter_diff',
+          '/work-notes/clang/c_keyword',
           '/work-notes/clang/c_array_func',
-          '/work-notes/clang/c_pointer_array',
           '/work-notes/clang/c_mem_model', 
-        ]
-      },
-      {
-        title: '其他',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/other/install_ubuntu_on_xps13',
-          '/work-notes/other/genymotion_install',
-          '/work-notes/other/debian_apt_source',
-          '/work-notes/other/compile_ibus-libpinyin',
-          '/work-notes/other/virtualbox_debian',
-          '/work-notes/other/soucelist_in_ubuntu',
-          '/work-notes/other/debian_vm',
-          '/work-notes/other/win10_grub',
-          '/work-notes/other/systemd_wiki',
-          '/work-notes/other/debian_mirror',
-          '/work-notes/other/wsl',
-          '/work-notes/other/systemd_blog', 
+          '/work-notes/clang/c_pointer_array',
+          '/work-notes/clang/arguments_parameter_diff',
         ]
       },
     ],
@@ -298,14 +292,15 @@ module.exports = {
       ]
     },
     nav: [
-      { text: 'Java', link: '/java/' },
+      { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
-      { text: '工作笔记', link: '/work-notes/' },
-      { text: '资料收藏', link: '/collection/' },
+      { text: '图示速查', link: '/diagram/' },
       {
-        text: '联系我',
+        text: '其他',
         ariaLabel: 'contactMe',
         items: [
+          { text: '其他笔记', link: '/work-notes/' },
+          { text: '资料收藏', link: '/collection/' },
           { text: '建站指南', link: '/work-notes/other/static_blog' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
