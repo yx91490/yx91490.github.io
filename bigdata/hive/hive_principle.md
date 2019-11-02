@@ -8,7 +8,7 @@
 
 一条SQL，进入的Hive。经过上述的过程，其实也是一个比较典型的编译过程变成了一个作业。
 
-![img](./assets/20160521121202857)
+![img](./assets/20160521121202857.jpg)
 
 首先，Driver会输入一个字符串SQL，然后经过Parser变成AST，这个变成AST的过程是通过Antlr来完成的，也就是Anltr根据语法文件来将SQL变成AST。
 
@@ -58,7 +58,7 @@ Map Join全过程不会使用Reduce，非常均匀，不会存在数据倾斜问
 
 Hive有一种稍微复杂一点的机制，叫Auto Map Join。还记得原理中提到的物理优化器？Physical Optimizer么？它的其中一个功能就是把Join优化成Auto Map Join。
 
-![img](./assets/20160521122201970)
+![img](./assets/20160521122201970.jpg)
 
 优化过程是把Join作业前面加上一个条件选择器ConditionalTask和一个分支。左边的分支是MapJoin，右边的分支是Common Join(Reduce Join)
 
