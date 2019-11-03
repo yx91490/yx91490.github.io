@@ -251,7 +251,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/other/static_blog',
+          '/work-notes/other/static_blog',
         ]
       },
       {
