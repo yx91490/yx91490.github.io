@@ -15,7 +15,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/java-env/maven',
-          '/java/java-env/jdk_tools', 
+          '/java/java-env/jdk_tools',
           '/java/java-env/class_path',
           '/java/java-env/mat_cmd_tool',
         ]
@@ -27,7 +27,7 @@ module.exports = {
         children: [
           '/java/jdk/enum',
           '/java/jdk/java_concurrent_framework',
-          '/java/jdk/classloader', 
+          '/java/jdk/classloader',
           '/java/jdk/jdk_new_features',
           '/java/jdk/red_black_tree',
           '/java/jdk/hashmap',
@@ -44,7 +44,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/jvm/jvm_parameter',
-          '/java/jvm/gc', 
+          '/java/jvm/gc',
           '/java/jvm/java_memory_model',
           '/java/jvm/cms_parnew_gc_log_format',
           '/java/jvm/java_runtime_data_region',
@@ -56,7 +56,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/java/library/slf4j', 
+          '/java/library/slf4j',
         ]
       },
       {
@@ -64,7 +64,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/java/thread/multi_thread', 
+          '/java/thread/multi_thread',
         ]
       },
       {
@@ -72,7 +72,31 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          // '/java/spring/spring', 
+          // '/java/spring/spring',
+        ]
+      },
+      {
+        title: 'SQL',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/work-notes/sql/transaction',
+          '/work-notes/sql/sql_join',
+          // '/work-notes/sql/mysql',
+          '/work-notes/sql/mysql_grant',
+          '/work-notes/sql/mysql_import_export',
+          '/work-notes/sql/mysql_installation',
+          '/work-notes/sql/mysql_column_width',
+          '/work-notes/sql/mysql_group_concat',
+        ]
+      },
+      {
+        title: '缓存',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/redis/redis',
+          '/java/redis/cache',
         ]
       },
       {
@@ -84,7 +108,7 @@ module.exports = {
           '/work-notes/architecture/distributed_delay_queue',
           '/work-notes/architecture/distribute_transaction',
           '/work-notes/architecture/redis_distributelock',
-          '/work-notes/architecture/short_url_design', 
+          '/work-notes/architecture/short_url_design',
         ]
       },
       {
@@ -93,7 +117,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/work-notes/java/slf4j_nop',
-          '/work-notes/java/tomcat_400', 
+          '/work-notes/java/tomcat_400',
           '/work-notes/java/not_catch_throw_error',
           '/work-notes/java/no_such_method_error',
           '/work-notes/java/httpclient_fluent_trap',
@@ -118,7 +142,7 @@ module.exports = {
           '/work-notes/tools/vim',
           '/work-notes/tools/idea_template',
           '/work-notes/tools/svn_commit_old_branch',
-          '/work-notes/tools/svn_local_delete', 
+          '/work-notes/tools/svn_local_delete',
           '/work-notes/tools/typora',
           '/work-notes/tools/maven_release_jar',
           // '/work-notes/tools/install_gnu_cli_on_macos',
@@ -132,7 +156,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/zeppelin/zeppelin_bugs',
-          '/bigdata/zeppelin/zeppelin_sharding', 
+          '/bigdata/zeppelin/zeppelin_sharding',
         ]
       },
       {
@@ -140,7 +164,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/kylin/read_kylin_source', 
+          '/bigdata/kylin/read_kylin_source',
         ]
       },
       {
@@ -150,7 +174,7 @@ module.exports = {
         children: [
           '/bigdata/sqoop/sqoop_mysql_temp_file',
           '/bigdata/sqoop/sqoop_usage',
-          '/bigdata/sqoop/sqoop_hcatalog', 
+          '/bigdata/sqoop/sqoop_hcatalog',
         ]
       },
       {
@@ -158,7 +182,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/zookeeper/zk_distribute_lock', 
+          '/bigdata/zookeeper/zk_distribute_lock',
         ]
       },
       {
@@ -166,7 +190,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/hadoop/hadoop_command', 
+          '/bigdata/hadoop/hadoop_command',
           '/bigdata/hadoop/hadoop_interview',
           '/bigdata/hadoop/yarn',
           '/bigdata/hadoop/distcp',
@@ -179,7 +203,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/hdfs/columnar_storage_parquet_orc',
-          '/bigdata/hdfs/avro_specification_1.8.1', 
+          '/bigdata/hdfs/avro_specification_1.8.1',
         ]
       },
       {
@@ -187,7 +211,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/mapreduce/mapreduce', 
+          '/bigdata/mapreduce/mapreduce',
         ]
       },
       {
@@ -199,7 +223,7 @@ module.exports = {
           '/bigdata/hive/hive_data_type',
           '/bigdata/hive/hive_bucket',
           '/bigdata/hive/hive_principle',
-          '/bigdata/hive/hive_optimize', 
+          '/bigdata/hive/hive_optimize',
           '/bigdata/hive/hive_parse_json',
         ]
       },
@@ -209,7 +233,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/hbase/hbase_interview',
-          '/bigdata/hbase/hbase_issue', 
+          '/bigdata/hbase/hbase_issue',
         ]
       },
       {
@@ -217,18 +241,26 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/note/oss_note', 
+          '/bigdata/note/oss_note',
         ]
       },
     ],
     '/work-notes': [
+      {
+        title: '经验',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/other/static_blog',
+        ]
+      },
       {
         title: 'linux',
         collapsable: false,
         sidebarDepth: 0,
         children: [
           '/work-notes/linux/rpm_yum',
-          '/work-notes/linux/shell', 
+          '/work-notes/linux/shell',
           'work-notes/linux/netstat',
           'work-notes/other/systemd_blog',
           '/work-notes/other/genymotion_install',
@@ -247,30 +279,6 @@ module.exports = {
         ]
       },
       {
-        title: '缓存',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/java/redis/redis',
-          '/java/redis/cache', 
-        ]
-      },
-      {
-        title: 'SQL',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/sql/transaction', 
-          '/work-notes/sql/sql_join',
-          // '/work-notes/sql/mysql',
-          '/work-notes/sql/mysql_grant',
-          '/work-notes/sql/mysql_import_export',
-          '/work-notes/sql/mysql_installation',
-          '/work-notes/sql/mysql_column_width',
-          '/work-notes/sql/mysql_group_concat',
-        ]
-      },
-      {
         title: 'C语言',
         collapsable: false,
         sidebarDepth: 0,
@@ -278,7 +286,7 @@ module.exports = {
           '/work-notes/clang/c_qsort',
           '/work-notes/clang/c_keyword',
           '/work-notes/clang/c_array_func',
-          '/work-notes/clang/c_mem_model', 
+          '/work-notes/clang/c_mem_model',
           '/work-notes/clang/c_pointer_array',
           '/work-notes/clang/arguments_parameter_diff',
         ]
@@ -292,16 +300,15 @@ module.exports = {
       ]
     },
     nav: [
+      { text: '图示速查', link: '/diagram/' },
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
-      { text: '图示速查', link: '/diagram/' },
+      { text: '资料收藏', link: '/collection/' },
       {
         text: '其他',
         ariaLabel: 'contactMe',
         items: [
           { text: '其他笔记', link: '/work-notes/' },
-          { text: '资料收藏', link: '/collection/' },
-          { text: '建站指南', link: '/work-notes/other/static_blog' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
           { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
