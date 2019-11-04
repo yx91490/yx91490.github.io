@@ -1,14 +1,14 @@
-心脏病预测数据
+# 心脏病预测数据
 
-数据描述：
+### 数据描述
 
 [heart-disease.names](http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/heart-disease.names)
 
-常用数据集（303条）：
+### 常用数据集（303条）
 
 [processed.cleveland.data](http://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/processed.cleveland.data)
 
-字段：
+### 字段
 
 | 字段名   |             含义              | 英文描述                                                     |                                         阿里云数据集描述 |
 | :------- | :---------------------------: | ------------------------------------------------------------ | -------------------------------------------------------: |
@@ -27,7 +27,7 @@
 | thal     |           缺陷种类            | 3 = normal; 6 = fixed defect; 7 = reversable defect          |                         并发种类，由轻到重norm、fix、rev |
 | status   |           是否患病            |                                                              |                         是否患病，buff是健康、sick是患病 |
 
-参考：
+### 参考
 
 - [心脏病预测案例](https://help.aliyun.com/document_detail/34929.html)
 - [Heart Disease Data Set](http://archive.ics.uci.edu/ml/datasets/Heart+Disease)
