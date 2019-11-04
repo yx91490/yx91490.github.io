@@ -141,11 +141,11 @@ module.exports = {
           '/work-notes/tools/editor',
           '/work-notes/tools/vim',
           '/work-notes/tools/idea_template',
+          '/work-notes/tools/install_gnu_cli_on_macos',
           '/work-notes/tools/svn_commit_old_branch',
           '/work-notes/tools/svn_local_delete',
           '/work-notes/tools/typora',
           '/work-notes/tools/maven_release_jar',
-          // '/work-notes/tools/install_gnu_cli_on_macos',
         ]
       },
     ],
