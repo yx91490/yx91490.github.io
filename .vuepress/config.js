@@ -155,6 +155,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'bigdata/zeppelin/heart_diease_dataset',
           '/bigdata/zeppelin/zeppelin_bugs',
           '/bigdata/zeppelin/zeppelin_sharding',
         ]
