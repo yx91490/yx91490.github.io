@@ -290,7 +290,15 @@ mvn -U package
 
 #### 跳过单元测试
 
-在使用mvn package进行编译打包时，Maven默认会执行src/test/java中的JUnit测试用例，有时为了跳过测试，会使用参数`-DskipTests`或`-Dmaven.test.skip=true`，这两个参数的主要区别是：
+在使用mvn package进行编译打包时，Maven默认会执行src/test/java中的JUnit测试用例，有时为了跳过执行单元测试会使用下面的参数：
+
+```bash
+mvn clean package -DskipTests
+# 或者
+mvn clean package -Dmaven.test.skip=true
+```
+
+这两个参数的主要区别是：
 
 - **-DskipTests**，不执行测试用例，但编译测试用例类生成相应的class文件至target/test-classes下。   
 - **-Dmaven.test.skip=true**，不执行测试用例，也不编译测试用例类。
@@ -302,6 +310,14 @@ mvn -U package
   <skipTests>true</skipTests>
   <maven.test.skip>true</maven.test.skip>
 </properties>
+```
+
+#### 跳过checkstyle检查
+
+有些开源项目会使用checkstyle检查代码格式，在我们打包代码的时候可以使用下面的参数跳过检查：
+
+```bash
+mvn clean package -Dcheckstyle.skip=true
 ```
 
 #### 生成Scala项目模板
