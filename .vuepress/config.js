@@ -304,12 +304,12 @@ module.exports = {
       { text: '图示速查', link: '/diagram/' },
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
+      { text: '其他笔记', link: '/work-notes/' },
       { text: '资料收藏', link: '/collection/' },
       {
         text: '其他',
         ariaLabel: 'contactMe',
         items: [
-          { text: '其他笔记', link: '/work-notes/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
           { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
