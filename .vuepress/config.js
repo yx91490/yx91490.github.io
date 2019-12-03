@@ -18,6 +18,7 @@ module.exports = {
           '/java/java-env/jdk_tools',
           '/java/java-env/class_path',
           '/java/java-env/mat_cmd_tool',
+          '/java/java-env/proguard',
         ]
       },
       {

@@ -6,6 +6,7 @@
 - [类路径ClassPath](./java-env/class_path.md)
 - [JDK命令工具](./java-env/jdk_tools.md)
 - [命令行分析Heap Dump文件](./java-env/mat_cmd_tool.md)
+- [使用Proguard混淆Spring Boot项目代码](./java-env/proguard.md)
 
 ### JDK
 
