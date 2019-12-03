@@ -184,6 +184,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/bigdata/zookeeper/zookeeper',
           '/bigdata/zookeeper/zk_distribute_lock',
         ]
       },

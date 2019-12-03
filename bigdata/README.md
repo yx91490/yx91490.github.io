@@ -20,7 +20,8 @@
 
 ### ZooKeeper
 
-- [zookeeper实现分布式锁](./zookeeper/zk_distribute_lock.md)
+- [ZooKeeper笔记](./zookeeper/zookeeper.md)
+- [Zookeeper实现分布式锁](./zookeeper/zk_distribute_lock.md)
 
 ### Zeppelin
 
