@@ -2,7 +2,18 @@
 
 ## UML类图
 
-在UML类图中，常见的有以下几种关系: 泛化（Generalization）， 实现（Realization），关联（Association)，聚合（Aggregation），组合(Composition)，依赖(Dependency)
+在UML类图中，常见的有以下几种关系：
+
+- 泛化（Generalization），
+- 实现（Realization），
+- 组合  (Composition)，
+- 聚合（Aggregation），
+- 关联（Association)，
+- 依赖  (Dependency)
+
+#### 各种关系的强弱顺序
+
+**泛化 = 实现 > 组合 > 聚合 > 关联 > 依赖**
 
 #### 泛化（Generalization）
 
@@ -65,10 +76,6 @@
 【箭头及指向】：带箭头的虚线，指向被使用者
 
 【依赖关系】：是一种使用的关系， 即一个类的实现需要另一个类的协助，所以要尽量不使用双向的互相依赖。
-
-#### 各种关系的强弱顺序
-
-**泛化 = 实现 > 组合 > 聚合 > 关联 > 依赖**
 
 下面这张UML图，比较形象地展示了各种类图关系：
 
