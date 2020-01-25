@@ -12,5 +12,4 @@ title: yx91490的博客
 
 - [大数据](./bigdata/README.md)
 
-- [工作笔记](./work-notes/README.md)
-
+<a style="color:white" href="/scenery/" class="">风景</a>

@@ -14,11 +14,12 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/java/java-env/maven',
           '/java/java-env/jdk_tools',
           '/java/java-env/class_path',
           '/java/java-env/mat_cmd_tool',
-          '/java/java-env/proguard',
+          '/java/java-env/maven',
+          '/java/java-env/maven_modules',
+          '/java/java-env/maven_assembly_spi',
         ]
       },
       {
@@ -26,6 +27,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/jdk/date_time',
           '/java/jdk/enum',
           '/java/jdk/java_concurrent_framework',
           '/java/jdk/classloader',
@@ -37,6 +39,8 @@ module.exports = {
           // '/java/jdk/resource_close',
           // '/java/jdk/java8_lambda',
           '/java/jdk/io',
+          '/java/jdk/not_catch_throw_error',
+          '/java/jdk/no_such_method_error',
         ]
       },
       {
@@ -58,6 +62,11 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/library/slf4j',
+          '/java/library/slf4j_nop',
+          '/java/library/javamail',
+          '/java/library/httpclient_fluent_trap',
+          '/java/library/poi_full_gc',
+          '/java/library/ctrl_char_in_json',
         ]
       },
       {
@@ -74,6 +83,45 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           // '/java/spring/spring',
+          '/java/spring/spring_url_pattern',
+          '/java/spring/proguard',
+        ]
+      },
+      {
+        title: 'Linux',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/linux/rpm_yum',
+          '/java/linux/shell',
+          '/java/linux/netstat',
+          '/java/linux/systemd_blog',
+          '/java/linux/genymotion_install',
+          '/java/linux/centos6_centos7_diff',
+          '/java/linux/systemd_wiki',
+          '/java/linux/genymotion_install',
+          '/java/linux/win10_grub',
+          '/java/linux/wsl',
+          '/java/linux/debian_mirror',
+          '/java/linux/debian_vm',
+          '/java/linux/debian_apt_source',
+          '/java/linux/install_ubuntu_on_xps13',
+          '/java/linux/virtualbox_debian',
+          '/java/linux/compile_ibus-libpinyin',
+          '/java/linux/soucelist_in_ubuntu',
+        ]
+      },
+      {
+        title: 'C语言',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/clang/c_qsort',
+          '/java/clang/c_keyword',
+          '/java/clang/c_array_func',
+          '/java/clang/c_mem_model',
+          '/java/clang/c_pointer_array',
+          '/java/clang/arguments_parameter_diff',
         ]
       },
       {
@@ -81,7 +129,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/java/sql/transaction',
+          //'/java/sql/transaction',
           '/java/sql/sql_join',
           // '/java/sql/mysql',
           '/java/sql/mysql_grant',
@@ -113,24 +161,21 @@ module.exports = {
         ]
       },
       {
-        title: '工作问题记录',
+        title: '经验',
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/java/work-notes/slf4j_nop',
-          '/java/work-notes/tomcat_400',
-          '/java/work-notes/not_catch_throw_error',
-          '/java/work-notes/no_such_method_error',
-          '/java/work-notes/httpclient_fluent_trap',
-          '/java/work-notes/poi_full_gc',
-          '/java/work-notes/maven_modules',
-          '/java/work-notes/ctrl_char_in_json',
-          // '/java/work-notes/rest_api_design',
-          '/java/work-notes/date_time',
-          '/java/work-notes/spring_url_pattern',
-          '/java/work-notes/javamail',
-          '/java/work-notes/maven_assembly_spi',
-          '/java/work-notes/tomcat_host',
+          '/java/linux/static_blog',
+        ]
+      },
+      {
+        title: 'Tomcat',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/tomcat/tomcat_400',
+          // '/java/tomcat/rest_api_design',
+          '/java/tomcat/tomcat_host',
         ]
       },
       {
@@ -138,15 +183,15 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/work-notes/tools/git',
-          '/work-notes/tools/editor',
-          '/work-notes/tools/vim',
-          '/work-notes/tools/idea_template',
-          '/work-notes/tools/install_gnu_cli_on_macos',
-          '/work-notes/tools/svn_commit_old_branch',
-          '/work-notes/tools/svn_local_delete',
-          '/work-notes/tools/typora',
-          '/work-notes/tools/maven_release_jar',
+          '/java/tools/git',
+          '/java/tools/editor',
+          '/java/tools/vim',
+          '/java/tools/idea_template',
+          '/java/tools/install_gnu_cli_on_macos',
+          '/java/tools/svn_commit_old_branch',
+          '/java/tools/svn_local_delete',
+          '/java/tools/typora',
+          '/java/tools/maven_release_jar',
         ]
       },
     ],
@@ -248,70 +293,21 @@ module.exports = {
         ]
       },
     ],
-    '/work-notes': [
-      {
-        title: '经验',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/other/static_blog',
-        ]
-      },
-      {
-        title: 'linux',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/linux/rpm_yum',
-          '/work-notes/linux/shell',
-          '/work-notes/linux/netstat',
-          '/work-notes/other/systemd_blog',
-          '/work-notes/other/genymotion_install',
-          '/work-notes/linux/centos6_centos7_diff',
-          '/work-notes/other/systemd_wiki',
-          '/work-notes/other/genymotion_install',
-          '/work-notes/other/win10_grub',
-          '/work-notes/other/wsl',
-          '/work-notes/other/debian_mirror',
-          '/work-notes/other/debian_vm',
-          '/work-notes/other/debian_apt_source',
-          '/work-notes/other/install_ubuntu_on_xps13',
-          '/work-notes/other/virtualbox_debian',
-          '/work-notes/other/compile_ibus-libpinyin',
-          '/work-notes/other/soucelist_in_ubuntu',
-        ]
-      },
-      {
-        title: 'C语言',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/work-notes/clang/c_qsort',
-          '/work-notes/clang/c_keyword',
-          '/work-notes/clang/c_array_func',
-          '/work-notes/clang/c_mem_model',
-          '/work-notes/clang/c_pointer_array',
-          '/work-notes/clang/arguments_parameter_diff',
-        ]
-      },
-    ],
     '/':[
         ['', '首页'],
         ['/java/', 'Java'],
         ['/bigdata/', '大数据'],
-        ['/work-notes/', '工作笔记'],
       ]
     },
     nav: [
-      { text: '图示速查', link: '/diagram/' },
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
-      { text: '其他笔记', link: '/work-notes/' },
-      { text: '资料收藏', link: '/collection/' },
+      { text: '图示速查', link: '/diagram/' },
       {
         text: '其他',
         ariaLabel: 'contactMe',
         items: [
+          { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
           { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
