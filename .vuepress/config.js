@@ -158,6 +158,7 @@ module.exports = {
           '/java/architecture/distribute_transaction',
           '/java/architecture/redis_distributelock',
           '/java/architecture/short_url_design',
+          '/java/architecture/three_layer',
         ]
       },
       {

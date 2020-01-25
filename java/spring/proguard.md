@@ -1,5 +1,7 @@
 # 使用Proguard混淆Spring Boot项目代码
 
+> 发布日期：2019-12-03
+
 项目中需要对代码进行混淆处理，由于项目是标准的maven项目，便使用了`proguard-maven-plugin`来自动化混淆过程，但是在使用过程中也不免踩到了一些坑，网上也很少有提及，在此记录一下。
 
 ### 踩过的坑
@@ -42,7 +44,7 @@ spring boot启动后实现`ApplicationRunner`接口的初始化类并没有执�
 2019-11-24 19:33:49.703 [TRACE] [main] [o.s.c.i.s.PathMatchingResourcePatternResolver : 323] Resolved classpath location [com/abc/def/] to resources []
 ```
 
-但是将混淆后jar包经先解压后再压缩处理，却可以正常加载。也就是说proguard在打包过程中把包路径信息丢失了。需要配置`keepdirectories`参数。
+但是将混淆后jar包先解压后再压缩处理，却可以正常加载。也就是说proguard在打包过程中把包路径信息丢失了。需要配置`keepdirectories`参数。
 
 #### JDK9编译的jar包类冲突
 

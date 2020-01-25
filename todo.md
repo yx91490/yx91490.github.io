@@ -23,3 +23,7 @@ java8 lambda
 hadoop command change user group
 
 https://www.wikihow.com/Main-Page
+
+sql parser
+
+two phase commit
