@@ -105,6 +105,7 @@ default-time_zone = '+8:00'
 
 - [mybatis查询mysql的datetime类型数据时间差了14小时](https://www.jianshu.com/p/ea7ef2d29940)
 - [MySQL修改时区的方法小结](https://www.cnblogs.com/mracale/p/6064447.html)
+- [MySQL术语表](https://dev.mysql.com/doc/refman/8.0/en/glossary.html#glos_schema)
 
 
 
