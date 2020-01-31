@@ -20,6 +20,7 @@ module.exports = {
           '/java/java-env/maven',
           '/java/java-env/maven_modules',
           '/java/java-env/maven_assembly_spi',
+          '/java/java-env/maven_release_jar',
         ]
       },
       {
@@ -192,7 +193,6 @@ module.exports = {
           '/java/tools/svn_commit_old_branch',
           '/java/tools/svn_local_delete',
           '/java/tools/typora',
-          '/java/tools/maven_release_jar',
         ]
       },
     ],
