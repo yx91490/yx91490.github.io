@@ -100,3 +100,7 @@ Kafka
 **HUE**：
 
 ​    8888： Hue WebUI 端口
+
+## 参考
+
+- [Ports Used by CDH Components](https://docs.cloudera.com/documentation/enterprise/6/6.2/topics/cdh_ports.html)
