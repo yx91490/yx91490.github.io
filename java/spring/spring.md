@@ -46,10 +46,10 @@ Spring容器会扫描@ComponentScan配置的包路径，找到标记@Component�
 
 #### @Component说明
 
-常见继承： 
-- @Configuration：标记类为配置类，常与@ComponentScan或@Bean注解一起使用 
-- @Controller 
-- @Repository 
+常见继承： 
+- @Configuration：标记类为配置类，常与@ComponentScan或@Bean注解一起使用 
+- @Controller 
+- @Repository 
 - @Service
 
 ### 通过@Bean注册Bean
@@ -163,3 +163,4 @@ java -jar xxx.jar --server.port=8888
 ### 参考
 
 - [Springboot 命令注入属性](https://www.cnblogs.com/wuxinshui/p/10983942.html)
+- [Sping Doc - Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)

@@ -12,8 +12,9 @@ title: yx91490的博客
 
 - [大数据](./bigdata/README.md)
 
-- [工作笔记](./work-notes/README.md)
-
 ### 微信公众号
 
-<div style="align:left" ><img src="./assets/our_code.png" alt="图解代码" style="zoom: 20%;align:left" /></div>
+<div style="align:left" ><img src="./pic/our_code.png" alt="图解代码" style="zoom: 20%;align:left" /></div>
+
+<a style="color:white" href="/scenery/" class="">风景</a>
+

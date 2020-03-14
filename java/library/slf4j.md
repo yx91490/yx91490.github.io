@@ -3,15 +3,20 @@
 ### 常见问题总结
 
 1. slf4j应该有且仅有一个绑定的日志框架.
-2. 通常slf4j的绑定是`slf4j-nop.jar` `slf4j-simple.jar`,`slf4j-log4j12.jar`, `slf4j-jdk14.jar` , `logback-classic.jar`中的一个.
+2. 通常slf4j的绑定是`slf4j-nop.jar` `slf4j-simple.jar`,`slf4j-log4j12.jar`, `slf4j-jdk14.jar` , `logback-classic.jar`中的一个.
 3.  如果在classpath中找不到相应的绑定则会打印`Failed to load class org.slf4j.impl.StaticLoggerBinder`的异常;
 4. 如果有多于一个的绑定,则会打印`Multiple bindings were found on the class path`的异常
 5. 设置`slf4j.detectLoggerNameMismatch`系统属性检查logger名称不匹配的问题.
 6. slf4j-api和相应的绑定包的版本应该保持一致.
 7. `log4j-over-slf4j.jar`用来把对log4j的调用重定向到slf4j,和`slf4j-log4j12.jar`混用会导致`StackOverflowError`.
 8. `jcl-over-slf4j.jar`用来把对JCL的调用重定向到slf4j,和`slf4j-jcl.jar`混用会导致`StackOverflowError`.
+9. 使用logback的时候，添加jul-to-slf4j`依赖将标准输出流重定向到日志中。
 
-> https://www.slf4j.org/codes.html
+#### 参考
+
+- https://www.slf4j.org/codes.html
+
+- [How to redirect System.out to a log file using Logback?](https://stackoverflow.com/questions/39170008/how-to-redirect-system-out-to-a-log-file-using-logback)
 
 ### LoggerFactory初始化过程
 

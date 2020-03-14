@@ -1,7 +1,8 @@
-# Idea配置代码模板
+# Idea配置
 
-在工作中发现要大量写一些有固定模式的代码，比如声明一个logger:  
-​
+## 配置代码模板
+
+在工作中发现要大量写一些有固定模式的代码，比如声明一个logger: 
 
 ```java
 private static Logger logger = LoggerFactory.getLogger(Object.class);
@@ -39,3 +40,16 @@ private List<$to$> to$to$List(List <$from$> inputList) {
 
 不得不说idea是一个神器，神器在手，就看你能不能用好了。
 
+## 开启文件底部虚拟空间
+
+`File` -> `Settings` -> `Editor` -> `Check Show virtual space at file bottom`
+
+参考
+
+- [scrolling past the end in IDEA](https://stackoverflow.com/questions/36715803/scrolling-past-the-end-in-idea)
+
+## 系统实用工具
+
+路径：` /System/Library/CoreServices/Applications`
+
+![image-20191223174406801](./idea_template.assets/image-20191223174406801.png)
