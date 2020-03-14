@@ -34,6 +34,8 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 
 #### 配置maven插件
 
+#### Test-jar
+
 在一些开源项目可能会看到依赖中有一些`xxx-test.jar`，这是对应的项目中的测试类单独打成的jar包，以便于在其他项目的测试类中引用。这些test jar使用下面的方式生成：
 
 ```xml
@@ -64,7 +66,22 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 </dependency>
 ```
 
-配置打包的jar相关：
+##### 设置JDK版本：
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.0</version>
+    <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+        <encoding>UTF-8</encoding>
+    </configuration>
+</plugin>
+```
+
+##### 配置打包的jar相关：
 
 ```xml
 <plugin>
@@ -104,7 +121,7 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 ```
 如果不指定`useUniqueVersions`为`false`，那么classpath中快照版的jar名称就变为`${artifactId}-${version}-20150316.032502-62.jar`这种maven库里能唯一定位的形式，而不是`${artifactId}-${version}-SNAPSHOT.jar`这种形式，这会导致运行时ClassNotFoundException。
 
-将依赖的库拷贝到输出目录下：
+##### 将依赖的库拷贝到输出目录下：
 
 ```xml
 <plugin>
@@ -129,7 +146,7 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 </plugin>
 ```
 
-将项目代码和所有依赖的jar包打进一个jar包中：
+##### 将项目代码和所有依赖的jar包打进一个jar包中：
 
 ```xml
 <plugin>
@@ -152,7 +169,7 @@ Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Usin
 </plugin>
 ```
 
-重命名包名：
+##### 重命名包名：
 
 ```xml
 <plugin>
