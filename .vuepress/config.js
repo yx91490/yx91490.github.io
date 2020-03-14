@@ -317,7 +317,7 @@ module.exports = {
     ],
 //    displayAllHeaders: true,
     activeHeaderLinks: false,
-  }
+  },
   plugins: [
     [
       '@vuepress/google-analytics',
