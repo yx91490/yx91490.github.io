@@ -14,7 +14,7 @@ title: yx91490的博客
 
 ### 微信公众号
 
-<div style="align:left" ><img src="./pic/our_code.png" alt="图解代码" style="zoom: 20%;align:left" /></div>
+<div style="align:left" ><img src="./pic/our_code.png" alt="图解代码" style="zoom: 20%;align:left;margin:16px 0 16px 0" /></div>
 
 <a style="color:white" href="/scenery/" class="">风景</a>
 
