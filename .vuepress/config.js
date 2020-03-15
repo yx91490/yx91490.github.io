@@ -97,6 +97,7 @@ module.exports = {
           '/java/linux/docker',
           '/java/linux/rpm_yum',
           '/java/linux/shell',
+          '/java/linux/ssh_timeout',
           '/java/linux/netstat',
           '/java/linux/systemd_blog',
           '/java/linux/genymotion_install',
