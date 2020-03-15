@@ -45,15 +45,16 @@ $ sudo rpm -e 包名
 
 ### YUM命令
 
-| 操作                     | 命令                         |
-| ------------------------ | ---------------------------- |
-| 更新包列表               | yum check-update             |
-| 更新已安装的包           | sudo yum update              |
-| 搜索某个包               | yum search search_string     |
-| 查看某个软件包的信息     | yum info package             |
-| 在线安装软件包           | sudo yum install package     |
-| 离线安装软件包           | sudo yum install package.rpm |
-| 删除一个或多个已安装的包 | sudo yum remove package      |
+| 操作                     | 命令                                                         |
+| ------------------------ | ------------------------------------------------------------ |
+| 更新包列表               | yum check-update                                             |
+| 更新已安装的包           | sudo yum update                                              |
+| 搜索某个包               | yum search search_string                                     |
+| 查看某个软件包的信息     | yum info package                                             |
+| 在线安装软件包           | sudo yum install package                                     |
+| 离线安装软件包           | sudo yum install package.rpm                                 |
+| 删除一个或多个已安装的包 | sudo yum remove package                                      |
+| 卸载软件及其依赖         | yum history list \<Name / ID><br />sudo yum history undo \<ID> |
 
 ### 参考
 
