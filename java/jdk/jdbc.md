@@ -1,0 +1,77 @@
+# JDBC学习笔记
+
+### Schema
+
+在MySQL中`schema`和`database`是同义词，在SQL语句中可以把关键字`database`替换为关键字`schema`。但是在Oracle, DB2等数据库中有所不同。
+
+参考：
+
+- [Difference Between Schema / Database in MySQL](https://stackoverflow.com/questions/11618277/difference-between-schema-database-in-mysql)
+- [数据库中的Schema是什么?](https://blog.csdn.net/u010429286/article/details/79022484)
+- [What is a Database Schema?](https://database.guide/what-is-a-database-schema/)
+- [Database-specific Catalog and Schema Considerations](https://docs.oracle.com/cd/E13162_01/odsi/docs10gr3/datasrvc/Database-specific%20Catalog%20and%20Schema%20Considerations.html)
+- [ALL_TABLES - Catalog Views - Oracle to SQL Server Migration](http://www.sqlines.com/oracle/all_tables)
+- [List All Tables In Oracle Database Query](https://www.arungudelli.com/tutorial/oracle/list-all-tables-in-oracle-query/)
+- [System Tables and Views](https://docs.oracle.com/database/timesten-18.1/TTSYS/systemtables.htm#TTSYS379)
+- [ORACLE系统表大全](https://www.cnblogs.com/mq0036/p/4157267.html)
+
+### Timeout
+
+`Connection.setNetworkTimeout()`
+
+参考：
+
+- [Setting Network Timeout for JDBC connection](https://stackoverflow.com/questions/18822552/setting-network-timeout-for-jdbc-connection)
+
+### 切换Database
+
+使用jdbc接口而不要执行`USE <databasename>`语句：
+
+```java
+Connection.setCatalog();
+```
+
+原因：
+
+1. 数据库无关性
+2. driver可能需要执行一些其他操作
+
+注意：
+
+- 不会影响已经存在的或者prepared的statement
+
+参考：
+
+- [Java, how to change current database to another?](https://stackoverflow.com/questions/13433326/java-how-to-change-current-database-to-another)
+- [5.3 Configuration Properties for Connector/J](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html)
+
+### 查询元数据
+
+Oracle获取列comment：
+
+```java
+OracleConnection oraCon = (OracleConnection)con;
+oraCon.setRemarksReporting(true);
+DatabaseMetaData dmt = con.getMetaData();    
+colRs = dmt.getColumns(null, "dbo", 'Student', null);
+while (colRs.next()) {
+   System.out.println(colRs.getString("REMARKS");
+}
+```
+
+MySQL获取表及列comment：连接参数中指定`useInformationSchema=true`。
+
+参考：
+
+- [How to get Column Comments in JDBC](https://stackoverflow.com/questions/37612183/how-to-get-column-comments-in-jdbc)
+- [Retrieve mysql table comment using DatabaseMetaData](https://stackoverflow.com/questions/14146230/retrieve-mysql-table-comment-using-databasemetadata)
+
+### Satement
+
+Statement.setMaxRows() 给JDBC驱动程序一个提示，当此Statement生成的ResultSet对象需要更多行时，应该从数据库中获取行数。
+
+Statement.setFetchSize() 将此Statement对象生成的任何ResultSet对象可以包含的最大行数限制为给定数目。
+
+参考：
+
+- [执行对象Statement、PreparedStatement和CallableStatement详解 JDBC简介（五）](https://www.cnblogs.com/noteless/p/10307273.html)
