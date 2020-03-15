@@ -141,7 +141,7 @@ mysql> show variables like '%character%';
 - character_set_results：结果集的字符集
 - character_set_server：数据库服务器的默认字符集
 
-![preview](mysql_charset.jpg)
+![preview](./mysql_charset.jpg)
 
 字符集的转换流程分为3步：
 
