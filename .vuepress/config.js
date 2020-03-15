@@ -308,11 +308,11 @@ module.exports = {
     nav: [
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
-      { text: '图示速查', link: '/diagram/' },
       {
         text: '其他',
         ariaLabel: 'contactMe',
         items: [
+          { text: '图示速查', link: '/diagram/' },
           { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
