@@ -93,6 +93,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/linux/docker',
           '/java/linux/rpm_yum',
           '/java/linux/shell',
           '/java/linux/netstat',
