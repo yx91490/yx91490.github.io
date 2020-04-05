@@ -141,6 +141,7 @@ module.exports = {
           '/java/sql/mysql_installation',
           '/java/sql/mysql_column_width',
           '/java/sql/mysql_group_concat',
+          'java/sql/oracle_db_data_type.md',
         ]
       },
       {
