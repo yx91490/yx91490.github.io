@@ -27,3 +27,5 @@ https://www.wikihow.com/Main-Page
 sql parser
 
 two phase commit
+
+dfs.datanode.du.reserved
