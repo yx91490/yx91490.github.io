@@ -324,11 +324,8 @@ module.exports = {
     activeHeaderLinks: false,
   },
   plugins: [
-    [
-      '@vuepress/google-analytics',
-      {
-        'ga': 'UA-140404299-1' // UA-00000000-0
-      }
-    ]
+    ['@vuepress/plugin-google-analytics', {
+        ga: 'UA-140404299-1' // UA-00000000-0
+    }],
   ]
 }
