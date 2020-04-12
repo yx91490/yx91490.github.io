@@ -73,6 +73,22 @@ repository
 
 
 
+
+
+
+
+ 概念
+Bounded context：边界上下文
+Entity：领域实体
+Value Object：领域值对象
+Aggregate：聚合
+Domain Event：领域事件
+Domain Service：领域服务
+factory
+
+Repository：仓库
+
+
 ## 为什么
 
 
@@ -80,3 +96,11 @@ repository
 
 
 ## 怎么做
+
+重要的是实践过程
+
+软件核心复杂性应对之道
+
+参考：
+
+[【DDD】使用领域驱动设计思想实现业务系统](https://www.cnblogs.com/daoqidelv/p/7492322.html)
