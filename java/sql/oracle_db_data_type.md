@@ -357,6 +357,38 @@ LOB数据类型可以内联（表内），脱机（在表空间内，使用LOB�
 
 `CLOB`s和`NCLOB`s完全参与交易。包，PL / SQL或OCI 对a `CLOB`或`NCLOB`value 所做的更改`DBMS_LOB`可以被提交或回滚。然而，`CLOB`和`NCLOB`定位器不能跨事务或会话。您不能使用`NCLOB`属性创建对象类型，但是可以`NCLOB`在对象类型的方法中指定参数。
 
+## 实践
+
+```sql
+create table MULTI_DATA_TYPE
+(
+  id    VARCHAR2(10),
+  bdb   BINARY_DOUBLE,
+  bft   BINARY_FLOAT,
+  blb   BLOB,
+  clb   CLOB,
+  chr   CHAR(18),
+  dt    DATE,
+  ids   INTERVAL DAY(2) TO SECOND(6),
+  iym   INTERVAL YEAR(2) TO MONTH,
+  lng   LONG,
+  nclb  NCLOB,
+  num   NUMBER,
+  nvchr NVARCHAR2(4),
+  rw    RAW(12),
+  ts    TIMESTAMP(6),
+  tslz  TIMESTAMP(6) WITH LOCAL TIME ZONE,
+  tsz   TIMESTAMP(6) WITH TIME ZONE
+)
+
+create table DATE_DEMO
+(
+  name       NUMBER(5) not null,
+  comm       NUMBER(10,2),
+  lngr       LONG RAW
+)
+```
+
 ## 参考
 
 [Oracle数据类型](https://docs.oracle.com/cd/B28359_01/server.111/b28318/datatype.htm#CNCPT113)
