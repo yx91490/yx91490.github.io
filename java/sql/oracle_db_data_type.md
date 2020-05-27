@@ -49,7 +49,7 @@ Oracle数据库`VARCHAR2`使用非填充的比较语义比较值。
 
 #### VARCHAR数据类型
 
-该`VARCHAR`数据类型是同义`VARCHAR2`的数据类型。为避免行为上的可能变化，请始终使用`VARCHAR2`数据类型存储长度可变的字符串。
+`VARCHAR`数据类型是与`VARCHAR2`同义的数据类型。为避免行为上的可能变化，请始终使用`VARCHAR2`数据类型存储长度可变的字符串。
 
 ### 字符数据类型的长度语义
 
@@ -360,3 +360,12 @@ LOB数据类型可以内联（表内），脱机（在表空间内，使用LOB�
 ## 参考
 
 [Oracle数据类型](https://docs.oracle.com/cd/B28359_01/server.111/b28318/datatype.htm#CNCPT113)
+
+[Datatype Mappings](https://docs.oracle.com/cd/F49540_01/DOC/java.815/a64685/basic3.htm)
+
+[ALL_COL_COMMENTS](https://docs.oracle.com/cd/B28359_01/server.111/b28320/statviews_1036.htm#REFRN20040)
+
+[ALL_TAB_COLUMNS](https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_2094.htm)
+
+[Difference between ALL_TAB_COLUMNS: DATA_LENGTH and CHAR_LENGTH](https://www.experts-exchange.com/questions/22049278/Difference-between-ALL-TAB-COLUMNS-DATA-LENGTH-and-CHAR-LENGTH.html)
+
