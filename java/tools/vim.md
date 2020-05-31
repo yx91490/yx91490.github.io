@@ -157,3 +157,5 @@ O                           在光标所在行的上一行增添新行
 :set fileencoding=utf-8
 ```
 
+
+[Vim 查找/替换/输入非可见字符](http://yongzhi.wang/vim-digraph)

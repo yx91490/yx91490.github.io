@@ -1,5 +1,7 @@
 # JDBC学习笔记
 
+## 概念
+
 ### Schema
 
 在MySQL中`schema`和`database`是同义词，在SQL语句中可以把关键字`database`替换为关键字`schema`。但是在Oracle, DB2等数据库中有所不同。
@@ -14,6 +16,8 @@
 - [List All Tables In Oracle Database Query](https://www.arungudelli.com/tutorial/oracle/list-all-tables-in-oracle-query/)
 - [System Tables and Views](https://docs.oracle.com/database/timesten-18.1/TTSYS/systemtables.htm#TTSYS379)
 - [ORACLE系统表大全](https://www.cnblogs.com/mq0036/p/4157267.html)
+
+## Connection接口
 
 ### Timeout
 
@@ -45,6 +49,8 @@ Connection.setCatalog();
 - [Java, how to change current database to another?](https://stackoverflow.com/questions/13433326/java-how-to-change-current-database-to-another)
 - [5.3 Configuration Properties for Connector/J](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html)
 
+## 查询
+
 ### 查询元数据
 
 Oracle获取列comment：
@@ -75,3 +81,65 @@ Statement.setFetchSize() 将此Statement对象生成的任何ResultSet对象可�
 参考：
 
 - [执行对象Statement、PreparedStatement和CallableStatement详解 JDBC简介（五）](https://www.cnblogs.com/noteless/p/10307273.html)
+
+## 插入数据
+
+### Null处理
+
+```java
+Statementstmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT ...");
+while (rs.next()) {
+    int num = rs.getInt(1);
+    if (rs.wasNull()) {
+        // num is null
+    } else {
+        // num is not null
+    }
+}
+```
+
+### 日期类型
+
+**JDBC 4.2 以下：**
+
+不带时间的`DATE`类型：
+
+```java
+ps.setDate(2, java.sql.Date.valueOf("2013-09-04"));
+//endDate是java.util.Date类的实例
+ps.setDate(2, new java.sql.Date(endDate.getTime());
+ps.setDate(2, new java.sql.Date(System.currentTimeMillis()));
+// Since Java 8
+ps.setDate(2, java.sql.Date.valueOf(java.time.LocalDate.now()));
+```
+
+带时间的`TIMESTAMP` 或 `DATETIME`类型：
+
+```java
+ps.setTimestamp(2, java.sql.Timestamp.valueOf("2013-09-04 13:30:00");
+ps.setTimestamp(2, new java.sql.Timestamp(endDate.getTime()));
+ps.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
+// Since Java 8
+ps.setTimestamp(2, java.sql.Timestamp.from(java.time.Instant.now()));
+ps.setTimestamp(2, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+```
+
+**JDBC 4.2 以上：**
+
+```
+PreparedStatement.setObject(1 , localDate);
+ResultSet.getObject(1 , LocalDate.class);
+```
+
+使用`EPOCH_DATE`替代日期`0000-00-00`：
+
+```
+LocalDate EPOCH_DATE = LocalDate.ofEpochDay( 0 ); // 1970-01-01 is day 0 in Epoch counting.
+```
+
+## 参考
+
+- [JDBC处理SQL NULL值](https://blog.csdn.net/m0_37409332/article/details/78667269)
+
+- [Using setDate in PreparedStatement](https://stackoverflow.com/questions/18614836/using-setdate-in-preparedstatement)

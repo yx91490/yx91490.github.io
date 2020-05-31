@@ -10,29 +10,24 @@
 ## JDBC连接方式
 
 1. 使用Cloudera JDBC Connector`com.cloudera.impala.jdbc41.Driver`，连接串格式：
-
     ```
     jdbc:impala://Host:Port[/Schema];Property1=Value;Property2=Value;...
     ```
 
 2. 使用Hive JDBC Driver`org.apache.hive.jdbc.HiveDriver`：
    1. 简单连接串（注意21050端口号后面的“/”，以及“;auth=noSasl”，缺少会出错）：
-
-        ```
-       jdbc:hive2://myhost.example.com:21050/;auth=noSasl
-       ```
-
-	 2. kerberos连接串：
-
-        ```
-    jdbc:hive2://myhost.example.com:21050/;principal=impala/myhost.example.com@H2.EXAMPLE.COM
-        ```
-   
-    3. LDAP连接串：
-
-        ```
-    jdbc:hive2://host:port/db_name;user=ldap_userid;password=ldap_password
-        ```
+      ```
+      jdbc:hive2://myhost.example.com:21050/;auth=noSasl
+      ```
+   2. kerberos连接串：
+      ```
+      jdbc:hive2://myhost.example.com:21050/;principal=impala/myhost.example.com@H2.EXAMPLE.COM
+      ```
+   3. LDAP连接串：
+      ```
+      jdbc:hive2://host:port/db_name;user=ldap_userid;password=ldap_password
+      ```
+        
 
 ## 问题
 

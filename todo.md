@@ -30,3 +30,6 @@ two phase commit
 基于地理位置的兴趣收藏:
      Key-Value collection
 
+dfs.datanode.du.reserved
+
+glob
