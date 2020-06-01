@@ -1,3 +1,4 @@
+https://yx91490.github.io/bigdata/
 https://yx91490.github.io/bigdata/hadoop/distcp.html
 https://yx91490.github.io/bigdata/hadoop/hadoop_command.html
 https://yx91490.github.io/bigdata/hadoop/hadoop_interview.html
@@ -27,6 +28,9 @@ https://yx91490.github.io/bigdata/zeppelin/zeppelin_bugs.html
 https://yx91490.github.io/bigdata/zeppelin/zeppelin_sharding.html
 https://yx91490.github.io/bigdata/zookeeper/zk_distribute_lock.html
 https://yx91490.github.io/bigdata/zookeeper/zookeeper.html
+https://yx91490.github.io/collection/
+https://yx91490.github.io/diagram/
+https://yx91490.github.io/java/
 https://yx91490.github.io/java/architecture/ddd.html
 https://yx91490.github.io/java/architecture/ddd_distilled_note.html
 https://yx91490.github.io/java/architecture/ddd_note.html
@@ -114,6 +118,7 @@ https://yx91490.github.io/java/sql/mysql_grant.html
 https://yx91490.github.io/java/sql/mysql_group_concat.html
 https://yx91490.github.io/java/sql/mysql_import_export.html
 https://yx91490.github.io/java/sql/mysql_installation.html
+https://yx91490.github.io/java/sql/oracle_db_data_type.html
 https://yx91490.github.io/java/sql/sql_join.html
 https://yx91490.github.io/java/sql/transaction.html
 https://yx91490.github.io/java/thread/multi_thread.html
@@ -124,6 +129,7 @@ https://yx91490.github.io/java/tools/editor.html
 https://yx91490.github.io/java/tools/git.html
 https://yx91490.github.io/java/tools/idea_template.html
 https://yx91490.github.io/java/tools/install_gnu_cli_on_macos.html
+https://yx91490.github.io/java/tools/sublime.html
 https://yx91490.github.io/java/tools/svn_commit_old_branch.html
 https://yx91490.github.io/java/tools/svn_local_delete.html
 https://yx91490.github.io/java/tools/typora.html

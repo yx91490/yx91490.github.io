@@ -5,9 +5,7 @@ set -o nounset
 BASE_DIR=$(cd $(dirname ${0});pwd)
 
 list() {
-    git ls-files > /tmp/git.txt
-    find bigdata/ collection/ diagram/ java/ -name '*.md' |grep -v "README.md" > /tmp/sitemap.txt
-    grep -f /tmp/sitemap.txt /tmp/git.txt |sed 's/\.md$/.html/g' |xargs -n1 -i echo "https://yx91490.github.io/{}"
+    git ls-files |grep -f <(find bigdata/ collection/ diagram/ java/ -name '*.md') |sed 's/README\.md$//g' |sed 's/\.md$/.html/g' |xargs -n1 -i echo "https://yx91490.github.io/{}"
 }
 
 update() {
