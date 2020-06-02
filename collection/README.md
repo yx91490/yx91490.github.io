@@ -1,5 +1,9 @@
 # 资料收藏
 
+### Java基础
+
+- [Half 的文章：Java集合](https://segmentfault.com/u/half_5ab2635cc04bc/articles)
+
 ### 架构
 
 - [MVC，MVP 和 MVVM 的图示](http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html)
