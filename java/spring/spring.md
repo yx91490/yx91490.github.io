@@ -160,7 +160,35 @@ InputStream input = resource.getInputStream();
 java -jar xxx.jar --server.port=8888
 ```
 
+
+
+## 命令行运行指定的类
+
+```java
+@SpringBootApplication
+@Profile("manual") //确保default Profile下不会激活
+public class SpringBootConsoleApplication implements CommandLineRunner {
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(JDBCBenchmark.class);
+        app.setWebApplicationType(WebApplicationType.NONE);
+        app.run(args);
+    }
+    @Override
+    public void run(String... args) {
+    }
+}
+```
+
+```
+java -Dspring.profiles.active=manual -cp $classpath foo.MainClass arg1, arg2...
+```
+
+
+
 ### 参考
 
 - [Springboot 命令注入属性](https://www.cnblogs.com/wuxinshui/p/10983942.html)
 - [Sping Doc - Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)
+- [Prevent Application / CommandLineRunner classes from executing during JUnit testing](https://stackoverflow.com/questions/29344313/prevent-application-commandlinerunner-classes-from-executing-during-junit-test)
+- [Spring Boot without the web server](https://stackoverflow.com/questions/26105061/spring-boot-without-the-web-server)
+- [How can I run a specific class / utility in a Spring Boot application with wiring?](https://stackoverflow.com/questions/52778546/how-can-i-run-a-specific-class-utility-in-a-spring-boot-application-with-wirin)
