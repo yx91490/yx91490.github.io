@@ -291,10 +291,18 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 ### 中文乱码
 
-```
+```bash
 RUN localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
 ENV LANG zh_CN.UTF-8
 ```
+
+或者：
+
+```bash
+localectl set-locale LANG=zh_CN.UTF-8
+```
+
+
 
 ### 参考
 
@@ -327,5 +335,6 @@ ENV LANG zh_CN.UTF-8
 - [容器跨区双向调用的域名注册方案实现](https://www.jianshu.com/p/69fb93c09817)
 - [Dubbo跨区访问注册IP异常的解决方案](https://www.jianshu.com/p/da0fda84953f)
 - [Docker部署Dubbo跨主机IP访问解决方案](https://blog.csdn.net/leecho571/article/details/81199067)
-- [Where is /var/lib/docker on Mac/OS X](Where is /var/lib/docker on Mac/OS X)
+- [Where is /var/lib/docker on Mac/OS X](https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x)
+- [centos7 中文乱码解决方法](https://www.cnblogs.com/sisimi/p/7693226.html)
 
