@@ -30,6 +30,19 @@ https://yx91490.github.io/bigdata/zookeeper/zk_distribute_lock.html
 https://yx91490.github.io/bigdata/zookeeper/zookeeper.html
 https://yx91490.github.io/collection/
 https://yx91490.github.io/diagram/
+https://yx91490.github.io/fun/
+https://yx91490.github.io/fun/badminton.html
+https://yx91490.github.io/fun/business.html
+https://yx91490.github.io/fun/color_knowledge.html
+https://yx91490.github.io/fun/cook.html
+https://yx91490.github.io/fun/good_food.html
+https://yx91490.github.io/fun/how_to_choose_pot.html
+https://yx91490.github.io/fun/kitchen.html
+https://yx91490.github.io/fun/law.html
+https://yx91490.github.io/fun/recipes.html
+https://yx91490.github.io/fun/scenery.html
+https://yx91490.github.io/fun/同比和环比.html
+https://yx91490.github.io/fun/房价收入比.html
 https://yx91490.github.io/java/
 https://yx91490.github.io/java/architecture/ddd.html
 https://yx91490.github.io/java/architecture/ddd_distilled_note.html
@@ -74,6 +87,7 @@ https://yx91490.github.io/java/jdk/no_such_method_error.html
 https://yx91490.github.io/java/jdk/not_catch_throw_error.html
 https://yx91490.github.io/java/jdk/red_black_tree.html
 https://yx91490.github.io/java/jdk/resource_close.html
+https://yx91490.github.io/java/jdk/urlencode.html
 https://yx91490.github.io/java/jvm/cms_parnew_gc_log_format.html
 https://yx91490.github.io/java/jvm/gc.html
 https://yx91490.github.io/java/jvm/java_memory_model.html
@@ -102,6 +116,7 @@ https://yx91490.github.io/java/linux/soucelist_in_ubuntu.html
 https://yx91490.github.io/java/linux/ssh_timeout.html
 https://yx91490.github.io/java/linux/static_blog.html
 https://yx91490.github.io/java/linux/system_manage.html
+https://yx91490.github.io/java/linux/systemd.html
 https://yx91490.github.io/java/linux/systemd_blog.html
 https://yx91490.github.io/java/linux/systemd_wiki.html
 https://yx91490.github.io/java/linux/virtualbox_debian.html
