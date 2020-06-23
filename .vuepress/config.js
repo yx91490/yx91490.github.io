@@ -28,6 +28,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/jdk/urlencode',
           '/java/jdk/jdbc',
           '/java/jdk/date_time',
           '/java/jdk/enum',
