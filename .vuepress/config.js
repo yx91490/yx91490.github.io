@@ -4,7 +4,17 @@ module.exports = {
   head: [
     ['meta', { name: 'google-site-verification', content: 'j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ'}],
     ['meta', { name: 'baidu-site-verification', content: '4z2bGbjYMB'}],
-    ['link', { rel: 'icon', href: '/logo.png' }]
+    ['link', { rel: 'icon', href: '/logo.png' }],
+    ['script', {},
+    `
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+    `],
   ],
   themeConfig: {
     sidebar: {
