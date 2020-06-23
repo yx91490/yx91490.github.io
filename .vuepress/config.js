@@ -95,6 +95,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/linux/kill_signal',
           '/java/linux/docker',
           '/java/linux/rpm_yum',
           '/java/linux/shell',
