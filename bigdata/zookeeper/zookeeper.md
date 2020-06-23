@@ -27,7 +27,7 @@
 
 ### create(String path, byte data[], List\<ACL\> acl, CreateMode mode)
 
-异步版本：create(String path, byte data[], List<ACL> acl, CreateMode mode,  StringCallback cb, Object ctx)
+异步版本：create(String path, byte data[], List\<ACL\> acl, CreateMode mode,  StringCallback cb, Object ctx)
 
 异常：
 
