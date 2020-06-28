@@ -4,7 +4,17 @@ module.exports = {
   head: [
     ['meta', { name: 'google-site-verification', content: 'j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ'}],
     ['meta', { name: 'baidu-site-verification', content: '4z2bGbjYMB'}],
-    ['link', { rel: 'icon', href: '/logo.png' }]
+    ['link', { rel: 'icon', href: '/logo.png' }],
+    ['script', {},
+    `
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+    `],
   ],
   themeConfig: {
     sidebar: {
@@ -28,6 +38,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/jdk/urlencode',
           '/java/jdk/jdbc',
           '/java/jdk/date_time',
           '/java/jdk/enum',
@@ -94,11 +105,16 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/jdk/joda_time_interval',
+          'java/jdk/joda_time_period',
+          'java/jdk/joda_time_quickstart',
+          'java/linux/kill_signal',
           '/java/linux/docker',
           '/java/linux/rpm_yum',
           '/java/linux/shell',
           '/java/linux/ssh_timeout',
           '/java/linux/netstat',
+          'java/linux/systemd',
           '/java/linux/systemd_blog',
           '/java/linux/genymotion_install',
           '/java/linux/centos6_centos7_diff',
