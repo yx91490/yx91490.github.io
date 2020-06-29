@@ -37,51 +37,6 @@ From source with checksum 79b9b24a29c6358b53597c3b49575e37
 This command was run using /opt/cloudera/parcels/CDH-5.16.2-1.cdh5.16.2.p0.8/jars/hadoop-common-2.6.0-cdh5.16.2.jar
 ```
 
-### hdfs dfs -ls
-
-```
-Usage: hadoop fs [generic options] -ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [<path> ...]
-```
-
-
-
-```
-$ hdfs dfs -ls /
-Found 5 items
-drwxr-xr-x   - flink hdfs                0 2019-09-04 14:51 /flink
-drwxr-xr-x   - hbase hbase               0 2020-02-26 12:55 /hbase
-drwxr-xr-x   - hdfs  supergroup          0 2019-09-20 13:56 /system
-drwxrwxrwt   - hdfs  supergroup          0 2020-04-09 11:04 /tmp
-drwxr-xr-x   - hdfs  supergroup          0 2019-09-11 21:02 /user
-```
-
-### hdfs dfs -mkdir
-
-创建HDFS目录：
-
-```
-Usage: hadoop fs [generic options] -mkdir [-p] <path> ...
-```
-
-### hdfs dfs -df
-
-展示给定hdfs目标的剩余空间大小：
-
-```
-$ hdfs dfs -df hdfs:/
-Filesystem                    Size          Used     Available  Use%
-hdfs://nameservice1  1241336426496  674560343997  389376255958   54%
-```
-
-### hdfs dfs -count
-
-统计符合特定模式的路径下的目录数、文件数和字节数：
-
-```
-$ hdfs dfs -count /
-       14477        32802       222969126341 /
-```
-
 ### hdfs fsck
 
 检查Hadoop文件系统的健康状况：
@@ -168,25 +123,282 @@ The cluster is balanced. Exiting...
 
 ### ls
 
-1. 按修改时间倒序排序
+使用帮助：
 
-   hadoop fs -ls -r -t /path
+```
+Usage: hadoop fs [generic options] -ls [-C] [-d] [-h] [-q] [-R] [-t] [-S] [-r] [-u] [<path> ...]
+```
 
-2. 只列出文件名称
+按修改时间倒序排序：
 
-   hadoop fs -ls -C /path
+```
+hadoop fs -ls -r -t /path
+```
 
-### du
+只列出文件名称：
 
-1. 按大小逆序输出子目录及文件的大小
+```
+hadoop fs -ls -C /path
+```
 
-   hadoop fs -du -s /path/* |sort -rnk1
+`hadoop fs -ls`输出：
+
+```
+$ hdfs dfs -ls /
+Found 5 items
+drwxr-xr-x   - flink hdfs                0 2019-09-04 14:51 /flink
+drwxr-xr-x   - hbase hbase               0 2020-02-26 12:55 /hbase
+drwxr-xr-x   - hdfs  supergroup          0 2019-09-20 13:56 /system
+drwxrwxrwt   - hdfs  supergroup          0 2020-04-09 11:04 /tmp
+drwxr-xr-x   - hdfs  supergroup          0 2019-09-11 21:02 /user
+```
+
+### count
+
+统计符合特定模式的路径下的目录数、文件数和字节数：
+
+```
+$ hdfs dfs -count /
+       14477        32802       222969126341 /
+```
+
+### mkdir
+
+创建HDFS目录：
+
+```
+Usage: hadoop fs [generic options] -mkdir [-p] <path> ...
+```
+
+### mv
+
+```
+Usage: hadoop fs [generic options] -mv <src> ... <dst>
+```
+
+### cp
+
+```
+Usage: hadoop fs [generic options] -cp <src> ... <dst>
+```
+
+### copyFromLocal
+
+```
+Usage: hadoop fs [generic options] -copyFromLocal [-f] [-p] [-l] <localsrc> ... <dst>
+```
+
+### copyToLocal
+
+```
+Usage: hadoop fs [generic options] -copyToLocal [-p] [-ignoreCrc] [-crc] <src> ... <localdst>
+```
+
+### put
+
+把一个或者多个本地文件系统路径（文件或目录）上传到HDFS：
+
+```
+Usage: hadoop fs [generic options] -put [-f] [-p] [-l] <localsrc> ... <dst>
+```
 
 ### rm
 
-1. 跳过回收站删除文件
+```
+Usage: hadoop fs [generic options] -rm [-f] [-r|-R] [-skipTrash] <src> ...
+```
 
-   hadoop rm -r -skipTrash /path
+```
+$ hdfs dfs -rm /hadoop/test
+
+16/11/07 01:53:29 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+
+Deleted /hadoop/test
+```
+
+跳过回收站删除文件：
+
+```
+hadoop rm -r -skipTrash /path
+```
+
+### getmerge
+
+```
+Usage: hadoop fs [generic options] -getmerge [-nl] <src> <localdst>
+```
+
+## get
+
+```
+Usage: hadoop fs [generic options] -get [-p] [-ignoreCrc] [-crc] <src> ... <localdst>
+```
+
+### cat
+
+```
+Usage: hadoop fs [generic options] -cat [-ignoreCrc] <src> ...
+```
+
+### tail
+
+```
+Usage: hadoop fs [generic options] -tail [-f] <file>
+```
+
+### text
+
+```
+Usage: hadoop fs [generic options] -text [-ignoreCrc] <src> ...
+```
+
+### touchz
+
+```
+Usage: hadoop fs [generic options] -touchz <path> ...
+```
+
+### chmod
+
+```
+Usage: hadoop fs [generic options] -chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...
+```
+
+### chown
+
+```
+Usage: hadoop fs [generic options] -chown [-R] [OWNER][:[GROUP]] PATH...
+```
+
+### df
+
+展示给定hdfs目标的剩余空间大小：
+
+```
+$ hdfs dfs -df hdfs:/
+Filesystem                    Size          Used     Available  Use%
+hdfs://nameservice1  1241336426496  674560343997  389376255958   54%
+```
+
+### du
+
+```
+Usage: hadoop fs [generic options] -du [-s] [-h] [-x] <path> ...
+```
+
+```
+$ hadoop fs -du /user/flink
+0            0             /user/flink/.Trash
+34500398160  103501194480  /user/flink/.flink
+```
+
+按大小逆序输出子目录及文件的大小：
+
+```
+hadoop fs -du -s /path/* |sort -rnk1
+```
+
+### stat
+
+```
+Usage: hadoop fs [generic options] -stat [format] <path> ...
+```
+
+### getfacl
+
+```
+Usage: hadoop fs [generic options] -getfacl [-R] <path>
+```
+
+### getfattr
+
+```
+Usage: hadoop fs [generic options] -getfattr [-R] {-n name | -d} [-e en] <path>
+```
+
+### expunge
+
+清空回收站：
+
+```
+$ hdfs dfs -expunge
+16/11/07 01:55:54 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+```
+
+### setrep
+
+```
+Usage: hadoop fs [generic options] -setrep [-R] [-w] <rep> <path> ...
+```
+
+### distcp
+
+```
+usage: distcp OPTIONS [source_path...] <target_path>
+              OPTIONS
+ -append                       Reuse existing data in target files and
+                               append new data to them if possible
+ -async                        Should distcp execution be blocking
+ -atomic                       Commit all changes or none
+ -bandwidth <arg>              Specify bandwidth per map in MB
+ -blocksperchunk <arg>         If set to a positive value, fileswith more
+                               blocks than this value will be split into
+                               chunks of <blocksperchunk> blocks to be
+                               transferred in parallel, and reassembled on
+                               the destination. By default,
+                               <blocksperchunk> is 0 and the files will be
+                               transmitted in their entirety without
+                               splitting. This switch is only applicable
+                               when the source file system implements
+                               getBlockLocations method and the target
+                               file system implements concat method
+ -copybuffersize <arg>         Size of the copy buffer to use. By default
+                               <copybuffersize> is 8192B.
+ -delete                       Delete from target, files missing in source
+ -diff <arg>                   Use snapshot diff report to identify the
+                               difference between source and target
+ -f <arg>                      List of files that need to be copied
+ -filelimit <arg>              (Deprecated!) Limit number of files copied
+                               to <= n
+ -filters <arg>                The path to a file containing a list of
+                               strings for paths to be excluded from the
+                               copy.
+ -i                            Ignore failures during copy
+ -log <arg>                    Folder on DFS where distcp execution logs
+                               are saved
+ -m <arg>                      Max number of concurrent maps to use for
+                               copy
+ -mapredSslConf <arg>          Configuration for ssl config file, to use
+                               with hftps://. Must be in the classpath.
+ -numListstatusThreads <arg>   Number of threads to use for building file
+                               listing (max 40).
+ -overwrite                    Choose to overwrite target files
+                               unconditionally, even if they exist.
+ -p <arg>                      preserve status (rbugpcaxt)(replication,
+                               block-size, user, group, permission,
+                               checksum-type, ACL, XATTR, timestamps). If
+                               -p is specified with no <arg>, then
+                               preserves replication, block size, user,
+                               group, permission, checksum type and
+                               timestamps. raw.* xattrs are preserved when
+                               both the source and destination paths are
+                               in the /.reserved/raw hierarchy (HDFS
+                               only). raw.* xattrpreservation is
+                               independent of the -p flag. Refer to the
+                               DistCp documentation for more details.
+ -rdiff <arg>                  Use target snapshot diff report to identify
+                               changes made on target
+ -sizelimit <arg>              (Deprecated!) Limit number of files copied
+                               to <= n bytes
+ -skipcrccheck                 Whether to skip CRC checks between source
+                               and target paths.
+ -strategy <arg>               Copy strategy to use. Default is dividing
+                               work based on file sizes
+ -tmp <arg>                    Intermediate work path to be used for
+                               atomic commit
+ -update                       Update target, copying only missingfiles or
+                               directories
+```
 
 ## 参考
 
