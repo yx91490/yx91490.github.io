@@ -1,6 +1,6 @@
 # Impala
 
-## Impala连接端口
+## 端口
 
 | 客户端                    | 端口  |
 | ------------------------- | ----- |
@@ -27,7 +27,7 @@
       ```
       jdbc:hive2://host:port/db_name;user=ldap_userid;password=ldap_password
       ```
-        
+      
 
 ## 问题
 
@@ -38,6 +38,30 @@
 **中文乱码**
 
 参考：https://docs.cloudera.com/documentation/enterprise/latest/topics/impala_string.html#string
+
+## SQL Hints
+
+> In Impala 2.0 and higher, you can specify the hints inside comments that use either the `/* */` or `--` notation. Specify a `+` symbol immediately before the hint name. Recently added hints are only available using the `/* */` and `--` notation. For clarity, the `/* */` and `--` styles are used in the syntax and examples throughout this section. With the `/* */` or `--` notation for hints, specify a `+` symbol immediately before the first hint name. Multiple hints can be specified separated by commas, for example `/* +clustered,shuffle */`
+
+```
+UPSERT /* +NOCLUSTERED,NOSHUFFLE */ INTO ...
+```
+
+> Starting from CDH 5.12 / Impala 2.9, the INSERT or UPSERT operations into Kudu tables automatically add an exchange and a sort node to the plan that partitions and sorts the rows according to the partitioning/primary key scheme of the target table (unless the number of rows to be inserted is small enough to trigger single node execution). Since Kudu partitions and sorts rows on write, pre-partitioning and sorting takes some of the load off of Kudu and helps large INSERT operations to complete without timing out. However, this default behavior may slow down the end-to-end performance of the INSERT or UPSERT operations. Starting from CDH 5.13 / Impala 2.10, you can use the /* +NOCLUSTERED */ and /* +NOSHUFFLE */ hints together to disable partitioning and sorting before the rows are sent to Kudu. Additionally, since sorting may consume a large amount of memory, consider setting the MEM_LIMIT query option for those queries.
+
+参考：
+
+https://impala.apache.org/docs/build/html/topics/impala_hints.html
+
+https://docs.cloudera.com/documentation/enterprise/5-16-x/topics/impala_upsert.html
+
+https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_kudu.html
+
+## Impala flush mode
+
+Use Kudu AUTO_FLUSH_BACKGROUND mode
+
+https://issues.apache.org/jira/browse/IMPALA-4134
 
 ## 参考
 
