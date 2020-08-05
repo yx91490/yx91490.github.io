@@ -38,6 +38,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/jdk/lurenjia_java_concurrent',
           'java/jdk/urlencode',
           '/java/jdk/jdbc',
           '/java/jdk/date_time',
