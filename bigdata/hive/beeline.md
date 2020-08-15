@@ -21,35 +21,42 @@
 
 ### 示例
 
+#### URL格式
+
+HiveServer2 高可用URL格式：
+
+```shell
+beeline -u "jdbc:hive2://zk1:2181,zk2:2181,zk3:2181/default;serviceDiscoveryMode=zooKeeper;zooKeeperNamespace=hiveserver2;"
+```
+
+#### 不同身份认证示例
+
 1. 使用简单身份认证连接到HiveServer2：
 
-    ```
+    ```shell
     beeline -u jdbc:hive2://localhost:10000 username password
     ```
 
     或者使用`-n`指定用户名，使用`-p`指定密码：
 
-    ```
+    ```shell
     beeline -n username -p password -u jdbc:hive2://hs2.local:10012
     ```
 
 2. 使用Kerberos身份认证连接到HiveServer2：
 
-    ```
+    ```shell
     beeline -u "jdbc:hive2://hs2.local:10013/default;principal=hive/localhost@mydomain.com
     ```
 
 3. 使用SSL连接到HiveServer2：
 
-    ```
+    ```shell
     jdbc:hive2://localhost:10000/default;ssl=true;sslTrustStore=/usr/local/truststore;trustStorePassword=mytruststorepassword
     ```
 
 4. 使用LDAP连接：
 
-    ```
+    ```shell
     beeline -u jdbc:hive2://hs2.local:10013/default <ldap-username> <ldap-password>
     ```
-
-
-
