@@ -82,6 +82,23 @@ Statement.setFetchSize() 将此Statement对象生成的任何ResultSet对象可�
 
 - [执行对象Statement、PreparedStatement和CallableStatement详解 JDBC简介（五）](https://www.cnblogs.com/noteless/p/10307273.html)
 
+## MySQL时区
+
+相关配置参数的组合情况：
+
+|                           | useLegacyDatetimeCode=True（默认）                           | useLegacyDatetimeCode=False         |
+| ------------------------- | ------------------------------------------------------------ | ----------------------------------- |
+| useTimezone=False（默认） | 将年月日时分秒+"连接时区", 创建时间戳                        | 将年月日时分秒+"配置时区"创建时间戳 |
+| useTimezone=True          | 先将年月日时分秒+"连接时区", 创建时间戳<br />再进行时区调整, 调整为"配置时区". | 将年月日时分秒+"配置时区"创建时间戳 |
+
+参考：
+
+[5.3 Configuration Properties for Connector/J](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html)
+
+[Chapter 16 Known Issues and Limitations](https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-known-issues-limitations.html)
+
+[0078 Java与MySQL时间戳传递/存储/协调问题--userLegacyDatetimeCode--userTimezone--serverTimezone](https://www.cnblogs.com/sonng/p/11294609.html)
+
 ## 插入数据
 
 ### Null处理
@@ -135,7 +152,7 @@ ResultSet.getObject(1 , LocalDate.class);
 使用`EPOCH_DATE`替代日期`0000-00-00`：
 
 ```
-LocalDate EPOCH_DATE = LocalDate.ofEpochDay( 0 ); // 1970-01-01 is day 0 in Epoch counting.
+LocalDate EPOCH_DATE = LocalDate.ofEpochDay(0); // 1970-01-01 is day 0 in Epoch counting.
 ```
 
 ## 参考
