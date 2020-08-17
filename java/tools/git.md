@@ -136,7 +136,7 @@ git merge --allow-unrelated-histories
 
 #### 图示
 
-<img src="git.assets/git-model@2x.png" alt="img" style="zoom: 40%;" />
+<img src="./git.assets/git-model@2x.png" alt="img" style="zoom: 40%;" />
 
 #### 特点
 
@@ -174,7 +174,7 @@ git merge --allow-unrelated-histories
 
 #### 图示
 
-<img src="git.assets/gitlab_flow_github_flow.png" alt="github_flow" style="zoom: 67%;" />
+<img src="./git.assets/gitlab_flow_github_flow.png" alt="github_flow" style="zoom: 67%;" />
 
 #### 特点
 
@@ -203,7 +203,7 @@ git merge --allow-unrelated-histories
 
 #### 版本发布
 
-<img src="git.assets/gitlab_flow_release_branches.png" alt="版本发布" style="zoom: 67%;" />
+<img src="./git.assets/gitlab_flow_release_branches.png" alt="版本发布" style="zoom: 67%;" />
 
 总结：
 
@@ -216,7 +216,7 @@ git merge --allow-unrelated-histories
 
 图示：
 
-<img src="git.assets/gitlab_flow_environment_branches.png" alt="持续发布" style="zoom:67%;" />
+<img src="./git.assets/gitlab_flow_environment_branches.png" alt="持续发布" style="zoom:67%;" />
 
 总结：
 

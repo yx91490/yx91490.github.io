@@ -290,7 +290,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/hive/impala',
-          '/bigdata/hive/beeline',
+          '/bigdata/hive/hive_cli',
           '/bigdata/hive/hive_ql',
           '/bigdata/hive/hive_data_type',
           '/bigdata/hive/hive_bucket',
