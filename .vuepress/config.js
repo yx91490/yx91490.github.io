@@ -263,9 +263,9 @@ module.exports = {
           '/bigdata/hadoop/hadoop_command',
           '/bigdata/hadoop/hadoop_interview',
           '/bigdata/hadoop/yarn',
+          '/bigdata/hadoop/yarn_cli',
           '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/port',
-          '/bigdata/yarn/yarn_cli',
         ]
       },
       {
