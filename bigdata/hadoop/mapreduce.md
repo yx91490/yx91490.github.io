@@ -231,3 +231,8 @@ conf.set("mapred.child.env", "JAVA_HOME=/home/iteblog/java/jdk1.8.0_25");
 conf.set("yarn.app.mapreduce.am.env", "JAVA_HOME=/home/iteblog/java/jdk1.8.0_25");
 ```
 
+参考
+
+[大数据技术 - MapReduce的Shuffle及调优](https://www.cnblogs.com/duma/p/10704544.html)
+
+[MapReduce之Shuffle过程详述](https://matt33.com/2016/03/02/hadoop-shuffle/)

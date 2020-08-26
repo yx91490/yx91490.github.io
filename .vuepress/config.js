@@ -266,6 +266,7 @@ module.exports = {
           '/bigdata/hadoop/yarn_cli',
           '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/port',
+          '/bigdata/mapreduce/mapreduce',
         ]
       },
       {
@@ -275,14 +276,6 @@ module.exports = {
         children: [
           '/bigdata/hdfs/columnar_storage_parquet_orc',
           '/bigdata/hdfs/avro_specification_1.8.1',
-        ]
-      },
-      {
-        title: 'MapReduce',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/bigdata/mapreduce/mapreduce',
         ]
       },
       {
