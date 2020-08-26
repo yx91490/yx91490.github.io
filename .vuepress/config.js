@@ -265,6 +265,7 @@ module.exports = {
           '/bigdata/hadoop/yarn',
           '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/port',
+          '/bigdata/yarn/yarn_cli',
         ]
       },
       {
