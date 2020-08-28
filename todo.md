@@ -33,3 +33,7 @@ two phase commit
 dfs.datanode.du.reserved
 
 glob
+
+kotlin
+base64
+Java系统调用和环境变量
