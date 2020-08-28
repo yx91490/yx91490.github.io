@@ -6,7 +6,7 @@ BASE_DIR=$(cd $(dirname ${0});pwd)
 
 # 列出已经加入git的所有地址
 list() {
-    git ls-files |grep -f <(find fun/ bigdata/ collection/ diagram/ java/ -name '*.md') |sed 's/README\.md$//g' |sed 's/\.md$/.html/g' |xargs -n1 -i echo "https://yx91490.github.io/{}"
+    git ls-files |grep -f <(find fun/ bigdata/ collection/ diagram/ java/ linux/ sql/ -name '*.md') |sed 's/README\.md$//g' |sed 's/\.md$/.html/g' |xargs -n1 -i echo "https://yx91490.github.io/{}"
 }
 
 # 更新sitemap.txt
@@ -17,7 +17,7 @@ update() {
 
 # 列出未加入config.js的地址
 vuelist() {
-    git ls-files |grep -f <(find bigdata/ collection/ diagram/ java/ -name '*.md') |sed 's/README\.md$//g' |sed 's/\.md$//g' > /tmp/vue.txt
+    git ls-files |grep -f <(find bigdata/ collection/ diagram/ java/ linux/ sql/ -name '*.md') |sed 's/README\.md$//g' |sed 's/\.md$//g' > /tmp/vue.txt
     grep -of /tmp/vue.txt .vuepress/config.js > /tmp/vue_includes.txt
     grep -vwf /tmp/vue_includes.txt /tmp/vue.txt
 }
