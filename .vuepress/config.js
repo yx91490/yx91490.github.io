@@ -28,6 +28,8 @@ module.exports = {
           '/java/java-env/class_path',
           '/java/java-env/mat_cmd_tool',
           '/java/java-env/maven',
+          '/java/java-env/maven_archetype',
+          '/java/java-env/maven_plugin',
           '/java/java-env/maven_modules',
           '/java/java-env/maven_assembly_spi',
           '/java/java-env/maven_release_jar',
