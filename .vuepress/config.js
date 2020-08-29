@@ -76,6 +76,19 @@ module.exports = {
     ],
     '/java': [ 
       {
+        title: 'Maven',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/java/maven/maven',
+          '/java/maven/maven_archetype',
+          '/java/maven/maven_plugin',
+          '/java/maven/maven_modules',
+          '/java/maven/maven_assembly_spi',
+          '/java/maven/maven_release_jar',
+        ]
+      },
+      {
         title: 'Java环境',
         collapsable: false,
         sidebarDepth: 0,
@@ -83,12 +96,6 @@ module.exports = {
           '/java/java-env/jdk_tools',
           '/java/java-env/class_path',
           '/java/java-env/mat_cmd_tool',
-          '/java/java-env/maven',
-          '/java/java-env/maven_archetype',
-          '/java/java-env/maven_plugin',
-          '/java/java-env/maven_modules',
-          '/java/java-env/maven_assembly_spi',
-          '/java/java-env/maven_release_jar',
         ]
       },
       {
@@ -99,7 +106,6 @@ module.exports = {
           'java/jdk/joda_time_interval',
           'java/jdk/joda_time_period',
           'java/jdk/joda_time_quickstart',
-          'java/jdk/lurenjia_java_concurrent',
           'java/jdk/urlencode',
           '/java/jdk/jdbc',
           '/java/jdk/date_time',
@@ -116,6 +122,8 @@ module.exports = {
           '/java/jdk/io',
           '/java/jdk/not_catch_throw_error',
           '/java/jdk/no_such_method_error',
+          '/java/jdk/multi_thread',
+          '/java/jdk/lurenjia_java_concurrent',
         ]
       },
       {
@@ -142,14 +150,6 @@ module.exports = {
           '/java/library/httpclient_fluent_trap',
           '/java/library/poi_full_gc',
           '/java/library/ctrl_char_in_json',
-        ]
-      },
-      {
-        title: '线程',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/java/thread/multi_thread',
         ]
       },
       {
@@ -202,9 +202,9 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/tomcat/tomcat_host',
           '/java/tomcat/tomcat_400',
           // '/java/tomcat/rest_api_design',
-          '/java/tomcat/tomcat_host',
         ]
       },
       {
@@ -270,8 +270,8 @@ module.exports = {
           '/bigdata/hadoop/port',
           '/bigdata/hadoop/hadoop_command',
           '/bigdata/hadoop/distcp',
-          '/bigdata/hdfs/columnar_storage_parquet_orc',
-          '/bigdata/hdfs/avro_specification_1.8.1',
+          '/bigdata/hadoop/columnar_storage_parquet_orc',
+          '/bigdata/hadoop/avro_specification_1.8.1',
           '/bigdata/hadoop/yarn',
           '/bigdata/hadoop/yarn_cli',
           '/bigdata/hadoop/mapreduce',
