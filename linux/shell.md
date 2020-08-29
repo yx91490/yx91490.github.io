@@ -1,5 +1,154 @@
 # Shell笔记
 
+### 最佳实践
+
+什么时候不应该使用bash脚本：
+
+- 你的脚本太长，多达几百行
+- 你需要比数组更复杂的数据结构
+- 出现了复杂的转义问题
+- 有太多的字符串操作
+- 不太需要调用其它程序和跟其它程序管道交互
+- 担心性能
+
+执行：
+
+```shell
+用bash -n对脚本进行语法检查：
+bash -n myscript.sh
+
+用bash -v跟踪脚本里的每个命令的执行：
+bash -v myscript.sh
+
+用bash -x跟踪脚本里的每个命令的执行，并附加扩充信息：
+bash -x myscript.sh
+```
+
+设置：
+
+```bash
+set -o verbose             # 永久指定输出调试信息
+set -o xtrace              # 永久指定输出调试信息
+set -o nounset             # 当遇到不存在的变量时终止执行
+set -o errexit             # 当出错时终止执行
+```
+
+封装提高复用性和可读性：
+
+```shell
+log() {
+    local prefix="[$(date +%Y/%m/%d\ %H:%M:%S)]: "
+    echo "${prefix} $@" >&2
+}
+log "INFO" "a info level message"
+
+
+ExtractBashComments() {
+    egrep "^#"
+}
+cat example.sh | ExtractBashComments |wc -l
+comments=$(ExtractBashComments < rules.sh)
+```
+
+使用readonly和local修饰变量提高安全：
+
+```shell
+# DEFAULT_VAL可以被环境变量中的值覆盖
+readonly DEFAULT_VAL=${DEFAULT_VAL:-234}
+myfunc() {
+    local var=${DEFAULT_VAL}
+    echo var:$var
+}
+```
+
+用$()代替反单引号"`"的好处：
+
+- $()能够支持内嵌
+
+- $()不用转义
+
+- $()不容易与单引号混淆
+
+```shell
+echo "A-`echo B-\`echo C-\\\`echo D\\\`\``"
+echo "A-$(echo B-$(echo C-$(echo D)))"
+```
+
+用[[]]替代[]的好处：
+-  避免转义问题
+-  支持新功能
+
+| 对比项                   | []   | [[]] |
+| ------------------------ | ---- | ---- |
+| 逻辑或                   |      | \|\| |
+| 逻辑与                   |      | &&   |
+| 字符串比较（不需要转义） |      | <    |
+| 通配符(glob)字符串比较   |      | ==   |
+| 正则表达式字符串比较     |      | =~   |
+
+```bash
+name=b
+[ "${name}" \> "a" -o ${name} \< "m" ]
+[[ "${name}" > "a" && "${name}" < "m"  ]]
+```
+
+正则表达式/Globbing, 注意正则表达式和globbing表达式都不能用引号包裹：
+
+```bash
+t="abc123"
+[[ "$t" == abc* ]]         # true (globbing比较)
+[[ "$t" =~ [abc]+[123]+ ]] # true (正则表达式比较)
+[[ "$t" == "abc*" ]]       # false (字面比较)
+[[ "$t" =~ "abc*" ]]       # false (字面比较)
+```
+
+如果表达式里有空格，可以把它存储到一个变量里：
+
+```bash
+r="a b+"
+[[ "a bbb" =~ $r ]]        # true
+```
+
+按Globbing方式的字符串比较也可以用到case语句中：
+
+```bash
+case $t in
+abc*)  echo "matched abc*" ;;
+esac
+```
+
+使用<()避免使用临时文件：
+
+```bash
+#   下载并比较两个网页
+diff <(wget -O - https://baidu.com) <(wget -O - https://sogou.com)
+```
+
+使用"here documents"在标准输入上输入多行字符串：
+
+```bash
+#   任何字词都可以当作分界符
+command  << MARKER
+...
+${var}
+$(cmd)
+...
+MARKER
+```
+
+如果文本里没有内嵌变量替换操作，你可以把第一个MARKER用单引号包起来：
+
+```bash
+command << 'MARKER'
+...
+no substitution is happening here.
+$ (dollar sign) is passed through verbatim.
+...
+MARKER
+```
+
+
+
 ### 登录shell
 
 **登录shell**：登录shell是当你通过系统控制台、虚拟控制台、ssh或其他程序远程登录，或者以其他方式登录到系统时显示提示符的第一个shell。登录shell一定是交互式的。
@@ -203,11 +352,44 @@ array=(${array[@]:0:2} ${array	[@]:3})
 array=(${array[@]/foo3/})
 ```
 
+#### 数组与循环示例
+
+从标准输入读入n次字符串，每次输入的字符串保存在数组array里：
+
+```shell
+i=0
+n=5
+while [ "$i" -lt $n ] ; do
+  echo "Please input strings ... `expr $i + 1`"
+  read array[$i]
+  echo "${array[$i]}"
+  i=`expr $i + 1`
+done
+```
+
+将字符串里的字母逐个放入数组，并输出到标准输出：
+
+```shell
+chars='abcdefghijklmnopqrstuvwxyz'
+for (( i=0; i<26; i++ )) ; do
+    array[$i]=${chars:$i:1}
+    echo ${array[$i]}
+done
+```
+
+将文件中内容给数组赋值：(碰到第一个回车符之前的内容)，然后查看数组赋值情况：
+
+```shell
+read -a Words < /tmp/tmp.file
+set | grep "Words"
+```
+
 #### 参考
 
 - [Bash中数组的操作教程](https://www.jb51.net/article/101241.htm)
 - [bash数组定义](https://blog.csdn.net/ilovemilk/article/details/4959747)
 - [30分钟玩转Shell脚本编程](http://c.biancheng.net/cpp/shell/)
+- [BASH数组用法小结及循环用法](https://blog.csdn.net/samxx8/article/details/8025548)
 
 ### 注释
 
@@ -235,6 +417,8 @@ EOF 也可以使用其他符号:
 
 | 参数处理 | 说明                                                         |
 | -------- | ------------------------------------------------------------ |
+| $0       | 脚本名称                                                     |
+| $n       | 传给脚本/函数的第n个参数(第10+个参数要使用花括号：${10})     |
 | $*       | 以一个单字符串显示所有向脚本传递的参数。 如"\$*"用用双引号括起来的情况、以"$1 $2 … $n"的形式输出所有参数（传递了一个参数）。 |
 | $@       | 与\$*相同，但是使用时加引号，并在引号中返回每个参数。 如"\$@"用双引号括起来的情况、以"$1" "$2" … "$n" 的形式输出所有参数（传递了N个参数）。 |
 | $#       | 传递到脚本的参数个数                                         |
