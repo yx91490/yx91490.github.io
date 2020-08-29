@@ -18,6 +18,62 @@ module.exports = {
   ],
   themeConfig: {
     sidebar: {
+    '/sql': [
+      {
+        title: 'SQL',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          //'/sql/transaction',
+          '/sql/sql_join',
+          // '/sql/mysql',
+          '/sql/mysql_grant',
+          '/sql/mysql_import_export',
+          '/sql/mysql_installation',
+          '/sql/mysql_column_width',
+          '/sql/mysql_group_concat',
+          'sql/oracle_db_data_type.md',
+        ]
+      },
+    ],
+    '/linux': [
+      {
+        title: 'Linux',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          'linux/kill_signal',
+          '/linux/docker',
+          '/linux/rpm_yum',
+          '/linux/shell',
+          '/linux/ssh_timeout',
+          '/linux/netstat',
+          'linux/systemd',
+          '/linux/systemd_blog',
+          '/linux/genymotion_install',
+          '/linux/centos6_centos7_diff',
+          '/linux/systemd_wiki',
+          '/linux/genymotion_install',
+          '/linux/win10_grub',
+          '/linux/wsl',
+          '/linux/debian_mirror',
+          '/linux/debian_vm',
+          '/linux/debian_apt_source',
+          '/linux/install_ubuntu_on_xps13',
+          '/linux/virtualbox_debian',
+          '/linux/compile_ibus-libpinyin',
+          '/linux/soucelist_in_ubuntu',
+        ]
+      },
+      {
+        title: '经验',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/linux/static_blog',
+        ]
+      },
+    ],
     '/java': [ 
       {
         title: 'Java环境',
@@ -40,6 +96,9 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          'java/jdk/joda_time_interval',
+          'java/jdk/joda_time_period',
+          'java/jdk/joda_time_quickstart',
           'java/jdk/lurenjia_java_concurrent',
           'java/jdk/urlencode',
           '/java/jdk/jdbc',
@@ -104,37 +163,6 @@ module.exports = {
         ]
       },
       {
-        title: 'Linux',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          'java/jdk/joda_time_interval',
-          'java/jdk/joda_time_period',
-          'java/jdk/joda_time_quickstart',
-          'linux/kill_signal',
-          '/linux/docker',
-          '/linux/rpm_yum',
-          '/linux/shell',
-          '/linux/ssh_timeout',
-          '/linux/netstat',
-          'linux/systemd',
-          '/linux/systemd_blog',
-          '/linux/genymotion_install',
-          '/linux/centos6_centos7_diff',
-          '/linux/systemd_wiki',
-          '/linux/genymotion_install',
-          '/linux/win10_grub',
-          '/linux/wsl',
-          '/linux/debian_mirror',
-          '/linux/debian_vm',
-          '/linux/debian_apt_source',
-          '/linux/install_ubuntu_on_xps13',
-          '/linux/virtualbox_debian',
-          '/linux/compile_ibus-libpinyin',
-          '/linux/soucelist_in_ubuntu',
-        ]
-      },
-      {
         title: 'C语言',
         collapsable: false,
         sidebarDepth: 0,
@@ -145,22 +173,6 @@ module.exports = {
           '/java/clang/c_mem_model',
           '/java/clang/c_pointer_array',
           '/java/clang/arguments_parameter_diff',
-        ]
-      },
-      {
-        title: 'SQL',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          //'/sql/transaction',
-          '/sql/sql_join',
-          // '/sql/mysql',
-          '/sql/mysql_grant',
-          '/sql/mysql_import_export',
-          '/sql/mysql_installation',
-          '/sql/mysql_column_width',
-          '/sql/mysql_group_concat',
-          'sql/oracle_db_data_type.md',
         ]
       },
       {
@@ -183,14 +195,6 @@ module.exports = {
           '/java/architecture/redis_distributelock',
           '/java/architecture/short_url_design',
           '/java/architecture/three_layer',
-        ]
-      },
-      {
-        title: '经验',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/linux/static_blog',
         ]
       },
       {
@@ -322,23 +326,23 @@ module.exports = {
       ]
     },
     nav: [
-      { text: 'SQL', link: '/sql/' },
-      { text: 'Linux', link: '/linux/' },
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
       {
         text: '其他',
         ariaLabel: 'contactMe',
         items: [
+          { text: 'SQL', link: '/sql/' },
+          { text: 'Linux', link: '/linux/' },
           { text: '图示速查', link: '/diagram/' },
           { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
-          { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
+          // { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
         ]
       }
     ],
-//    displayAllHeaders: true,
+    displayAllHeaders: true,
     activeHeaderLinks: false,
   },
   plugins: [
