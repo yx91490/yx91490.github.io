@@ -1,4 +1,4 @@
-# 发布jar包到maven中央仓库教程
+# 发布Jar包到Maven中央仓库指南
 
 ### pom.xml配置
 

@@ -1,4 +1,4 @@
-# Spring URL匹配问题
+# 一个Spring URL匹配问题
 
 众所周知Spring MVC的url路径中可以使用变量，比如一个`/foo/{bar}`可以映射一个路径`/foo/abc`，并且可以取出变量bar的值为abc。但是项目中一个`/foo/{bar}`路径却没有从实际url中取出正确的值来，抽象出来了的例子如下：
 

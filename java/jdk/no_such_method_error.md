@@ -1,4 +1,4 @@
-## 调试NoSuchMethodError问题的通用方法
+## NoSuchMethodError问题的通用调试方法
 
 ### 现象
 

@@ -1,4 +1,4 @@
-# systemd作者介绍systemd的博客（译文）
+# Systemd作者博客 译文
 
 >  译自：[http://0pointer.de/blog/projects/systemd.html](http://0pointer.de/blog/projects/systemd.html)
 

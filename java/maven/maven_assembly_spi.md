@@ -1,4 +1,4 @@
-# Maven assembly插件打包与Java spi机制问题
+# Maven assembly插件与Java SPI机制冲突问题
 
 ### 现象
 

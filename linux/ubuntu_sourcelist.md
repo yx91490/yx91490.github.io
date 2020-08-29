@@ -1,4 +1,4 @@
-# 源中的backportsproposedsecurity
+# Ubuntu源的更新级别
 
 http://forum.ubuntu.org.cn/viewtopic.php?t=253103
 

@@ -1,4 +1,4 @@
-# freedesktop.org对systemd的wiki
+# Systemd wiki译文
 
 翻译自:http://www.freedesktop.org/wiki/Software/systemd/
 

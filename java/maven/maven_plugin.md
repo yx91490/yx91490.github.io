@@ -1,4 +1,4 @@
-# Maven插件常用配置
+# Maven常用插件配置
 
 ## Maven-Assembly-Plugin
 

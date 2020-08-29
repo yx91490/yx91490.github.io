@@ -1,6 +1,6 @@
-# Maven项目模板
+# Maven原型模板介绍
 
-maven项目模板可以用来快速搭建项目框架。下面介绍几个官方的模板：
+maven archetype可以用来快速搭建项目框架。下面介绍几个官方的模板：
 
 ### maven-archetype-quickstart
 

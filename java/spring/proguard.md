@@ -1,4 +1,4 @@
-# 使用Proguard混淆Spring Boot项目代码
+# Spring Boot项目代码混淆指南
 
 > 发布日期：2019-12-03
 

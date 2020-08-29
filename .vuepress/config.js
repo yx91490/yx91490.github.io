@@ -194,8 +194,8 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/architecture/design_pattern',
-          '/java/architecture/distributed_delay_queue',
-          '/java/architecture/distribute_transaction',
+          // '/java/architecture/distributed_delay_queue',
+          // '/java/architecture/distribute_transaction',
           '/java/architecture/redis_distributelock',
           '/java/architecture/short_url_design',
           '/java/architecture/three_layer',
@@ -216,13 +216,12 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/tools/macos',
+          '/java/tools/idea',
           '/java/tools/git',
+          '/java/tools/svn',
           '/java/tools/editor',
           '/java/tools/vim',
-          '/java/tools/idea_template',
-          '/java/tools/install_gnu_cli_on_macos',
-          '/java/tools/svn_commit_old_branch',
-          '/java/tools/svn_local_delete',
           '/java/tools/typora',
         ]
       },
