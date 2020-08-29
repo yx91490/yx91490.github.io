@@ -7,16 +7,18 @@ module.exports = {
     ['link', { rel: 'icon', href: '/logo.png' }],
     ['script', {},
     `
-		var _hmt = _hmt || [];
-		(function() {
-		  var hm = document.createElement("script");
-		  hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
-		  var s = document.getElementsByTagName("script")[0]; 
-		  s.parentNode.insertBefore(hm, s);
-		})();
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
     `],
   ],
   themeConfig: {
+    smoothScroll: true,
+    lastUpdated: '更新时间',
     sidebar: {
     '/sql': [
       {
