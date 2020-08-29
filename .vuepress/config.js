@@ -74,6 +74,21 @@ module.exports = {
         ]
       },
     ],
+    '/clang': [
+      {
+        title: 'C语言',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/clang/c_qsort',
+          '/clang/c_keyword',
+          '/clang/c_array_func',
+          '/clang/c_mem_model',
+          '/clang/c_pointer_array',
+          '/clang/arguments_parameter_diff',
+        ]
+      },
+    ],
     '/java': [ 
       {
         title: 'Maven',
@@ -132,10 +147,10 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/jvm/jvm_parameter',
-          '/java/jvm/gc',
           '/java/jvm/java_memory_model',
-          '/java/jvm/cms_parnew_gc_log_format',
           '/java/jvm/java_runtime_data_region',
+          '/java/jvm/gc',
+          '/java/jvm/cms_parnew_gc_log_format',
           '/java/jvm/young_gc_stw',
         ]
       },
@@ -160,19 +175,6 @@ module.exports = {
           // '/java/spring/spring',
           '/java/spring/spring_url_pattern',
           '/java/spring/proguard',
-        ]
-      },
-      {
-        title: 'C语言',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          '/java/clang/c_qsort',
-          '/java/clang/c_keyword',
-          '/java/clang/c_array_func',
-          '/java/clang/c_mem_model',
-          '/java/clang/c_pointer_array',
-          '/java/clang/arguments_parameter_diff',
         ]
       },
       {
@@ -327,6 +329,7 @@ module.exports = {
         items: [
           { text: 'SQL', link: '/sql/' },
           { text: 'Linux', link: '/linux/' },
+          { text: 'C语言', link: '/clang/' },
           { text: '图示速查', link: '/diagram/' },
           { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
