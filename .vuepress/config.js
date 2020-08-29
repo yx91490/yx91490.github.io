@@ -315,11 +315,15 @@ module.exports = {
     ],
     '/':[
         ['', '首页'],
+        ['/sql/', 'SQL'],
         ['/java/', 'Java'],
+        ['/linux/', 'Linux'],
         ['/bigdata/', '大数据'],
       ]
     },
     nav: [
+      { text: 'SQL', link: '/sql/' },
+      { text: 'Linux', link: '/linux/' },
       { text: 'Java开发', link: '/java/' },
       { text: '大数据', link: '/bigdata/' },
       {
