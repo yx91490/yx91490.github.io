@@ -1,4 +1,34 @@
-# Debian和Ubuntu桌面使用总结
+# Ubuntu桌面使用总结
+
+### Debian镜像站点的目录结构
+
+#### 目录结构
+
+Debian软件包位于`Debian镜像站点`的目录树中，可通过FTP或HTTP访问它们。下列目录存在于任何Debian镜像站点的/debian/目录下：
+
+`/dists/`:
+
+本目录包含“发行版”（distributions），此处是获得Debian发布版本（releases）和已发布版本（pre-releases）的软件包的正规途径（/etc/apt/sources.list的源即指向此目录下的文件夹）。有些旧软件包及Contens-*.gzPackages.gz 文件仍在其中。
+
+`/pool/`:
+
+所有Debian发布版及已发布版的软件包的新的物理地址。可以找到.deb包。
+
+`/tools/`:
+
+一些DOS下的小工具，用于创建启动盘、硬盘分区、压缩/解压缩和启动Linux。
+
+`/doc/`:
+
+Debian的基本文档，如FAQ、错误报告系统使用说明等。
+
+`/indices/`:
+
+维护人员文件和重载文件。
+
+`/project/`:
+
+大部分为开发人员的资源，如：`project/experimental/`:本目录包含了处于开发中的软件包和工具，它们均处于alpha测试阶段。用户不应使用这些软件，因为即使是经验丰富的用户也会被搞得一团糟。`project/orphaned/`:已不再有人维护的软件包，它们已从发行版中孤立出来。
 
 ### Debian发布周期和各库的作用
 
@@ -104,6 +134,19 @@ deb [http://security.debian.org/](http://security.debian.org/) stable/updates ma
 
 sudo apt-get install -t wheezy-backports package
 
+
+
+### 一个虚拟机安装debian失败问题
+
+执行某个安装步骤失败。你可以尝试从菜单中重新运行这个失败的项目，跳过它并选择其它项目。 失败的步骤是：安装系统 
+
+```
+an installation step failed. You can try to run the failing item again from the menu, or skip it and choose something else. The failing step is: Install the system
+```
+
+
+发现问题是分了多个分区导致硬盘容量不足。
+
 ### Ubuntu源各个库的发布周期
 
 http://forum.ubuntu.org.cn/viewtopic.php?t=253103
@@ -131,3 +174,42 @@ proposed：update类的测试部分，仅建议提供测试和反馈的人进行
 4.追求最新、能提供建议和反馈大虾：发行版默认的、 security、backports、update、proposed 全部用上！
 
 摘自ubuntu中文论坛
+
+### 戴尔XPS13(9350)安装ubuntu15总结
+
+之前用的linux发行版是debian，但是考虑这个笔记本硬件太新，testing源不稳定，就准备安装个ubuntu。 
+
+1. 首先在win10中使用磁盘管理的压缩卷分出一部分空闲分区来供ubuntu使用。来供ubuntu 
+2. 在BIOS中把硬盘模式从RAID调成AHCI，否则ubuntu15.10识别不了硬盘。 
+
+然后正常安装ubuntu,但是开机后发现wifi用不了,原因是没有驱动,可以按照下面的教程来做: 
+[https://github.com/awesomebytes/ubuntu14_dell_xps13_9350](https://github.com/awesomebytes/ubuntu14_dell_xps13_9350)
+
+但是之后出现了问题, 开机之后进不了图形界面,说缺少”intel_guc_ucode_init skl_guc_ver4.bin”.google了以下发现这是intel的固件,可以从以下地方下载到: 
+[http://www.fishprogs.info/puppy/firmware/i915/skl_guc_ver4.bin](http://www.fishprogs.info/puppy/firmware/i915/skl_guc_ver4.bin)
+
+至于怎样找到ubuntu发布的最新的内核可以看下面的教程: 
+[http://sourcedigit.com/17921-how-to-install-linux-kernel-4-4-rc2-on-ubuntu/](http://sourcedigit.com/17921-how-to-install-linux-kernel-4-4-rc2-on-ubuntu/)
+
+### 升级win10周年导致双系统grub挂掉
+
+机型：dell xps13 9350 
+win10+ubuntu 16.04 双系统，uefi启动。
+
+解决办法： 
+http://askubuntu.com/questions/696999/unable-to-install-grub-in-dev-nvme/741159
+
+https://help.ubuntu.com/community/Boot-Repair#Getting_Boot-Repair
+
+### 安装genymotion模拟器
+
+参考 
+[Android Studio如何安装插件](http://blog.csdn.net/u010053050/article/details/blog.csdn.net/hyr83960944/article/details/35987721) 
+[Android Studio如何集成Genymotion](http://blog.csdn.net/hyr83960944/article/details/37900383)
+
+启动genymotion遇到问题：
+
+> Cannot mix incompatible Qt library (version 0x40806) with this library (version 0x40802)
+
+参考[stackoverflow的解答](http://askubuntu.com/questions/534415/cannot-mix-incompatible-qt-library)
+
