@@ -247,9 +247,9 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/sqoop/sqoop_mysql_temp_file',
           '/bigdata/sqoop/sqoop_usage',
           '/bigdata/sqoop/sqoop_hcatalog',
+          '/bigdata/sqoop/sqoop_mysql_temp_file',
         ]
       },
       {
@@ -266,22 +266,15 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/hadoop/hadoop_command',
           '/bigdata/hadoop/hadoop_interview',
-          '/bigdata/hadoop/yarn',
-          '/bigdata/hadoop/yarn_cli',
-          '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/port',
-          '/bigdata/hadoop/mapreduce',
-        ]
-      },
-      {
-        title: 'HDFS',
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
+          '/bigdata/hadoop/hadoop_command',
+          '/bigdata/hadoop/distcp',
           '/bigdata/hdfs/columnar_storage_parquet_orc',
           '/bigdata/hdfs/avro_specification_1.8.1',
+          '/bigdata/hadoop/yarn',
+          '/bigdata/hadoop/yarn_cli',
+          '/bigdata/hadoop/mapreduce',
         ]
       },
       {
