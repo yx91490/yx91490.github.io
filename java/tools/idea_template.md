@@ -17,7 +17,7 @@ private static Logger logger = LoggerFactory.getLogger($className$.class);
 
 需要注意的是要把`$className$`变量设置成内置的类名称函数`className()`，这样会自动生成正确的类名。
 
-![变量](https://static.oschina.net/uploads/img/201707/30184658_wubv.png "在这里输入图片标题")
+![idea_code_template变量](./idea_template.assets/idea_code_template1.png)
 
 这个仅仅是个小菜，真正让我拍手称快的是自动生成从一种list到另一种list的转换的代码模板。工作中用的是jdk1.7的语法，不能用lambda表达式，因此一些list转换则变得十分繁琐，要定义一个又一个私有方法来完成这种转换，或者使用guava的Lists.transform\(\)方法，但是匿名内部类的使用又使得代码变得不够优雅，而且官方也不推荐这么用。但是我们可以定义一个模板来自动化的完成这种转换：
 
