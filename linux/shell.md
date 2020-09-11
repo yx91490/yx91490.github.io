@@ -535,6 +535,10 @@ test is a shell builtin
 | []    | test命令                                                    |
 | [[]]  | 条件表达式，类似于[]，但添加了字符串比较                    |
 
+参考
+
+[shell脚本中整数型变量自增（加1）的实现方式](https://blog.csdn.net/yumushui/article/details/53469845)
+
 //TODO
 
 ```
