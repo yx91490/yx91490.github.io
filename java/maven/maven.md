@@ -80,6 +80,23 @@ ClassLoader.getResource("path-to-your-res");
 </plugin>
 ```
 
+另一种简便的方式是设置properties，对于JDK9之前的版本：
+
+```xml
+<properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+```
+
+JDK9之后的版本（支持交叉编译）：
+
+```xml
+<properties>
+	<maven.compiler.release>8</maven.compiler.release>
+</properties>
+```
+
 ##### maven-jar-plugin
 
 1）在一些开源项目可能会看到依赖中有一些`xxx-test.jar`，这是对应的项目中的测试类单独打成的jar包，以便于在其他项目的测试类中引用。这些test jar使用下面的方式生成：
