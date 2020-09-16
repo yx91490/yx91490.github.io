@@ -255,7 +255,7 @@ module.exports = {
         children: [
           '/bigdata/zookeeper/zookeeper',
           '/bigdata/zookeeper/zk_distribute_lock',
-          '/bigdata/zookeeper/sbn9787111524311_note',
+          '/bigdata/zookeeper/isbn9787111524311_note',
         ]
       },
       {
