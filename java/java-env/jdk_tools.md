@@ -1,21 +1,30 @@
 # JDK命令工具
 
-### 查看JVM进程的PID
+### 查看进程信息
+
+查看JVM进程的PID：
 
 ```
 $ jcmd -l
 ```
 
-查看进程24684的JVM参数
+查看JVM默认值：
 
+```shell
+# 详细
+java -XX:+PrintFlagsFinal -version
+# 精简
+java -XX:+PrintCommandLineFlags -version
 ```
-//默认值
-java -XX:+PrintFlagsFinal
+
+查看进程24684的JVM参数：
+
+```shell
 jcmd 24684 VM.flags
 jinfo -flag UseXMMForArrayCopy 24500
 ```
 
-### jmap
+### jmap命令
 
 | 选项   | 功能                                                         |
 | ------ | ------------------------------------------------------------ |
@@ -23,26 +32,24 @@ jinfo -flag UseXMMForArrayCopy 24500
 | -heap  | 显示Java堆详细信息 ，包括使用的GC算法、堆配置信息和各内存区域内存使用信息 |
 | -histo | 显示堆中对象的统计信息,包括类、实例数量、合计容量            |
 
-##### JMap分析堆转储文件
-
-1. 生成堆转储文件
+生成堆转储文件：
 
 ```shell
 jmap -dump:format=b,file=<dumpfile> <pid>
 ```
 
-1. 分析堆转储文件
+分析堆转储文件：
 
-   启动 Memory Analyzer tool , 然后选择菜单项 File- Open Heap Dump 来加载需要分析的堆转储文件。点击工具栏上的 Leak Suspects 菜单项来生成内存泄露分析报告.
+1. 启动 Memory Analyzer tool , 选择菜单项 File -> Open Heap Dump 来加载需要分析的堆转储文件。
+2. 点击工具栏上的 Leak Suspects 菜单项来生成内存泄露分析报告
 
-### 查看gc情况
+### jstat命令
 
 ```
 jstat -gc pid
-jstat -gccapacity pid
 jstat -gcnew pid
 jstat -gcold pid
-...
+jstat -gccapacity pid
 ```
 
 结果如下：
@@ -78,12 +85,17 @@ java -Xms128m -Xmx128m -Xmn32m -XX:SurvivorRatio=6 -jar /opt/jd-gui/jd-gui.jar
 | PGC   | 32768.0 | perm代当前新生成的容量                         |
 
 **使用Java监控工具出现 Can't attach to the process**
-这是因为新版的Linux系统加入了 ptrace-scope 机制. 这种机制为了防止用户访问当前正在运行的进程的内存和状态, 而一些调试软件本身就是利用 ptrace 来进行获取某进程的内存状态的(包括GDB),所以在新版本的Linux系统, 默认情况下不允许再访问了. 可以临时开启. 如:
+这是因为新版的Linux系统加入了 ptrace-scope 机制：这种机制为了防止用户访问当前正在运行的进程的内存和状态，而一些调试软件本身就是利用 ptrace 来进行获取某进程的内存状态的(包括GDB)，所以在新版本的Linux系统默认情况下不允许再访问了。
+
+临时开启：
 
 ```
 echo 0 > /proc/sys/kernel/yama/ptrace_scope
 ```
 
-或者永久开启：
-    //vim /etc/sysctl.d/10-ptrace.conf
-    kernel.yama.ptrace_scope = 0
+编辑`/etc/sysctl.d/10-ptrace.conf`永久开启：
+
+```
+kernel.yama.ptrace_scope = 0
+```
+

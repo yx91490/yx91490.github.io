@@ -581,6 +581,12 @@ test is a shell builtin
 | []    | test命令                                                    |
 | [[]]  | 条件表达式，类似于[]，但添加了字符串比较                    |
 
+参考：
+
+[shell脚本中整数型变量自增（加1）的实现方式](https://blog.csdn.net/yumushui/article/details/53469845)
+
+[What is /bin/sh -c?](https://stackoverflow.com/questions/3985193/what-is-bin-sh-c)
+
 ### 退出状态码
 
 对于非管道命令使用 $? 能够检查前一个命令的退出状态；对于管道命令也有 PIPESTATUS 变量允许检查从管道所有部分返回的代码。
@@ -593,7 +599,7 @@ cmd1 | cmd2 | cmd3
 
 cmd1 退出代码在 `${PIPESTATUS[0]}` 中，cmd3 退出代码在 `${PIPESTATUS[2]}` 中，因此 `$?` 总是与 `${PIPESTATUS: -1}` 相同。
 
-[bash shell 获取管道前的退出状态码](https://www.qiansw.com/bash-shell-gets-the-exit-status-code-before-the-pipe.html)
+参考：[bash shell 获取管道前的退出状态码](https://www.qiansw.com/bash-shell-gets-the-exit-status-code-before-the-pipe.html)
 
 ### TODO
 
@@ -610,7 +616,3 @@ for
 模式操作符
 read和数组
 ```
-
-### 参考
-
-- [What is /bin/sh -c?](https://stackoverflow.com/questions/3985193/what-is-bin-sh-c)
