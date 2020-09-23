@@ -169,6 +169,24 @@ $ /bin/kill -L
 | SIGWINCH  | 28, 28,  20  | B    | 窗口大小调整信号 (4.3 BSD, Sun) |
 | SIGUNUSED | - , 31 , -   | A    | 未使用的信号 (将成为 SIGSYS)    |
 
+### 常用信号
+
+| 信号    |          | 说明                                 |
+| ------- | -------- | ------------------------------------ |
+| SIGUP   | kill -1  | 让进程和缓地关闭进程并重启           |
+| SIGINT  | kill -2  | 相当于ctrl+c，信号被当前进程树接收到 |
+| SIGKILL | kill -9  | 不能被捕获                           |
+| SIGTERM | kill -15 | 只有当前进程收到，子进程不会收到     |
+
+### 守护进程和普通进程的区别
+
+守护进程收到SIGTERM的时候全部子进程被kill，普通进程收到SIGTERM的时候子进程过继给init进程。
+
+### 信号处理
+
+参考代码：[SignalSample.java](https://github.com/centercode/code-samples/blob/master/java-sample/jdk-sample/src/main/java/io/SignalSample.java)
+
 ## 参考
 
 - [java多线程的几种状态](https://blog.csdn.net/u014636245/article/details/92596602)
+- [一些常用的kill信号的对比和总结](https://wenku.baidu.com/view/595dde27ccbff121dd3683fb.html)
