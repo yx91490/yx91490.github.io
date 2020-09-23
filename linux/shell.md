@@ -311,11 +311,11 @@ bash只支持一维数组，但参数个数没有限制。定义数组有以下�
 
 ```bash
 array=('foo' 'bar')
-${array[n]}                     # 数组第n个元素
-${array[*]} 或${array[@]}       # 数组所有成员，使用“@”这个特殊的下标，可以将数组扩展成列表
-${!array[*]} 或${!array[@]}     # 数组所有下标
-${#array[*]} 或${#array[@]}     # 数组元素个数，没有定义的数组下标不会占用数组中元素的个数
-${#array[0]}                    # 数组第一个成员的长度
+${array[n]}                     # 数组第n个元素
+${array[*]} 或${array[@]}       # 数组所有成员，使用“@”这个特殊的下标，可以将数组扩展成列表
+${!array[*]} 或${!array[@]}     # 数组所有下标
+${#array[*]} 或${#array[@]}     # 数组元素个数，没有定义的数组下标不会占用数组中元素的个数
+${#array[0]}                    # 数组第一个成员的长度
 ```
 
 #### 遍历数组元素
@@ -384,12 +384,58 @@ read -a Words < /tmp/tmp.file
 set | grep "Words"
 ```
 
+#### 关联数组
+
+由于shell的的数组只支持一维数组,并且并没有map这种数据结构也。我们使用关联数组来模拟map的效果：
+
+定义一个map：
+
+```shell
+declare -A map=（）
+declare -A map=(["100"]="1" ["200"]="2")
+```
+
+输出所有key：
+
+```bash
+echo ${!map[@]}
+```
+
+输出所有value：
+
+```bash
+echo ${map[@]}
+```
+
+添加值：
+
+```go
+map["300"]="3"
+```
+
+输出key对应的值：
+
+```ruby
+echo ${map["100"]}
+```
+
+遍历map：
+
+```bash
+for key in ${!map[@]}
+do
+    echo ${map[$key]}
+done
+```
+
 #### 参考
 
 - [Bash中数组的操作教程](https://www.jb51.net/article/101241.htm)
 - [bash数组定义](https://blog.csdn.net/ilovemilk/article/details/4959747)
 - [30分钟玩转Shell脚本编程](http://c.biancheng.net/cpp/shell/)
 - [BASH数组用法小结及循环用法](https://blog.csdn.net/samxx8/article/details/8025548)
+- [shell中map的使用和遍历](https://blog.csdn.net/xzw_123/article/details/42920371)
+- [shell 数组(含"map")操作总结](https://blog.csdn.net/uestcyms/article/details/97511768)
 
 ### 注释
 
@@ -535,7 +581,21 @@ test is a shell builtin
 | []    | test命令                                                    |
 | [[]]  | 条件表达式，类似于[]，但添加了字符串比较                    |
 
-//TODO
+### 退出状态码
+
+对于非管道命令使用 $? 能够检查前一个命令的退出状态；对于管道命令也有 PIPESTATUS 变量允许检查从管道所有部分返回的代码。
+
+对于管道：
+
+```shell
+cmd1 | cmd2 | cmd3
+```
+
+cmd1 退出代码在 `${PIPESTATUS[0]}` 中，cmd3 退出代码在 `${PIPESTATUS[2]}` 中，因此 `$?` 总是与 `${PIPESTATUS: -1}` 相同。
+
+[bash shell 获取管道前的退出状态码](https://www.qiansw.com/bash-shell-gets-the-exit-status-code-before-the-pipe.html)
+
+### TODO
 
 ```
 Shell替换：Shell变量替换，命令替换，转义字符
