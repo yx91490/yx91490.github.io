@@ -265,6 +265,18 @@ RUN <command>
 CMD ["executable","param1","param2"]
 ```
 
+或者作为ENTRYPOINT的参数：
+
+```
+CMD ["param1","param2"]
+```
+
+>  注意：
+>
+> Docker容器中的应用都应该以前台执行，对于容器而言，其启动程序就是容器应用进程，容器就是为了主进程而存在的，主进程退出，容器就失去了存在的意义，从而退出，其它辅助进程不是它需要关心的东西。
+
+
+
 ### ENTRYPOINT
 
 配置容器为可执行的：
@@ -314,6 +326,56 @@ localectl set-locale LANG=zh_CN.UTF-8
 
 //TODO
 
+## 网络模式
+
+docker 提供给了4种网络模式：bridge（默认），none，host和自定义网络
+
+当我们完成docker engine的安装以后会生成3种网络：bridge，none和host。
+
+docker允许我们创建3种类型的自定义网络，bridge，overlay，MACVLAN 。
+
+#### Host网络
+
+docker build时使用host网络的方法：
+
+```shell
+docker build --network=host -t test .
+```
+
+docker-compose时使用host网络的方法：
+
+```shell
+version: '3.4'
+services:
+    zlggateway:
+    build:
+        context: gateway
+        network: host
+    ports:
+      - "80:80"
+      - "443:443"
+```
+
+docker run 时使用host网络的方法：
+
+```
+docker run --network=host  -i -t ubuntu:latest /bin/bash
+```
+
+注意：
+
+> docker run 使用的网络和docker build时使用网络，是两个独立的网络
+>
+> docker-compose.yml中的network_mode、networks都不是build时的网络环境
+
+参考：
+
+[docker - 关于network的一些理解](https://www.cnblogs.com/atuotuo/p/6926390.html)
+
+[Container networking](https://docs.docker.com/config/containers/container-networking/)
+
+[docker build以及docker run时使用host网络的方法](https://www.debugself.com/2018/01/17/docker_network/)
+
 ## 一些tricky技巧
 
 1.如果配置的网络模式是默认的bridge模式，通常会选择暴露若干个服务的端口，但是容器创建以后有时想另外暴露几个端口，如何在不删除容器的情况下更改暴露的端口？
@@ -328,6 +390,29 @@ localectl set-locale LANG=zh_CN.UTF-8
 
 指定配置参数：`dubbo.protocol.host`为容器的ip。
 
+4.如何在容器中使用dmidecode?
+
+`docker run`命令：
+
+```shell
+docker run --device /dev/mem:/dev/mem --cap-add sys_rawio --rm -it centos bash
+```
+
+或者`docker-compose`配置文件：
+
+```yml
+services:
+  service1:
+    devices:
+      - "/dev/mem:/dev/mem"
+    cap_add:
+     - sys_rawio
+```
+
+5.MySQL镜像如何初始化数据库？
+
+当Mysql容器首次启动时，会在` /docker-entrypoint-initdb.d`目录下扫描` .sh，.sql，.sql.gz`类型的文件。如果这些类型的文件存在，将执行它们来初始化一个数据库。这些文件会按照字母的顺序执行。
+
 ### 参考
 
 - [修改运行中的docker容器的端口映射](https://blog.csdn.net/londa/article/details/92064142)
@@ -337,4 +422,7 @@ localectl set-locale LANG=zh_CN.UTF-8
 - [Docker部署Dubbo跨主机IP访问解决方案](https://blog.csdn.net/leecho571/article/details/81199067)
 - [Where is /var/lib/docker on Mac/OS X](https://stackoverflow.com/questions/38532483/where-is-var-lib-docker-on-mac-os-x)
 - [centos7 中文乱码解决方法](https://www.cnblogs.com/sisimi/p/7693226.html)
+- [/dev/mem no such file or directory in Ubuntu Linux 14.04 container](https://forums.docker.com/t/dev-mem-no-such-file-or-directory-in-ubuntu-linux-14-04-container/28403/6)
+- [Docker —— 从入门到实践](https://yeasy.gitbook.io/docker_practice/)
+- [Docker容器启动时初始化Mysql数据库](https://www.cnblogs.com/felordcn/p/12970489.html)
 
