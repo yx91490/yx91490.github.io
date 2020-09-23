@@ -82,6 +82,29 @@ PARTITION(country='us')
 
 [LanguageManualDML-Syntax.1](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DML#LanguageManualDML-Syntax.1)
 
+
+
+### 分区
+
+您可以使用[Hive ALTER TABLE命令](https://dwgeek.com/apache-hive-alter-table-command-and-examples.html/)更改HDFS目录位置或添加新目录：
+
+```sql
+ALTER TABLE some_table PARTITION(year = 2012) 
+SET LOCATION 'hdfs://user/user1/some_table/2012';
+```
+
+此命令不会移动旧数据，也不会删除旧数据。它只是将Hive表分区设置为新位置。
+
+#### 删除或删除配置单元分区
+
+您可以使用带有DROP PARTITION选项的ALTER TABLE来删除表的分区。
+
+```sql
+ALTER TABLE some_table DROP IF EXISTS PARTITION(year = 2012);
+```
+
+参考：[How to Update or Drop Hive Partition? Steps and Examples](https://dwgeek.com/how-to-update-or-drop-hive-partition-steps-and-examples.html/)
+
 ### 动态分区
 
 在`PARTITION()`语句中必须列出所有分区字段。
