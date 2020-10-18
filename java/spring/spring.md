@@ -183,7 +183,65 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
 java -Dspring.profiles.active=manual -cp $classpath foo.MainClass arg1, arg2...
 ```
 
+## 开启访问日志
 
+```properties
+# accesslog
+server.tomcat.basedir=./
+# Enable access log.
+server.tomcat.accesslog.enabled=true
+# Whether to buffer output such that it is flushed only periodically.
+server.tomcat.accesslog.buffered=false
+# Directory in which log files are created. Can be absolute or relative to the Tomcat base dir.
+server.tomcat.accesslog.directory=logs
+# Log file name prefix.
+server.tomcat.accesslog.prefix=access_log
+# Log file name suffix.
+server.tomcat.accesslog.suffix=.log
+# Date format to place in the log file name.
+server.tomcat.accesslog.file-date-format=.yyyy-MM-dd
+# Number of days to retain the access log files before they are removed.
+server.tomcat.accesslog.max-days=-1
+# Format pattern for access logs.
+server.tomcat.accesslog.pattern=common
+server.tomcat.accesslog.rename-on-rotate=false
+server.tomcat.accesslog.request-attributes-enabled=false
+server.tomcat.accesslog.rotate=true
+```
+
+Access log内置了两个日志格式模板：
+
+- **common** - `%h %l %u %t "%r" %s %b`，依次为：远程主机名称，远程用户名，被认证的远程用户，日期和时间，请求的第一行，response code，发送的字节数
+- **combined** - `%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"`，依次为：远程主机名称，远程用户名，被认证的远程用户，日期和时间，请求的第一行，response code，发送的字节数，request header的Referer信息，request header的User-Agent信息。
+
+pattern的配置：
+
+- **%a** - Remote IP address，远程ip地址，注意不一定是原始ip地址，中间可能经过nginx等的转发
+- **%A** - Local IP address，本地ip
+- **%b** - Bytes sent, excluding HTTP headers, or '-' if no bytes were sent
+- **%B** - Bytes sent, excluding HTTP headers
+- **%h** - Remote host name (or IP address if `enableLookups` for the connector is false)，远程主机名称(如果resolveHosts为false则展示IP)
+- **%H** - Request protocol，请求协议
+- **%l** - Remote logical username from identd (always returns '-')
+- **%m** - Request method，请求方法（GET，POST）
+- **%p** - Local port，接受请求的本地端口
+- **%q** - Query string (prepended with a '?' if it exists, otherwise an empty string
+- **%r** - First line of the request，HTTP请求的第一行（包括请求方法，请求的URI）
+- **%s** - HTTP status code of the response，HTTP的响应代码，如：200,404
+- **%S** - User session ID
+- **%t** - Date and time, in Common Log Format format，日期和时间，Common Log Format格式
+- **%u** - Remote user that was authenticated
+- **%U** - Requested URL path
+- **%v** - Local server name
+- **%D** - Time taken to process the request, in millis，处理请求的时间，单位毫秒
+- **%T** - Time taken to process the request, in seconds，处理请求的时间，单位秒
+- **%I** - current Request thread name (can compare later with stacktraces)，当前请求的线程名，可以和打印的log对比查找问题
+
+参考：
+
+- [Apache Tomcat 8 Configuration Reference](https://tomcat.apache.org/tomcat-8.5-doc/config/valve.html#Access_Logging)
+- [Common Application properties](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html)
+- [springboot中配置tomcat的access log](https://www.cnblogs.com/shamo89/p/8134865.html)
 
 ### 参考
 
