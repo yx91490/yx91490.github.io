@@ -97,6 +97,42 @@ JDK9之后的版本（支持交叉编译）：
 </properties>
 ```
 
+当代码中使用了过时的API时会提示：
+
+```
+[INFO] xxx.java: 某些输入件使用或覆盖了已过时的 API。
+[INFO] xxx.java: 有关详细, 请使用 -Xlint:deprecation 重新编译。
+```
+
+需要在在pom.xml中通过如下配置来显示详细信息：
+
+```xml
+<plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <compilerArgument>-Xlint:deprecation</compilerArgument>
+    </configuration>
+</plugin>
+```
+
+当代码中出现了未经检查或不安全的操作时会提示：
+
+```
+[INFO] xxx.java: 某些输入件使用了未经检查或不安全的操作。
+[INFO] xxx.java: 有关详细 请使用 -Xlint:unchecked 重新编译。
+```
+
+需要在在pom.xml中通过如下配置来显示详细信息：
+
+```xml
+<plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <compilerArgument>-Xlint:unckecked</compilerArgument>
+    </configuration>
+</plugin>
+```
+
 ##### maven-jar-plugin
 
 1）在一些开源项目可能会看到依赖中有一些`xxx-test.jar`，这是对应的项目中的测试类单独打成的jar包，以便于在其他项目的测试类中引用。这些test jar使用下面的方式生成：
