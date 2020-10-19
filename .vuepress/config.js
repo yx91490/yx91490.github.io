@@ -290,6 +290,14 @@ module.exports = {
         ]
       },
       {
+        title: 'Spark',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/spark/spark',
+        ]
+      },
+      {
         title: 'HBase',
         collapsable: false,
         sidebarDepth: 0,
