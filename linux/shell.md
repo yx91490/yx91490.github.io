@@ -187,23 +187,33 @@ MARKER
 
 ## 登录shell
 
-**登录shell**：登录shell是当你通过系统控制台、虚拟控制台、ssh或其他程序远程登录，或者以其他方式登录到系统时显示提示符的第一个shell。登录shell一定是交互式的。
+交互式 shell 和非交互式 shell：
 
-shell首先执行/etc/profile中的命令，为系统内的所有bash用户建立默认特征。除了执行它所保存的命令外，一些版本的profile执行/etc/profile.d目录下所有扩展名为.sh的文件中的命令。这种设置使得拥有root权限的用户不需要修改profile本身文件就可以改变profile所执行的命令。
+- 交互式 shell 指的是在终端有交互的模式，比如 ssh 登录
 
-shell依次查找`~/.bash_profile`，`~/.bash_login`，`~/.profile`并执行它找到的第1个相关文件中的命令。
+- 非交互式 shell 指的是 bash shell 以命令脚本的形式执行
 
-退出执行`.bash_logout`文件中的命令。这个文件包含了退出话时执行的清理命令，如删除临时文件等。
+**登录shell**：登录shell是用户使用自己的 user ID 登录交互式 shell 的第一个进程。登录shell一定是**交互式**的。
 
-**交互式非登录shell**：终端模拟器显示的shell是交互式非登录shell。交互式非登录shell执行`~/.bashrc`文件中的命令。默认的`~/.bashrc`文件调用`/etc/bashrc`。
+- shell首先执行/etc/profile中的命令，为系统内的所有bash用户建立默认特征。然后依次查找`~/.bash_profile`，`~/.bash_login`，`~/.profile`并执行它找到的第1个相关文件中的命令。
 
-**非交互式shell**：非交互式shell并不执行前面描述的启动文件中的命令(如那些运行shell脚本的shell)，然而这些shell从登录shell继承了由这些启动文件设置的shell变量。
+- 退出执行`.bash_logout`文件中的命令。
 
-| 类型              | 启动文件                                                     | 退出文件     |
-| ----------------- | ------------------------------------------------------------ | ------------ |
-| 登录shell         | /etc/profile,/etc/profile.d/*.sh<br />~/.bash_profile \| ~/.bash_login \| ~/.profile | .bash_logout |
-| 交互式非登录shell | ~/.bashrc                                                    |              |
-| 非交互式shell     | 继承                                                         |              |
+**交互式非登录shell**：当你在已经存在的终端 session 中开启一个 shell 会得到一个交互式非登录 shell。
+
+- 交互式非登录shell执行`~/.bashrc`文件中的命令。
+
+**非交互式非登录shell**：
+
+- 非交互式shell并不执行前面描述的启动文件中的命令(如那些运行shell脚本的shell)，然而这些shell从登录shell继承了由这些启动文件设置的shell变量。
+
+| 交互类型 | 登录类型    | Bash启动                                                     | bash退出     |
+| -------- | ----------- | ------------------------------------------------------------ | ------------ |
+| 交互式   | 登录shell   | /etc/profile<br />~/.bash_profile \| ~/.bash_login \| ~/.profile | .bash_logout |
+| 交互式   | 非登录shell | ~/.bashrc                                                    |              |
+| 非交互式 | 非登录shell | 继承环境变量                                                 |              |
+
+参考：[登录式 shell 和非登录式 shell 区别](http://einverne.github.io/post/2019/01/login-shell-vs-non-login-shell.html)
 
 ## 变量
 
