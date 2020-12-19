@@ -1,5 +1,24 @@
 # Spark
 
+## 应用提交
+
+Master URL有效格式：
+
+| Master URL                      | 含义                                                         |
+| ------------------------------- | ------------------------------------------------------------ |
+| local                           | 使用单线程本地运行Spark                                      |
+| local[K]                        | 使用K个线程本地运行Spark                                     |
+| local[K,F]                      | 本地运行Spark，使用K个线程，最多允许F个线程失败              |
+| local[*]                        | 使用与机器逻辑核心数相同的线程数本地运行Spark                |
+| local[*,F]                      | 本地运行Spark，使用与机器逻辑核心数相同的线程数，最多允许F个线程失败 |
+| spark://HOST:PORT               | 连接到Spark 独立集群的master节点                             |
+| spark://HOST1:PORT1,HOST2:PORT2 | 连接到有备用master的spark独立集群，连接列表必须包含用zookeeper搭建的高可用集群中的所有master地址，端口号默认为7077 |
+| mesos://HOST:PORT               | 连接到mesos集群，端口号默认为5050。对于使用zk的mesos集群，使用mesos://zk://格式的URL。使用`--deploy-mode cluster`提交的话，HOST:PORT应该配置成连接到MesosClusterDispatcher |
+| yarn                            | 根据`--deploy-mode`的值不同以client或者cluster模式连接到一个YARN集群，集群地址来源于`HADOOP_CONF_DIR`或者`YARN_CONF_DIR`变量 |
+| k8s://HOST:PORT                 | 以cluster模式连接到一个kubernetes集群，未来会支持client模式。HOST 和 PORT 参考 [Kubernetes API Server](https://kubernetes.io/docs/reference/generated/kube-apiserver/). 默认使用TLS连接。为了强制使用不安全的连接，可以使用格式：k8s://http://HOST:PORT. |
+
+参考：[Master URLs](https://spark.apache.org/docs/2.4.0/submitting-applications.html#master-urls)
+
 ## 源码编译
 
 ```shell
@@ -345,6 +364,22 @@ shuffle前半部分的task在写入数据到磁盘文件之前，都会先写入
 - 减少网络传输的性能消耗
 
 ### 内存管理
+
+Spark 内存模型：
+
+  Spark在一个Executor中的内存分为三块，一块是execution内存，一块是storage内存，一块是other内存。
+
+- execution内存是执行内存，文档中说join，aggregate都在这部分内存中执行，shuffle的数据也会先缓存在这个内存中，满了再写入磁盘，能够减少IO。其实map过程也是在这个内存中执行的。
+- storage内存是存储broadcast，cache，persist数据的地方。
+- other内存是程序执行时预留给自己的内存。
+
+ execution和storage是Spark Executor中内存的大户，other占用内存相对少很多，这里就不说了。在spark-1.6.0以前的版本，execution和storage的内存分配是固定的，使用的参数配置分别是spark.shuffle.memoryFraction（execution内存占Executor总内存大小，default 0.2）和spark.storage.memoryFraction（storage内存占Executor内存大小，default 0.6），因为是1.6.0以前这两块内存是互相隔离的，这就导致了Executor的内存利用率不高，而且需要根据Application的具体情况，使用者自己来调节这两个参数才能优化Spark的内存使用。在spark-1.6.0以上的版本，execution内存和storage内存可以相互借用，提高了内存的Spark中内存的使用率，同时也减少了OOM的情况。
+
+  在Spark-1.6.0后加入了堆外内存，进一步优化了Spark的内存使用，堆外内存使用JVM堆以外的内存，不会被gc回收，可以减少频繁的full gc，所以在Spark程序中，会长时间逗留再Spark程序中的大内存对象可以使用堆外内存存储。使用堆外内存有两种方式，一种是在rdd调用persist的时候传入参数StorageLevel.OFF_HEAP，这种使用方式需要配合Tachyon一起使用。另外一种是使用Spark自带的spark.memory.offHeap.enabled 配置为true进行使用，但是这种方式在1.6.0的版本还不支持使用，只是多了这个参数，在以后的版本中会开放。
+
+  OOM的问题通常出现在execution这块内存中，因为storage这块内存在存放数据满了之后，会直接丢弃内存中旧的数据，对性能有影响但是不会有OOM的问题。
+
+参考：[Spark面对OOM问题的解决方法及优化总结](https://blog.csdn.net/yhb315279058/article/details/51035631)
 
 静态内存管理：
 
