@@ -1,5 +1,7 @@
 # Yarn
 
+## 架构
+
 #### ResourceManager
 
 每个Hadoop集群只会有一个ResourceManager（如果是HA的话会存在两个，但是有且只有一个处于active状态），它负责管理整个集群的计算资源，并将这些资源分别给应用程序。ResourceManager 内部主要有两个组件：
@@ -23,4 +25,14 @@ Container是与特定节点绑定的，其包含了内存、CPU磁盘等逻辑�
 
 [![The YARN architecture](./assets/The_YARN_architecture_iteblog.jpg)](https://www.iteblog.com/pic/hadoop/The_YARN_architecture_iteblog.jpg)
 
+## 配置
+
+| 配置项                                     | 备注                                                         |
+| ------------------------------------------ | ------------------------------------------------------------ |
+| yarn.log-aggregation-enable                | 是否启用日志聚合                                             |
+| yarn.nodemanager.remote-app-log-dir        | 日志聚合目录                                                 |
+| yarn.nodemanager.remote-app-log-dir-suffix | 将在{yarn.nodemanager.remote-app-log-dir} / $ {user} / {thisParam}中创建远程日志目录。默认值为“ logs” |
+| yarn.nodemanager.log-dirs                  | container本地化日志目录路径：`${yarn.nodemanager.log-dirs}/application_${appid}` |
+| yarn.log-aggregation.retain-seconds        | 删除聚合日志前要等待多长时间                                 |
+| yarn.log.server.url                        |                                                              |
 
