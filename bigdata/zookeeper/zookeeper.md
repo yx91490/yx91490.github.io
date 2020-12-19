@@ -114,3 +114,41 @@ telnet> stat
 telnet> dump
 ```
 
+## ACL
+
+总体来说，ZK的节点有5种操作权限：
+
+| 权限   | 名称 | 简写 | 生效范围 | 权限值 |
+| ------ | ---- | ---- | -------- | ------ |
+| READ   | 查   | r    | 节点自身 | 1      |
+| WRITE  | 改   | w    | 节点自身 | 2      |
+| CREATE | 增   | c    | 子节点?  | 4      |
+| DELETE | 删   | d    | 子节点   | 8      |
+| ADMIN  | 管理 | a    | 节点自身 | 16     |
+
+身份的认证有4种方式：
+
+| 方式              | 备注                                            |
+| ----------------- | ----------------------------------------------- |
+| world（默认方式） | 全世界都能访问                                  |
+| auth              | 代表已经认证通过的用户                          |
+| digest            | 用户名密码认证：Base64(sha1(username:password)) |
+| host              |                                                 |
+| ip                | 使用Ip地址认证                                  |
+
+授权
+
+```
+setAcl /newznode world:anyone:crdwa
+
+addauth /<node-name> digest <username>:<password>
+setAcl /newznode auth:username:password:crdwa #(同一节点不同用户可多次执行)
+
+setAcl /<node-name> ip:<IPv4-address>:<permission-set>	
+```
+
+参考
+
+- `org.apache.zookeeper.server.auth.DigestAuthenticationProvider`
+- [ZooKeeper access control using ACLs](https://zookeeper.apache.org/doc/r3.1.2/zookeeperProgrammers.html#sc_ZooKeeperAccessControl)
+
