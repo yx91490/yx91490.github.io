@@ -1,6 +1,6 @@
 # Idea配置总结
 
-## 配置代码模板
+## 代码模板
 
 在工作中发现要大量写一些有固定模式的代码，比如声明一个logger: 
 
@@ -15,7 +15,7 @@ private static Logger logger = LoggerFactory.getLogger(Object.class);
 private static Logger logger = LoggerFactory.getLogger($className$.class);
 ```
 
-需要注意的是要把`$className$`变量设置成内置的类名称函数`className()`，这样会自动生成正确的类名。
+需要注意的是要把`$className$`变量设置成内置的类名称函数`className()`，这样会自动生成正确的类名；`Abbreviation`设置成`log`，`Applicable Context`选择`Java/Declaration`。
 
 ![idea_code_template变量](./idea_template.assets/idea_code_template1.png)
 
@@ -40,16 +40,36 @@ private List<$to$> to$to$List(List <$from$> inputList) {
 
 不得不说idea是一个神器，神器在手，就看你能不能用好了。
 
-## 开启文件底部虚拟空间
+## 虚拟空间
 
-`File` -> `Settings` -> `Editor` -> `Check Show virtual space at file bottom`
+开启编辑器的虚拟空间功能，实现类似sublime Text的效果：
 
-参考
+<img src="idea.assets/image-20201219222911799.png" alt="image-20201219222911799" style="zoom: 25%;" />
 
-- [scrolling past the end in IDEA](https://stackoverflow.com/questions/36715803/scrolling-past-the-end-in-idea)
+勾选上`File` -> `Settings` -> `Editor` -> `Show virtual space at file bottom`。
 
-## 系统实用工具
+参考：[scrolling past the end in IDEA](https://stackoverflow.com/questions/36715803/scrolling-past-the-end-in-idea)
 
-路径：` /System/Library/CoreServices/Applications`
+## 快捷键
 
-![image-20191223174406801](./idea_template.assets/image-20191223174406801.png)
+| **功能**                  | Macos默认快捷键 |
+| ------------------------- | --------------- |
+| Go to Implementation(s)   | ⌥⌘B             |
+| File Structure            | ⌘F12            |
+| Find Usage                | ⌥F7             |
+| Quick Documentation       | F1              |
+| Optimize Imports          | ⌃⌥O             |
+| Find                      | ⌘F              |
+| Replace                   | ⌘R              |
+| Undo                      | ⌘Z              |
+| Redo                      | ⇧⌘Z             |
+| Select All                | ⌘A              |
+| Show Diff                 | ⌘D              |
+| Comment with Line Comment | ⌘/              |
+
+覆盖MacOS⌘H快捷键：
+
+系统偏好设置 -> 键盘 -> 快捷键 -> App快捷键 -> 点击加号按钮创建。注意菜单名称要跟 IDEA中原先的一模一样，设置一个不常用的新快捷键：
+
+<img src="./macos.assets/image-20201202144214247.png" alt="idea_key" style="zoom: 50%;" />
+
