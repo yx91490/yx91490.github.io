@@ -305,7 +305,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/hbase/hbase_interview',
-          '/bigdata/hbase/hbase_issue',
+          '/bigdata/hbase/hbase_user',
         ]
       },
       {
