@@ -52,6 +52,7 @@ module.exports = {
           '/linux/ssh_timeout',
           '/linux/netstat',
           '/linux/admin_cmd',
+          '/linux/ulimit',
           '/linux/systemd',
           '/linux/systemd_wiki',
           '/linux/systemd_blog',
