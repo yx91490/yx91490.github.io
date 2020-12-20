@@ -67,6 +67,21 @@ FSCK ended at Thu Apr 09 12:52:44 CST 2020 in 1306 milliseconds
 The filesystem under path '/' is HEALTHY
 ```
 
+根据blockId查找所属文件：
+
+```
+$ hdfs fsck -blockId <block_id>
+
+hdfs fsck -blockId blk_1100790203
+Connecting to namenode 
+FSCK started by hdfs 
+
+Block Id: blk_1100790203
+Block belongs to: /common/FFL1447685899336.txt
+```
+
+参考：[how to find file from blockName in HDFS hadoop?](https://stackoverflow.com/questions/10881449/how-to-find-file-from-blockname-in-hdfs-hadoop)
+
 ### hdfs balancer
 
 ```
