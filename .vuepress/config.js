@@ -267,6 +267,7 @@ module.exports = {
           '/bigdata/hadoop/hadoop_interview',
           '/bigdata/hadoop/port',
           '/bigdata/hadoop/hdfs_user',
+          '/bigdata/hadoop/hdfs_issue',
           '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/columnar_storage_parquet_orc',
           '/bigdata/hadoop/avro_specification_1.8.1',
