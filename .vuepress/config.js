@@ -266,7 +266,7 @@ module.exports = {
         children: [
           '/bigdata/hadoop/hadoop_interview',
           '/bigdata/hadoop/port',
-          '/bigdata/hadoop/hadoop_command',
+          '/bigdata/hadoop/hdfs_user',
           '/bigdata/hadoop/distcp',
           '/bigdata/hadoop/columnar_storage_parquet_orc',
           '/bigdata/hadoop/avro_specification_1.8.1',

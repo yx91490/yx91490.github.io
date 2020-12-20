@@ -1,4 +1,4 @@
-# Hadoop命令笔记
+# HDFS命令笔记
 
 ### hadoop --help
 
