@@ -4,7 +4,7 @@
 
 在Finder路径` /System/Library/CoreServices/Applications`下藏着一堆系统工具：
 
-<img src="macos.assets/image-20191223174406801.png" alt="image-20191223174406801" style="zoom: 33%;" />
+<img src="./macos.assets/image-20191223174406801.png" alt="image-20191223174406801" style="zoom: 33%;" />
 
 ## 安装Homebrew
 

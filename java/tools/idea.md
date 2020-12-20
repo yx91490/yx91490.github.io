@@ -44,7 +44,7 @@ private List<$to$> to$to$List(List <$from$> inputList) {
 
 开启编辑器的虚拟空间功能，实现类似sublime Text的效果：
 
-<img src="idea.assets/image-20201219222911799.png" alt="image-20201219222911799" style="zoom: 25%;" />
+<img src="./idea.assets/image-20201219222911799.png" alt="image-20201219222911799" style="zoom: 25%;" />
 
 勾选上`File` -> `Settings` -> `Editor` -> `Show virtual space at file bottom`。
 
