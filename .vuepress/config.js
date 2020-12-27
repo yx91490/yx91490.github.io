@@ -255,7 +255,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/zookeeper/zookeeper',
-          '/bigdata/zookeeper/zookeeper_user'
+          '/bigdata/zookeeper/zookeeper_user',
           '/bigdata/zookeeper/zk_distribute_lock',
           '/bigdata/zookeeper/isbn9787111524311_note',
         ]
