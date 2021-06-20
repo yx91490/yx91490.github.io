@@ -51,6 +51,7 @@ module.exports = {
           '/linux/kill_signal',
           '/linux/ssh_timeout',
           '/linux/netstat',
+          '/linux/symlink',
           '/linux/admin_cmd',
           '/linux/ulimit',
           '/linux/systemd',
