@@ -106,6 +106,20 @@ select group_concat(`field`,'字符串',`field`  separator  ';') from table grou
 
     mysql> load data local infile '/tmp/data.file' into table ${table};
 
+Load Data方式：
+
+```mysql
+LOAD DATA LOCAL INFILE '/path_to_local_file'
+INTO TABLE db.tab
+FIELDS TERMINATED BY ','
+(c1, c2, c3)
+SET c4 = 6, c5 = 75;
+```
+
+参考：
+
+[13.2.7 LOAD DATA Statement](https://dev.mysql.com/doc/refman/8.0/en/load-data.html)
+
 ## 常见问题
 
 ### 时区问题
