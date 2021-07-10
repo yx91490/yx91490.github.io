@@ -28,12 +28,8 @@ module.exports = {
         children: [
           //'/sql/transaction',
           '/sql/sql_join',
-          // '/sql/mysql',
-          '/sql/mysql_grant',
-          '/sql/mysql_import_export',
+          '/sql/mysql',
           '/sql/mysql_installation',
-          '/sql/mysql_column_width',
-          '/sql/mysql_group_concat',
           'sql/oracle_db_data_type.md',
         ]
       },
