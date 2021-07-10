@@ -95,6 +95,12 @@ grant all on *.* to 'user'@'ip' identified by 'password';
 select group_concat(`field`,'字符串',`field`  separator  ';') from table group by `otherfield`
 ```
 
+## JDBC
+
+参考：
+
+[Chapter 5 Connector/J Examples](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-examples.html)
+
 ## 导入导出
 
 第一步将数据导出到文本文件里：
