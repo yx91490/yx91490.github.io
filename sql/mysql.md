@@ -120,6 +120,8 @@ SET c4 = 6, c5 = 75;
 
 [13.2.7 LOAD DATA Statement](https://dev.mysql.com/doc/refman/8.0/en/load-data.html)
 
+[MySQL "replace into" 的坑](https://blog.51cto.com/corasql/1913191)
+
 ## 常见问题
 
 ### 时区问题
