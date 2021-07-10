@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>C语言内存模型相关 | yx91490的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/logo.png">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <meta name="description" content="java, 大数据(hadoop, sqoop, kylin, zeppelin)相关技术, 工作经验记录">
+    <meta name="google-site-verification" content="j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ">
+    <meta name="baidu-site-verification" content="4z2bGbjYMB">
+    
+    <link rel="preload" href="/assets/css/0.styles.443403f7.css" as="style"><link rel="preload" href="/assets/js/app.7afc5ba8.js" as="script"><link rel="preload" href="/assets/js/2.2e9f0341.js" as="script"><link rel="preload" href="/assets/js/67.f6843721.js" as="script"><link rel="prefetch" href="/assets/js/10.f1f615b6.js"><link rel="prefetch" href="/assets/js/100.2d1ba49a.js"><link rel="prefetch" href="/assets/js/101.4fe3e2e5.js"><link rel="prefetch" href="/assets/js/102.ac3f79b6.js"><link rel="prefetch" href="/assets/js/103.6992e30a.js"><link rel="prefetch" href="/assets/js/104.a9b8c364.js"><link rel="prefetch" href="/assets/js/105.90668a9c.js"><link rel="prefetch" href="/assets/js/106.97c48012.js"><link rel="prefetch" href="/assets/js/107.0ace1ff5.js"><link rel="prefetch" href="/assets/js/108.2b0d04b0.js"><link rel="prefetch" href="/assets/js/109.18d0b58c.js"><link rel="prefetch" href="/assets/js/11.7b4c838a.js"><link rel="prefetch" href="/assets/js/110.202ddc5a.js"><link rel="prefetch" href="/assets/js/111.ca9f9ac7.js"><link rel="prefetch" href="/assets/js/112.dd59998b.js"><link rel="prefetch" href="/assets/js/113.2350261d.js"><link rel="prefetch" href="/assets/js/114.ab507f89.js"><link rel="prefetch" href="/assets/js/115.a34d106e.js"><link rel="prefetch" href="/assets/js/116.a39d1fe8.js"><link rel="prefetch" href="/assets/js/117.78161574.js"><link rel="prefetch" href="/assets/js/118.f4b30aa2.js"><link rel="prefetch" href="/assets/js/119.2833bbc3.js"><link rel="prefetch" href="/assets/js/12.0a865c84.js"><link rel="prefetch" href="/assets/js/120.3810a4c6.js"><link rel="prefetch" href="/assets/js/121.0cc012c2.js"><link rel="prefetch" href="/assets/js/122.bb6b46fa.js"><link rel="prefetch" href="/assets/js/123.0940e471.js"><link rel="prefetch" href="/assets/js/124.bda39ea0.js"><link rel="prefetch" href="/assets/js/125.78052eee.js"><link rel="prefetch" href="/assets/js/126.432b04f1.js"><link rel="prefetch" href="/assets/js/127.9b789561.js"><link rel="prefetch" href="/assets/js/128.683eac02.js"><link rel="prefetch" href="/assets/js/129.2dc5f6b9.js"><link rel="prefetch" href="/assets/js/13.68f97892.js"><link rel="prefetch" href="/assets/js/130.83531165.js"><link rel="prefetch" href="/assets/js/131.d54a6cb0.js"><link rel="prefetch" href="/assets/js/132.df826f5f.js"><link rel="prefetch" href="/assets/js/133.c29144e7.js"><link rel="prefetch" href="/assets/js/134.e9011028.js"><link rel="prefetch" href="/assets/js/135.cadb4d38.js"><link rel="prefetch" href="/assets/js/136.c37068d3.js"><link rel="prefetch" href="/assets/js/137.37474281.js"><link rel="prefetch" href="/assets/js/138.b5c58d0c.js"><link rel="prefetch" href="/assets/js/139.b4d13843.js"><link rel="prefetch" href="/assets/js/14.0cd5d71c.js"><link rel="prefetch" href="/assets/js/140.fb39de5e.js"><link rel="prefetch" href="/assets/js/141.28c75315.js"><link rel="prefetch" href="/assets/js/142.e5217850.js"><link rel="prefetch" href="/assets/js/143.7953c7d4.js"><link rel="prefetch" href="/assets/js/144.30062908.js"><link rel="prefetch" href="/assets/js/145.e76068a0.js"><link rel="prefetch" href="/assets/js/146.abf25314.js"><link rel="prefetch" href="/assets/js/147.d569b54b.js"><link rel="prefetch" href="/assets/js/148.5c5ac16c.js"><link rel="prefetch" href="/assets/js/149.3b3fb247.js"><link rel="prefetch" href="/assets/js/15.dd5692d4.js"><link rel="prefetch" href="/assets/js/150.7b6bee9e.js"><link rel="prefetch" href="/assets/js/151.a27832e7.js"><link rel="prefetch" href="/assets/js/152.968e82ff.js"><link rel="prefetch" href="/assets/js/153.79ff04ee.js"><link rel="prefetch" href="/assets/js/154.be10e9d8.js"><link rel="prefetch" href="/assets/js/155.321a40d1.js"><link rel="prefetch" href="/assets/js/156.d1ff23cf.js"><link rel="prefetch" href="/assets/js/157.fb5e1657.js"><link rel="prefetch" href="/assets/js/158.11ecd591.js"><link rel="prefetch" href="/assets/js/159.267a1ffd.js"><link rel="prefetch" href="/assets/js/16.93147fe9.js"><link rel="prefetch" href="/assets/js/160.7ad18c87.js"><link rel="prefetch" href="/assets/js/161.6abc0b03.js"><link rel="prefetch" href="/assets/js/162.3e043808.js"><link rel="prefetch" href="/assets/js/163.90b2df16.js"><link rel="prefetch" href="/assets/js/164.f4bb1b3f.js"><link rel="prefetch" href="/assets/js/165.573417b4.js"><link rel="prefetch" href="/assets/js/166.7ddb05ec.js"><link rel="prefetch" href="/assets/js/167.3dd336a5.js"><link rel="prefetch" href="/assets/js/168.9a07b9a5.js"><link rel="prefetch" href="/assets/js/169.91f8b3e2.js"><link rel="prefetch" href="/assets/js/17.0c396e93.js"><link rel="prefetch" href="/assets/js/170.b48901a7.js"><link rel="prefetch" href="/assets/js/171.db78f871.js"><link rel="prefetch" href="/assets/js/172.d4be002b.js"><link rel="prefetch" href="/assets/js/18.20a3d35f.js"><link rel="prefetch" href="/assets/js/19.088e37a2.js"><link rel="prefetch" href="/assets/js/20.1bdb43cb.js"><link rel="prefetch" href="/assets/js/21.cd43dd35.js"><link rel="prefetch" href="/assets/js/22.ac570bf2.js"><link rel="prefetch" href="/assets/js/23.80248543.js"><link rel="prefetch" href="/assets/js/24.b9899796.js"><link rel="prefetch" href="/assets/js/25.98b33fee.js"><link rel="prefetch" href="/assets/js/26.791b5f0e.js"><link rel="prefetch" href="/assets/js/27.d11c17bb.js"><link rel="prefetch" href="/assets/js/28.bd0b8d7a.js"><link rel="prefetch" href="/assets/js/29.c31fe8d9.js"><link rel="prefetch" href="/assets/js/3.fcaa96e9.js"><link rel="prefetch" href="/assets/js/30.b40b00b8.js"><link rel="prefetch" href="/assets/js/31.b9642c8f.js"><link rel="prefetch" href="/assets/js/32.7ab84015.js"><link rel="prefetch" href="/assets/js/33.a782b27c.js"><link rel="prefetch" href="/assets/js/34.806943ed.js"><link rel="prefetch" href="/assets/js/35.bd80a570.js"><link rel="prefetch" href="/assets/js/36.f76e3be6.js"><link rel="prefetch" href="/assets/js/37.59a6b9cd.js"><link rel="prefetch" href="/assets/js/38.e2b4b7ff.js"><link rel="prefetch" href="/assets/js/39.b973cfc0.js"><link rel="prefetch" href="/assets/js/4.cc55ad7c.js"><link rel="prefetch" href="/assets/js/40.bfa9ad16.js"><link rel="prefetch" href="/assets/js/41.002327cb.js"><link rel="prefetch" href="/assets/js/42.07a14d78.js"><link rel="prefetch" href="/assets/js/43.95ee0b20.js"><link rel="prefetch" href="/assets/js/44.d53e6321.js"><link rel="prefetch" href="/assets/js/45.138665dc.js"><link rel="prefetch" href="/assets/js/46.b659b9b0.js"><link rel="prefetch" href="/assets/js/47.d900bb5d.js"><link rel="prefetch" href="/assets/js/48.68db6b54.js"><link rel="prefetch" href="/assets/js/49.44fb20f9.js"><link rel="prefetch" href="/assets/js/5.8a163529.js"><link rel="prefetch" href="/assets/js/50.6224223f.js"><link rel="prefetch" href="/assets/js/51.cbe3b2bc.js"><link rel="prefetch" href="/assets/js/52.d2afcfd2.js"><link rel="prefetch" href="/assets/js/53.3a9fdb92.js"><link rel="prefetch" href="/assets/js/54.b2ec4734.js"><link rel="prefetch" href="/assets/js/55.8cacb74a.js"><link rel="prefetch" href="/assets/js/56.fb47068c.js"><link rel="prefetch" href="/assets/js/57.477647e4.js"><link rel="prefetch" href="/assets/js/58.a1d40053.js"><link rel="prefetch" href="/assets/js/59.62188c35.js"><link rel="prefetch" href="/assets/js/6.032b2236.js"><link rel="prefetch" href="/assets/js/60.ac6e07e7.js"><link rel="prefetch" href="/assets/js/61.acbaaa5e.js"><link rel="prefetch" href="/assets/js/62.bffb6494.js"><link rel="prefetch" href="/assets/js/63.dca42109.js"><link rel="prefetch" href="/assets/js/64.c37760b0.js"><link rel="prefetch" href="/assets/js/65.e18923a2.js"><link rel="prefetch" href="/assets/js/66.665dce3e.js"><link rel="prefetch" href="/assets/js/68.edbfc456.js"><link rel="prefetch" href="/assets/js/69.6f5ac4e1.js"><link rel="prefetch" href="/assets/js/7.87978328.js"><link rel="prefetch" href="/assets/js/70.1275a46b.js"><link rel="prefetch" href="/assets/js/71.c992c0f7.js"><link rel="prefetch" href="/assets/js/72.fa62be00.js"><link rel="prefetch" href="/assets/js/73.b9f92168.js"><link rel="prefetch" href="/assets/js/74.fe002570.js"><link rel="prefetch" href="/assets/js/75.9d864b79.js"><link rel="prefetch" href="/assets/js/76.582a4bd3.js"><link rel="prefetch" href="/assets/js/77.50411d26.js"><link rel="prefetch" href="/assets/js/78.21fa81a4.js"><link rel="prefetch" href="/assets/js/79.650622dd.js"><link rel="prefetch" href="/assets/js/8.f4dd5e07.js"><link rel="prefetch" href="/assets/js/80.ac94dddb.js"><link rel="prefetch" href="/assets/js/81.ce3ad24c.js"><link rel="prefetch" href="/assets/js/82.a2c2a721.js"><link rel="prefetch" href="/assets/js/83.05c08e8b.js"><link rel="prefetch" href="/assets/js/84.a64e9216.js"><link rel="prefetch" href="/assets/js/85.40ba44d1.js"><link rel="prefetch" href="/assets/js/86.7bd02923.js"><link rel="prefetch" href="/assets/js/87.5e671b33.js"><link rel="prefetch" href="/assets/js/88.5545f342.js"><link rel="prefetch" href="/assets/js/89.37fea653.js"><link rel="prefetch" href="/assets/js/9.4f173bf1.js"><link rel="prefetch" href="/assets/js/90.47e82afb.js"><link rel="prefetch" href="/assets/js/91.04f1df1e.js"><link rel="prefetch" href="/assets/js/92.d8918ad7.js"><link rel="prefetch" href="/assets/js/93.32e26d6d.js"><link rel="prefetch" href="/assets/js/94.e90b38fd.js"><link rel="prefetch" href="/assets/js/95.132ce68b.js"><link rel="prefetch" href="/assets/js/96.193f2815.js"><link rel="prefetch" href="/assets/js/97.7353c2a1.js"><link rel="prefetch" href="/assets/js/98.b3248f37.js"><link rel="prefetch" href="/assets/js/99.880b2a46.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.443403f7.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">yx91490的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/java/" class="nav-link">
+  Java开发
+</a></div><div class="nav-item"><a href="/bigdata/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contactMe" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="contactMe" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/sql/" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/linux/" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/clang/" class="nav-link router-link-active">
+  C语言
+</a></li><li class="dropdown-item"><!----> <a href="/diagram/" class="nav-link">
+  图示速查
+</a></li><li class="dropdown-item"><!----> <a href="/collection/" class="nav-link">
+  资料收藏
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490/yx91490.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  给我留言
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/java/" class="nav-link">
+  Java开发
+</a></div><div class="nav-item"><a href="/bigdata/" class="nav-link">
+  大数据
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contactMe" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="contactMe" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/sql/" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/linux/" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/clang/" class="nav-link router-link-active">
+  C语言
+</a></li><li class="dropdown-item"><!----> <a href="/diagram/" class="nav-link">
+  图示速查
+</a></li><li class="dropdown-item"><!----> <a href="/collection/" class="nav-link">
+  资料收藏
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490/yx91490.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  给我留言
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>C语言</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/clang/c_qsort.html" class="sidebar-link">c语言qsort()函数</a></li><li><a href="/clang/c_keyword.html" class="sidebar-link">c语言的一些关键字</a></li><li><a href="/clang/c_array_func.html" class="sidebar-link">C语言数组名作为函数参数</a></li><li><a href="/clang/c_mem_model.html" aria-current="page" class="active sidebar-link">C语言内存模型相关</a></li><li><a href="/clang/c_pointer_array.html" class="sidebar-link">C语言指针与数组名</a></li><li><a href="/clang/arguments_parameter_diff.html" class="sidebar-link">arguments和parameter的区别</a></li><li><a href="/clang/compile_ibus-libpinyin.html" class="sidebar-link">在debian 9上编译ibus-libpinyin</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="c语言内存模型相关"><a href="#c语言内存模型相关" class="header-anchor">#</a> C语言内存模型相关</h1> <h1 id="内存模型"><a href="#内存模型" class="header-anchor">#</a> 内存模型</h1> <p>内存中运行着很多程序，我们的程序只占用一部分空间，这部分空间又可以细分为以下的区域：</p> <table><thead><tr><th>内存分区</th> <th>说明</th></tr></thead> <tbody><tr><td>程序代码区(code area)</td> <td>存放函数体的二进制代码</td></tr> <tr><td>静态数据区(data area)</td> <td>也称全局数据区，包含的数据类型比较多，如全局变量、静态变量、一般常量、字符串常量。其中：全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。常量数据（一般常量、字符串常量）存放在另一个区域。注意：静态数据区的内存在程序结束后由操作系统释放。</td></tr> <tr><td>堆区(heap area)</td> <td>一般由程序员分配和释放，若程序员不释放，程序运行结束时由操作系统回收。malloc()、calloc()、free() 等函数操作的就是这块内存，这也是本章要讲解的重点。注意：这里所说的堆区与数据结构中的堆不是一个概念，堆区的分配方式倒是类似于链表。</td></tr> <tr><td>栈区(stack area)</td> <td>由系统自动分配释放，存放函数的参数值、局部变量的值等。其操作方式类似于数据结构中的栈。</td></tr> <tr><td>命令行参数区</td> <td>存放命令行参数和环境变量的值，如通过main()函数传递的值。</td></tr></tbody></table> <blockquote><p>参考：永远的UNIX 高质量C++-C编程指南 – 第7章 内存管理 (1)</p></blockquote> <h4 id="_7-4指针参数是如何传递内存的"><a href="#_7-4指针参数是如何传递内存的" class="header-anchor">#</a> 7.4指针参数是如何传递内存的？</h4> <p>如果函数的参数是一个指针，不要指望用该指针去申请动态内存。示例7-4-1中，Test函数
+的语句GetMemory(str, 200)并没有使str获得期望的内存，str依旧是NULL，为什么？</p> <div class="language- extra-class"><pre class="language-text"><code>void GetMemory(char *p, int num)
+{
+    p = (char *)malloc(sizeof(char) * num);
+}
+void Test(void)
+{
+    char *str = NULL;
+    GetMemory(str, 100);    // str 仍然为 NULL
+    strcpy(str, &quot;hello&quot;);   // 运行错误
+}
+</code></pre></div><p><strong>示例7-4-1 试图用指针参数申请动态内存</strong></p> <p>毛病出在函数GetMemory中。编译器总是要为函数的每个参数制作临时副本，指针参数p的副本是 _p，编译器使 _p =p。如果函数体内的程序修改了_p的内容，就导致参数p的内容作相应的修改。这就是指针可以用作输出参数的原因。在本例中，_p申请了新的内存，只是把_p所指的内存地址改变了，但是p丝毫未变。所以函数GetMemory并不能输出任何东西。事实上，每执行一次GetMemory就会泄露一块内存，因为没有用free释放内存。
+如果非得要用指针参数去申请内存，那么应该改用“指向指针的指针”，见示例7-4-2。</p> <div class="language- extra-class"><pre class="language-text"><code>void GetMemory2(char **p, int num)
+{
+    *p = (char *)malloc(sizeof(char) * num);
+}
+void Test2(void)
+{
+    char *str = NULL;
+    GetMemory2(&amp;str, 100); // 注意参数是 &amp;str，而不是str
+    strcpy(str, &quot;hello&quot;);  
+    cout&lt;&lt; str &lt;&lt; endl;
+    free(str);
+}
+</code></pre></div><p><strong>示例7-4-2用指向指针的指针申请动态内存</strong></p> <p>由于“指向指针的指针”这个概念不容易理解，我们可以用函数返回值来传递动态内存。这种方法更加简单，见示例7-4-3。</p> <div class="language- extra-class"><pre class="language-text"><code>char *GetMemory3(int num)
+{
+    char *p = (char *)malloc(sizeof(char) * num);
+    return p;
+}
+void Test3(void)
+{
+    char *str = NULL;
+    str = GetMemory3(100);
+    strcpy(str, &quot;hello&quot;);
+    cout&lt;&lt; str &lt;&lt; endl;
+    free(str);
+}
+</code></pre></div><p><strong>示例7-4-3 用函数返回值来传递动态内存</strong></p> <p>用函数返回值来传递动态内存这种方法虽然好用，但是常常有人把return语句用错了。这里强调不要用return语句返回指向“栈内存”的指针，因为该内存在函数结束时自动消亡，见示例7-4-4。</p> <div class="language- extra-class"><pre class="language-text"><code>char *GetString(void)
+{
+    char p[] = &quot;hello world&quot;;
+    return p;   // 编译器将提出警告
+}
+void Test4(void)
+{
+char *str = NULL;
+str = GetString(); // str 的内容是垃圾
+cout&lt;&lt; str &lt;&lt; endl;
+}
+</code></pre></div><p><strong>示例7-4-4 return语句返回指向“栈内存”的指针</strong></p> <p>用调试器逐步跟踪Test4，发现执行str = GetString语句后str不再是NULL指针，但是str的内容不是“hello world”而是垃圾。
+如果把示例7-4-4改写成示例7-4-5，会怎么样？</p> <div class="language- extra-class"><pre class="language-text"><code>char *GetString2(void)
+{
+    char *p = &quot;hello world&quot;;
+    return p;
+}
+void Test5(void)
+{
+    char *str = NULL;
+    str = GetString2();
+    cout&lt;&lt; str &lt;&lt; endl;
+}
+</code></pre></div><p><strong>示例7-4-5 return语句返回常量字符串</strong></p> <p>函数Test5运行虽然不会出错，但是函数GetString2的设计概念却是错误的。因为GetString2内的“hello world”是常量字符串，位于静态存储区，它在程序生命期内恒定不变。无论什么时候调用GetString2，它返回的始终是同一个“只读”的内存块。
+14.函数参数的传递分为：值传送和引用（指针）传送。前者将变量的复本传给函数的形参，形参的改变不会引起变量原值得改变；后者将变量的地址传给形参，形参的改变将引起变量的改变。</p> <h1 id="extern"><a href="#extern" class="header-anchor">#</a> extern</h1> <p>注意：未初始化的全局变量的默认值是 0，而未初始化的局部变量的值却是垃圾值（任意值）。
+在所有的代码块（函数、if 块、switch 块等）之外定义的变量称为全局变量，它的作用范围默认是整个程序，也就是所有的源文件，包括 .c 和 .h 文件。
+如果你一直在编写单个 .c 文件的程序，那么请注意，全局变量的作用范围不是从变量定义处到该文件结束，在其他文件中也有效。
+虽然全局变量的作用范围是整个程序，但是如果希望在 a.c 中使用 b.c 中的变量，也必须先进行声明。声明使用 extern 关键字，<strong>与其他变量不同，extern 变量有声明和定义之分</strong>。
+extern 变量的定义格式为：</p> <div class="language- extra-class"><pre class="language-text"><code>extern type name = value;
+</code></pre></div><p>不过 extern 可以省略（我们通常就是这么做的），全局变量默认就是 extern 的.
+声明格式为：</p> <div class="language- extra-class"><pre class="language-text"><code>extern type name;
+</code></pre></div><p>注意：</p> <ul><li>在定义 extern 变量时不能省略 value，否则就变成了变量声明。</li> <li>声明 extern 变量时要指明数据类型（必须和定义时的数据类型一致）。</li> <li>声明可以有多次，定义只能有一次。</li></ul> <p>但是，函数和变量的声明有所不同，对于函数，你可以省略 extern。这是因为，函数的定义和声明区别很明显，有函数体就是定义，没有函数体就是声明，所以有没有 extern 都是函数声明。但是变量不一样，没有 extern 就是变量定义，重复定义是错误的。</p> <h1 id="static"><a href="#static" class="header-anchor">#</a> static</h1> <p>static 声明的变量称为静态变量，不管是全局变量还是局部变量，都存储在静态数据区（全局变量本来就存储在静态数据区，即使不加 static）。
+静态数据区的数据在程序启动时就会初始化，直到程序运行结束；对于代码块中的静态局部变量，即使代码块执行结束，也不会销毁。
+注意：静态数据区的变量只能初始化（定义）一次，以后只能改变它的值，不能再被初始化，即使有这样的语句，也无效。
+总结起来，static 变量的主要作用有两个：
+\1. 程序有多个源文件时，将全局变量或函数的作用范围限制在当前文件，对其他文件隐藏。
+\2. 保持变量内容的持久化将局部变量存储到静态数据区。静态数据区的内存在程序启动时就已分配好（内存中所有的字节默认值都是0x00），直到程序运行结束。</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">更新时间:</span> <span class="time">8/29/2020, 3:58:54 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/clang/c_array_func.html" class="prev">
+        C语言数组名作为函数参数
+      </a></span> <span class="next"><a href="/clang/c_pointer_array.html">
+        C语言指针与数组名
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.7afc5ba8.js" defer></script><script src="/assets/js/2.2e9f0341.js" defer></script><script src="/assets/js/67.f6843721.js" defer></script>
+  </body>
+</html>
