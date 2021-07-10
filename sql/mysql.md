@@ -76,6 +76,17 @@ CREATE TABLE `test` (
 grant all on *.* to 'user'@'ip' identified by 'password';
 ```
 
+## DML
+
+### Replace语义
+
+参考：
+
+[13.2.6 INSERT Statement](https://dev.mysql.com/doc/refman/8.0/en/insert.html)
+
+[13.2.6.2 INSERT ... ON DUPLICATE KEY UPDATE Statement](https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html)
+
+
 ## DQL
 
 ### group_concat()函数
