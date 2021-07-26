@@ -105,6 +105,8 @@ git push --force --tags origin 'refs/heads/*'
 git merge --allow-unrelated-histories
 ```
 
+参考：[changing author info](https://help.github.com/en/articles/changing-author-info)
+
 #### 修改已push commit的提交日期
 
 1. 修改日期格式：
@@ -124,11 +126,21 @@ git merge --allow-unrelated-histories
         fi'
    ```
 
-#### 参考
+#### 从远程仓库同步tags
 
-- [changing author info](https://help.github.com/en/articles/changing-author-info)
+```bash
+git fetch --all --tags
+```
 
+参考：[How To Checkout Git Tags](https://devconnected.com/how-to-checkout-git-tags/)
 
+#### 删除远程分支
+
+```
+git push origin --delete <branch_name>
+```
+
+参考：[git删除远程分支和本地分支](https://www.cnblogs.com/luosongchao/p/3408365.html)
 
 ## Git工作流
 
