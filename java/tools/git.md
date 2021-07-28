@@ -144,12 +144,27 @@ git push origin --delete <branch_name>
 
 ### 同步Fork的仓库
 
+1.配置上游remote：
+
 ```
-# 配置上游remote
 git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
-# Checkout到本地分支
+```
+
+2.Fetch上游变更（如果有必要的话）：
+
+```
+git fetch upstream
+```
+
+3.Checkout到本地分支：
+
+```
 git checkout main
-# Merge对应的上游分支
+```
+
+4.Merge对应的上游分支：
+
+```
 git merge upstream/main
 ```
 
