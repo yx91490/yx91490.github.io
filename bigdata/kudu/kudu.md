@@ -29,7 +29,220 @@ $ sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=/hdp/kudu/wal --
 
 ```
 
-## KUDU API
+## Kudu迁移到多master
+
+### 迁移准备
+
+1. 建立一个维护窗口（1小时足够），期间kudu服务将不可用。
+
+2. 确定master数量，master数据应该是奇数个。推荐设置为3个或5个，可以对应容忍1个或两个失败。
+
+3. 对现有的 master 执行以下准备步骤：
+
+   - 识别并记录 master 的 write-ahead log (WAL) 和数据所在的目录。如果使用 Kudu 系统包，它们的默认位置是`/var/lib/kudu/master`，但可以使用 `fs_wal_dir` 和 `fs_data_dirs`配置参数。
+
+   - 识别并记录 master 用于 RPC 的端口。默认端口值为 7051，但可能已使用`rpc_bind_addresses` 配置参数。
+
+   - 识别主节点的 UUID。可以使用以下命令获取它：
+
+     ```
+     $ sudo -u kudu kudu fs dump uuid --fs_wal_dir=<master_wal_dir> [--fs_data_dirs=<master_data_dir>] 2>/dev/null
+     ```
+
+   - （可选）为master配置DNS别名。别名可以是DNS的cname（假设机器在DNS中已经存在一条记录），或者`/etc/hosts`里的别名。
+
+4. 如果通过impala访问kudu表，必须同时更新Hive Metastore数据库中的master地址。
+
+   - 如果设置了DNS别名，执行下面的impala SQL：
+
+     ```
+     ALTER TABLE table_name
+     SET TBLPROPERTIES
+     ('kudu.master_addresses' = 'master-1,master-2,master-3');
+     ```
+
+   - 如果没有设置DNS别名，参考第11步。
+
+5. 为每个新主执行以下准备步骤：
+
+   - 在集群中选择一台未使用的机器。master 负载很低，因此它可以与其他数据服务或进程混部，但不能与来自相同配置的另一个 Kudu master 混部。
+   - 确保机器已使用系统包（已安装过 kudu 和 kudu-master 包）或其他方式安装了 Kudu。
+   - 选择并记录主数据所在的目录。
+   - 选择并记录主服务器用于 RPC 的端口。
+   - （可选）为 master 配置一个 DNS 别名（例如master-2, master-3， 等等）。
+
+### 执行迁移
+
+1. 停止整个集群所有的kudu进程。
+
+2. 格式化每台新主机上的数据目录，并记录生成的UUID。使用以下命令：
+
+   ```
+   $ sudo -u kudu kudu fs format --fs_wal_dir=<master_wal_dir> [--fs_data_dirs=<master_data_dir>]
+   $ sudo -u kudu kudu fs dump uuid --fs_wal_dir=<master_wal_dir> [--fs_data_dirs=<master_data_dir>] 2>/dev/null
+   ```
+
+   示例：
+
+   ```
+   [root@kudu-prod002 ~]# sudo -u kudu kudu fs format --fs_wal_dir=/apps/kudu/master/wal --fs_data_dirs=/apps/kudu/master/data
+   I0623 08:35:26.214287  7012 fs_manager.cc:263] Metadata directory not provided
+   I0623 08:35:26.214372  7012 fs_manager.cc:269] Using write-ahead log directory (fs_wal_dir) as metadata directory
+   I0623 08:35:26.216012  7012 fs_manager.cc:602] Generated new instance metadata in path /apps/kudu/master/data/instance:
+   uuid: "07f824b6be3a4a4abb9bdddd57f6f6fc"
+   format_stamp: "Formatted at 2021-06-23 00:35:26 on kudu-prod002"
+   I0623 08:35:26.217067  7012 fs_manager.cc:602] Generated new instance metadata in path /apps/kudu/master/wal/instance:
+   uuid: "07f824b6be3a4a4abb9bdddd57f6f6fc"
+   format_stamp: "Formatted at 2021-06-23 00:35:26 on kudu-prod002"
+   I0623 08:35:26.219463  7012 fs_manager.cc:503] Time spent creating directory manager: real 0.002s   user 0.001s sys 0.000s
+   ```
+
+3. 如果使用的是 Cloudera Manager，请立即添加新的 Kudu 主角色，但不要启动它们。
+
+   - 如果使用 DNS 别名，请覆盖每个角色（包括现有的主角色）的 `Master Address` 参数。
+   - 如果使用非默认 RPC 端口值，请添加端口号（以冒号分隔）。
+
+4. 在现有 master 上执行以下命令重写 master 的 Raft 配置：
+
+   ```
+   $ sudo -u kudu kudu local_replica cmeta rewrite_raft_config --fs_wal_dir=<master_wal_dir> [--fs_data_dirs=<master_data_dir>] 00000000000000000000000000000000 <all_masters>
+   ```
+
+   all_masters
+
+   以空格分隔的所有master列表。列表中的每个条目都必须是以下形式的字符串`<uuid>:<主机名>:<端口>`。
+
+   示例：
+
+   ```
+   [root@kudu-prod001 master]# sudo -u kudu kudu local_replica cmeta rewrite_raft_config --fs_wal_dir=/apps/kudu/master/wal --fs_data_dirs=/apps/kudu/master/data 00000000000000000000000000000000 3f6308e6f92f4046bf6910db315e3119:kudu-prod001:7051 07f824b6be3a4a4abb9bdddd57f6f6fc:kudu-prod002:7051 bc8a8fa87d3447cfbda6d854b7323711:kudu-prod003:7051
+   I0623 08:44:13.146708 30351 fs_manager.cc:263] Metadata directory not provided
+   I0623 08:44:13.146780 30351 fs_manager.cc:269] Using write-ahead log directory (fs_wal_dir) as metadata directory
+   I0623 08:44:13.147426 30351 fs_manager.cc:399] Time spent opening directory manager: real 0.000s    user 0.000s sys 0.000s
+   I0623 08:44:13.147513 30351 env_posix.cc:1676] Not raising this process' open files per process limit of 65535; it is already as high as it can go
+   I0623 08:44:13.147557 30351 file_cache.cc:466] Constructed file cache lbm with capacity 26214
+   I0623 08:44:13.149086 30351 fs_report.cc:352] FS layout report
+   --------------------
+   wal directory: 
+   metadata directory: 
+   1 data directories: /apps/kudu/master/data/data
+   Total live blocks: 6
+   Total live bytes: 52319
+   Total live bytes (after alignment): 65536
+   Total number of LBM containers: 7 (0 full)
+   Did not check for missing blocks
+   Did not check for orphaned blocks
+   Total full LBM containers with extra space: 0 (0 repaired)
+   Total full LBM container extra space in bytes: 0 (0 repaired)
+   Total incomplete LBM containers: 0 (0 repaired)
+   Total LBM partial records: 0 (0 repaired)
+   I0623 08:44:13.149106 30351 fs_manager.cc:419] Time spent opening block manager: real 0.001s    user 0.000s sys 0.000s
+   I0623 08:44:13.149211 30351 fs_manager.cc:436] Opened local filesystem: /apps/kudu/master/data,/apps/kudu/master/wal
+   uuid: "3f6308e6f92f4046bf6910db315e3119"
+   format_stamp: "Formatted at 2021-06-15 08:20:46 on kudu-prod001"
+   I0623 08:44:13.150106 30351 tool_action_local_replica.cc:244] Backed up old consensus metadata to /apps/kudu/master/wal/consensus-meta/00000000000000000000000000000000.pre_rewrite.1624409053149227
+   ```
+
+5. 修改现有 master 和新 master 的配置参数`master_addresses`。新值是所有master的逗号分隔列表。每个条目都是这样的格式：`<主机名>:<端口>`。（如果使用cloudera manager可以省略这一步）
+
+6. 启动现有的master
+
+7. 在每台新 master 机器上执行以下命令将 master 数据复制到每个新 master：
+
+   ```
+   $ sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=<master_data_dir> 00000000000000000000000000000000 <existing_master>
+   ```
+
+   示例：
+
+   ```
+   [root@kudu-prod002 ~]# sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=/apps/kudu/master/wal --fs_data_dirs=/apps/kudu/master/data 00000000000000000000000000000000 kudu-prod001:7051
+   I0623 08:48:32.466200  9769 fs_manager.cc:263] Metadata directory not provided
+   I0623 08:48:32.466274  9769 fs_manager.cc:269] Using write-ahead log directory (fs_wal_dir) as metadata directory
+   I0623 08:48:32.466897  9769 fs_manager.cc:399] Time spent opening directory manager: real 0.000s    user 0.000s sys 0.000s
+   I0623 08:48:32.466969  9769 env_posix.cc:1676] Not raising this process' open files per process limit of 65535; it is already as high as it can go
+   I0623 08:48:32.467013  9769 file_cache.cc:466] Constructed file cache lbm with capacity 26214
+   I0623 08:48:32.467432  9769 fs_report.cc:352] FS layout report
+   --------------------
+   wal directory: 
+   metadata directory: 
+   1 data directories: /apps/kudu/master/data/data
+   Total live blocks: 0
+   Total live bytes: 0
+   Total live bytes (after alignment): 0
+   Total number of LBM containers: 0 (0 full)
+   Did not check for missing blocks
+   Did not check for orphaned blocks
+   Total full LBM containers with extra space: 0 (0 repaired)
+   Total full LBM container extra space in bytes: 0 (0 repaired)
+   Total incomplete LBM containers: 0 (0 repaired)
+   Total LBM partial records: 0 (0 repaired)
+   I0623 08:48:32.467450  9769 fs_manager.cc:419] Time spent opening block manager: real 0.000s    user 0.000s sys 0.000s
+   I0623 08:48:32.467555  9769 fs_manager.cc:436] Opened local filesystem: /apps/kudu/master/data,/apps/kudu/master/wal
+   uuid: "07f824b6be3a4a4abb9bdddd57f6f6fc"
+   format_stamp: "Formatted at 2021-06-23 00:35:26 on kudu-prod002"
+   I0623 08:48:32.474596  9769 tablet_copy_client.cc:240] T 00000000000000000000000000000000 P 07f824b6be3a4a4abb9bdddd57f6f6fc: tablet copy: Beginning tablet copy session from remote peer at address kudu-prod001:7051
+   I0623 08:48:32.476819  9769 data_dirs.cc:938] Could only allocate 1 dirs of requested 3 for tablet 00000000000000000000000000000000. 1 dirs total
+   I0623 08:48:32.478768  9769 tablet_copy_client.cc:575] T 00000000000000000000000000000000 P 07f824b6be3a4a4abb9bdddd57f6f6fc: tablet copy: Starting download of 6 data blocks...
+   I0623 08:48:32.480983  9769 tablet_copy_client.cc:538] T 00000000000000000000000000000000 P 07f824b6be3a4a4abb9bdddd57f6f6fc: tablet copy: Starting download of 1 WAL segments...
+   I0623 08:48:32.483124  9769 tablet_copy_client.cc:414] T 00000000000000000000000000000000 P 07f824b6be3a4a4abb9bdddd57f6f6fc: tablet copy: Tablet Copy complete. Replacing tablet superblock.
+   ```
+
+8. 启动所有新的master
+
+9. 修改值 每个tablet server的`tserver_master_addrs`配置参数。新值必须是逗号分隔的master列表，其中每个条目都是这样格式`<主机名>:<端口>`。（如果使用cloudera manager可以省略这一步）
+
+10. 启动所有的tablet server
+
+11. 如果通过impala访问kudu并且没有设置DNS别名，请手动更新HMS的数据库。
+
+    - 以下是您将在 HMS 数据库中运行的示例 SQL 语句：
+
+      ```
+      UPDATE TABLE_PARAMS
+      SET PARAM_VALUE =
+        'master-1.example.com,master-2.example.com,master-3.example.com'
+      WHERE PARAM_KEY = 'kudu.master_addresses' AND PARAM_VALUE = 'old-master';
+      ```
+
+    - 通过运行以下SQL更新元数据：
+
+      ```
+      INVALIDATE METADATA;
+      ```
+
+### 验证
+
+要验证所有 master 都正常工作，请考虑执行以下健全性检查：
+
+- 使用浏览器，访问每个 master 的 web UI 并导航到 /masters。现在应该列出所有master，其中一个master为leader角色，其他的为follower角色。每个master上的内容应该是一样的。
+- 在集群上使用kudu命令行工具运行 Kudu系统检查 (ksck) 。有关更多详细信息，请参阅[使用 ksck 监控集群运行状况](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kudu_administration_cli.html#ksck)。
+
+### 参考
+
+[Apache: Migrating to Multiple Kudu Masters](https://kudu.apache.org/docs/administration.html#migrate_to_multi_master)
+
+[Cloudera: Migrating to Multiple Kudu Masters](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kudu_administration_cli.html#migratingToMultipleKuduMasters.d12e306)
+
+## Kudu Rebalance
+
+
+
+参考：
+
+[Monitoring cluster health with ksck](https://docs.cloudera.com/runtime/7.2.0/administering-kudu/topics/kudu-monitoring-cluster-health-with-ksck.html)
+
+[Running tablet rebalancing tool](https://docs.cloudera.com/runtime/7.2.0/administering-kudu/topics/kudu-running-tablet-rebalancing-tool.html)
+
+[Best practices when adding new tablet servers](https://docs.cloudera.com/runtime/7.2.7/kudu-management/topics/kudu-adding-new-tablet-servers.html)
+
+[Kudu Scaling Guide](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kudu_scaling.html)
+
+[Migrate data away from a kudu disk](https://stackoverflow.com/questions/61103452/migrate-data-away-from-a-kudu-disk)
+
+[kudu表无法正常访问的一种情况](https://segmentfault.com/a/1190000021635655)
+
+## Kudu API
 
 在这里简要说下三种`Kudu`提交数据策略的含义：
 
@@ -51,3 +264,38 @@ $ sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=/hdp/kudu/wal --
 [KUDU高级分区](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kudu_impala.html#concept_r3t_vtz_kt__section_sgh_4vz_kt)
 
 [一次Impala upsert Kudu执行缓慢问题排查总结](https://my.oschina.net/dabird/blog/3190668)
+
+## Kudu原理
+
+
+
+
+
+参考：
+
+[kudu基础入门-背景介绍,kudu是什么,kudu的应用场景,java代码操作kudu](http://www.jszja.com/contents/22/2163.html)
+
+[kudu-列式存储管理器-第四篇（原理篇）](https://daimajiaoliu.com/daima/4eda1fc5f1003fc)
+
+[kudu和hbase的区别和联系](https://blog.csdn.net/weixin_39478115/article/details/78470294)
+
+[kudu底层存储原理](https://blog.csdn.net/weixin_39478115/article/details/79267330)
+
+[kudu读写流程](https://blog.csdn.net/weixin_39478115/article/details/78470269)
+
+[KUDU(二)kudu架构设计](https://big-data.blog.csdn.net/article/details/109014814)
+
+[KUDU(三)kudu数据读写,更新流程](https://blog.csdn.net/wwwzydcom/article/details/109039097)
+
+[KUDU(四)kudu的模式设计](https://big-data.blog.csdn.net/article/details/109063149)
+
+[KUDU(五)kudu优化](https://big-data.blog.csdn.net/article/details/109152338)
+
+## Kudu实践
+
+[Kudu架构介绍及其在小米的应用实践](https://mp.weixin.qq.com/s/Y1_YO44SZbcQEYh1PYMwCA)
+
+[“他们团队都是committer!”—— 小米Kudu开源实践 ](https://mp.weixin.qq.com/s/87Z7iTfat4yEbzzgbX1Xbg)
+
+[我是如何成为Apache Kudu committer & PMC的？](https://mp.weixin.qq.com/s/dlh_kbhEWGw0DRK3j5GtNQ)
+

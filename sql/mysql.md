@@ -2,6 +2,26 @@
 
 ## 数据类型
 
+### 字段的显示宽度
+
+MySQL建表时常常要指定一个长度，这个长度并不是该数据类型占用的存储空间，而是所谓的显示宽度。对于如下的一张表，
+
+```mysql
+CREATE TABLE `test` (
+  `id` INT(2) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `name` CHAR(2) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+```
+
+对于varchar(2)这样的数据类型，不能插入’123’或者’你好吗’这样的字符串，但是可以插入’12’,’你好’这样的字符串，我们知道在utf8字符集下两个汉字占用6个字节的大小。 
+对于int(2)这样的数据 类型，是可以插入数字123的，但是最大不能超过int存储范围的最大值，而当该字段打开unsinged zerofill属性时，不足的位数是用0补齐的，也就是说数字9显示为09。
+
+参考: 
+[http://www.netingcn.com/mysql-int-display-width.html](http://www.netingcn.com/mysql-int-display-width.html)
+
+[https://dev.mysql.com/doc/refman/5.7/en/numeric-type-attributes.html](https://dev.mysql.com/doc/refman/5.7/en/numeric-type-attributes.html)
+
 ### 日期时间类型
 
 日期和时间类型包括 [`DATE`](https://dev.mysql.com/doc/refman/5.7/en/datetime.html), [`TIME`](https://dev.mysql.com/doc/refman/5.7/en/time.html), [`DATETIME`](https://dev.mysql.com/doc/refman/5.7/en/datetime.html), [`TIMESTAMP`](https://dev.mysql.com/doc/refman/5.7/en/datetime.html), 以及 [`YEAR`](https://dev.mysql.com/doc/refman/5.7/en/year.html)，每种类型都有一系列有效值，以及当指定了无效值时可以使用的“ 零 ”值。[`TIMESTAMP`](https://dev.mysql.com/doc/refman/5.7/en/datetime.html)类型具有特殊的自动更新行为。
@@ -45,13 +65,68 @@
 | [`ALLOW_INVALID_DATES`](https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sqlmode_allow_invalid_dates) | 允许存储错误值，如`'2009-11-31'`                             |
 | [`NO_ZERO_IN_DATE`](https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sqlmode_no_zero_in_date) | 不允许日期类型中的`0月`和`0天`, 如`'2009-00-00'` 以及 `'2009-01-00'`。<br>不允许零值'0000-00-00' |
 
+## DDL
+
+### MySQL授权
+
+1. 使用root用户（有授权权限的用户）
+2. 本机ip需要单独授权
+
+```
+grant all on *.* to 'user'@'ip' identified by 'password';
+```
+
+## DML
+
+### Replace语义
+
+参考：
+
+[13.2.6 INSERT Statement](https://dev.mysql.com/doc/refman/8.0/en/insert.html)
+
+[13.2.6.2 INSERT ... ON DUPLICATE KEY UPDATE Statement](https://dev.mysql.com/doc/refman/5.7/en/insert-on-duplicate.html)
+
+
+## DQL
+
+### group_concat()函数
+
+```
+select group_concat(`field`,'字符串',`field`  separator  ';') from table group by `otherfield`
+```
+
 ## JDBC
 
+参考：
 
+[Chapter 5 Connector/J Examples](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-examples.html)
 
-## 最佳实践
+## 导入导出
 
+第一步将数据导出到文本文件里：
 
+    $ mysql -h${HOST} -P${PORT} -u${user} -D${database} -p -e "select ..." > /tmp/data.file
+
+第二步
+登录mysql服务端导入数据文件：
+
+    mysql> load data local infile '/tmp/data.file' into table ${table};
+
+Load Data方式：
+
+```mysql
+LOAD DATA LOCAL INFILE '/path_to_local_file'
+INTO TABLE db.tab
+FIELDS TERMINATED BY ','
+(c1, c2, c3)
+SET c4 = 6, c5 = 75;
+```
+
+参考：
+
+[13.2.7 LOAD DATA Statement](https://dev.mysql.com/doc/refman/8.0/en/load-data.html)
+
+[MySQL "replace into" 的坑](https://blog.51cto.com/corasql/1913191)
 
 ## 常见问题
 
