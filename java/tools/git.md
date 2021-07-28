@@ -159,6 +159,12 @@ git merge upstream/main
 
 [Syncing a fork](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
+### “仅快进”的合并
+
+```shell
+git merge --ff-only origin/master
+```
+
 ## Git工作流
 
 ### Git flow
