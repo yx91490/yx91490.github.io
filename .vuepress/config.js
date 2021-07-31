@@ -279,7 +279,6 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/bigdata/hive/impala',
           '/bigdata/hive/hive_cli',
           '/bigdata/hive/hive_ql',
           '/bigdata/hive/hive_data_type',
