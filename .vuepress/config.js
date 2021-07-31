@@ -295,6 +295,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/impala/impala',
+          '/bigdata/impala/impala_admin',
         ]
       },
       {
