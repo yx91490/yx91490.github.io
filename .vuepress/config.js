@@ -290,6 +290,14 @@ module.exports = {
         ]
       },
       {
+        title: 'Impala',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/impala/impala',
+        ]
+      },
+      {
         title: 'Spark',
         collapsable: false,
         sidebarDepth: 0,
