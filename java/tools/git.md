@@ -142,6 +142,44 @@ git push origin --delete <branch_name>
 
 参考：[git删除远程分支和本地分支](https://www.cnblogs.com/luosongchao/p/3408365.html)
 
+### 同步Fork的仓库
+
+1.配置上游remote：
+
+```
+git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+```
+
+2.Fetch上游变更（如果有必要的话）：
+
+```
+git fetch upstream
+```
+
+3.Checkout到本地分支：
+
+```
+git checkout main
+```
+
+4.Merge对应的上游分支：
+
+```
+git merge upstream/main
+```
+
+参考：
+
+[Configuring a remote for a fork](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-for-a-fork)
+
+[Syncing a fork](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
+
+### “仅快进”的合并
+
+```shell
+git merge --ff-only origin/master
+```
+
 ## Git工作流
 
 ### Git flow

@@ -27,8 +27,6 @@ https://www.wikihow.com/Main-Page
 sql parser
 
 two phase commit
-基于地理位置的兴趣收藏:
-     Key-Value collection
 
 dfs.datanode.du.reserved
 
@@ -37,3 +35,9 @@ glob
 kotlin
 base64
 Java系统调用和环境变量
+
+jq
+
+shell 计算算子count distinct
+sql on json
+RAID, redis cache policy, 
