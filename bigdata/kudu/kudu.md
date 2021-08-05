@@ -1,5 +1,215 @@
 # Kudu
 
+## 编译Kudu源码
+
+### 要求
+
+- 不支持Windows
+- C++17兼容的编译器(GCC 7.0)
+
+### RHEL或CentOS
+
+CentOS8.0之前的版本需要安装`Red Hat Developer Toolset`以便于能够访问C++17兼容的编译器。
+
+1.安装必备库：
+
+```shell
+sudo yum install autoconf automake cyrus-sasl-devel cyrus-sasl-gssapi \
+  cyrus-sasl-plain flex gcc gcc-c++ gdb git java-1.8.0-openjdk-devel \
+  krb5-server krb5-workstation libtool make openssl-devel patch \
+  pkgconfig redhat-lsb-core rsync unzip vim-common which
+```
+
+2.如果在 RHEL 或 8.0 之前的 CentOS 上构建，请安装 Red Hat Developer Toolset。以下是 CentOS 所需的步骤：
+
+```shell
+sudo yum install centos-release-scl-rh
+sudo yum install devtoolset-8
+```
+
+3.可选：如果需要支持 Kudu 的 NVM（非易失性内存）块缓存，请安装 memkind 库：
+
+```shell
+sudo yum install memkind
+```
+
+如果 Linux 发行版提供的 memkind 包太旧（需要 1.8.0 或更高版本），请从源代码构建和安装：
+
+```shell
+sudo yum install numactl-libs numactl-devel
+git clone https://github.com/memkind/memkind.git
+cd memkind
+./build.sh --prefix=/usr
+sudo yum remove memkind
+sudo make install
+sudo ldconfig
+```
+
+4.可选：如果您计划构建文档，请安装一些额外的软件包，包括 ruby：
+
+```shell
+sudo yum install gem graphviz ruby-devel zlib-devel
+```
+
+如果在 RHEL 或 CentOS 7.0 之前构建， gem 包可能需要替换为 rubygems。
+
+构建文档需要 Doxygen 1.8.19 或更高版本，必须 [手动从源代码构建](https://www.doxygen.nl/manual/install.html#install_src_unix)。在低于 8.0 的 CentOS 或 RHEL 上构建此版本的 Doxygen 还需要 [devtoolset](https://www.softwarecollections.org/en/scls/rhscl/devtoolset-8/)。
+
+5.克隆 Git 存储库并切换到新`kudu`目录：
+
+```
+git clone https://github.com/apache/kudu
+cd kudu
+```
+
+6.使用`build-if-necessary.sh`脚本构建缺失的必要的三方软件。不使用 devtoolset 会导致`Host compiler appears to require libatomic, but cannot find it.`：
+
+```shell
+build-support/enable_devtoolset.sh thirdparty/build-if-necessary.sh
+```
+
+7.使用上一步中安装的程序构建 Kudu。为中间输出选择一个构建目录，该目录可以位于文件系统中的任何位置，但`kudu`目录本身除外。请注意，仍然必须指定 devtoolset，否则会出现`cc1plus: error: unrecognized command line option "-std=c++17"`：
+
+```
+mkdir -p build/release
+cd build/release
+../../build-support/enable_devtoolset.sh \
+  ../../thirdparty/installed/common/bin/cmake \
+  -DCMAKE_BUILD_TYPE=release ../..
+make -j4
+```
+
+8.可选：安装 Kudu 可执行文件、库和头文件：
+
+运行`sudo make install`安装以下内容：
+
+- kudu-tserver 和 kudu-master 可执行文件 `/usr/local/sbin`
+- Kudu 命令行工具 `/usr/local/bin`
+- Kudu 客户端库在 `/usr/local/lib64/`
+- Kudu 客户端标头 `/usr/local/include/kudu`
+
+默认安装目录为`/usr/local`。可以通过`DESTDIR` 环境变量对其进行自定义：
+
+```shell
+sudo make DESTDIR=/opt/kudu install
+```
+
+9.可选：构建文档。注意：此命令会构建不适合上传到 Kudu 网站的本地文档：
+
+```
+make docs
+```
+
+### 示例脚本
+
+此脚本概述了在新安装的 RHEL 或 CentOS 主机上构建 Kudu 的过程，并可用作自动化部署方案的基础。它跳过上面标记为**可选**的步骤：
+
+```shell
+#!/bin/bash
+
+sudo yum -y install autoconf automake curl cyrus-sasl-devel cyrus-sasl-gssapi \
+  cyrus-sasl-plain flex gcc gcc-c++ gdb git java-1.8.0-openjdk-devel \
+  krb5-server krb5-workstation libtool make openssl-devel patch pkgconfig \
+  redhat-lsb-core rsync unzip vim-common which
+sudo yum -y install centos-release-scl-rh
+sudo yum -y install devtoolset-8
+git clone https://github.com/apache/kudu
+cd kudu
+build-support/enable_devtoolset.sh thirdparty/build-if-necessary.sh
+mkdir -p build/release
+cd build/release
+../../build-support/enable_devtoolset.sh \
+  ../../thirdparty/installed/common/bin/cmake \
+  -DCMAKE_BUILD_TYPE=release \
+  -DNO_TESTS=1 \
+  ../..
+make -j4
+```
+
+### 运行
+
+组织目录：
+
+```
+├── bin
+│   ├── kudu
+│   ├── kudu-master
+│   └── kudu-tserver
+├── master
+│   ├── conf/master.conf
+│   ├── data
+│   ├── log
+│   └── wal
+└── tserver
+    ├── conf/tserver.conf
+    ├── data
+    ├── log
+    └── wal
+```
+
+master/conf/master.conf配置：
+
+```
+-rpc_bind_addresses=localhost:7051
+-webserver_interface=localhost
+-webserver_port=8051
+-fs_wal_dir=/home/kudu/kudu_cluster/master/wal
+-fs_data_dirs=/home/kudu/kudu_cluster/master/data
+-log_dir=/home/kudu/kudu_cluster/master/log
+-unlock_unsafe_flags
+-never_fsync
+```
+
+tserver/conf/tserver.conf配置：
+
+```
+-rpc_bind_addresses=localhost:7150
+-webserver_interface=localhost
+-webserver_port=8150
+-fs_wal_dir=/apps/home/worker/kudu_cluster/tserver/wal
+-fs_data_dirs=/apps/home/worker/kudu_cluster/tserver/data
+-log_dir=/apps/home/worker/kudu_cluster/tserver/log
+-unlock_unsafe_flags
+-never_fsync
+-tserver_master_addrs=127.0.0.1:7051
+```
+
+master报错：
+
+```
+W0805 17:18:12.092677  5319 negotiation.cc:313] Failed RPC negotiation. Trace:
+0805 17:18:12.092524 (+     0us) reactor.cc:583] Submitting negotiation task for server connection from 127.0.0.1:39018
+0805 17:18:12.092630 (+   106us) negotiation.cc:304] Negotiation complete: Invalid argument: Server connection negotiation failed: server connection from 127.0.0.1:39018: unable to find SASL plugin: PLAIN
+Metrics: {"server-negotiator.queue_time_us":49,"thread_start_us":31,"threads_started":1}
+```
+
+tserver报错：
+
+```
+W0805 17:05:51.576901  2112 negotiation.cc:313] Failed RPC negotiation. Trace:
+0805 17:05:51.576750 (+     0us) reactor.cc:583] Submitting negotiation task for client connection to 127.0.0.1:7051
+0805 17:05:51.576852 (+   102us) negotiation.cc:304] Negotiation complete: Invalid argument: Client connection negotiation failed: client connection to 127.0.0.1:7051: unable to find SASL plugin: PLAIN
+Metrics: {"client-negotiator.queue_time_us":61,"thread_start_us":48,"threads_started":1}
+W0805 17:05:51.576957  2110 heartbeater.cc:586] Failed to heartbeat to 127.0.0.1:7051 (0 consecutive failures): Invalid argument: Failed to ping master at 127.0.0.1:7051: Client connection negotiation failed: client connection to 127.0.0.1:7051: unable to find SASL plugin: PLAIN
+```
+
+安装软件包：
+
+```
+yum install gcc python-devel
+yum install cyrus-sasl*
+```
+
+### 参考
+
+[Build From Source](https://kudu.apache.org/docs/installation.html#build_from_source)
+
+[手把手教你在华为云编译和使用Apache Kudu](https://bbs.huaweicloud.com/blogs/174501)
+
+[【原创】大叔经验分享（53）kudu报错unable to find SASL plugin: PLAIN](https://www.cnblogs.com/barneywill/p/10793687.html)
+
+[Kudu 1.8.0 编译安装配置（瘦身版）](https://blog.csdn.net/qqqq0199181/article/details/95506766)
+
 ## Kudu迁移master
 
 ```
