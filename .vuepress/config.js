@@ -129,6 +129,7 @@ module.exports = {
           '/java/jdk/no_such_method_error',
           '/java/jdk/io',
           '/java/jdk/multi_thread',
+          '/java/jdk/aqs',
           '/java/jdk/java_concurrent_framework',
           '/java/jdk/lurenjia_java_concurrent',
         ]
