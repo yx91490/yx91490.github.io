@@ -295,7 +295,6 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/kudu/kudu',
-          '/bigdata/kudu/kudu_build',
           '/bigdata/kudu/kudu_paper',
         ]
       },
