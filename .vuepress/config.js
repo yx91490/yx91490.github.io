@@ -276,7 +276,7 @@ module.exports = {
         ]
       },
       {
-        title: 'HIVE',
+        title: 'Hive',
         collapsable: false,
         sidebarDepth: 0,
         children: [
@@ -287,6 +287,16 @@ module.exports = {
           '/bigdata/hive/hive_principle',
           '/bigdata/hive/hive_optimize',
           '/bigdata/hive/hive_parse_json',
+        ]
+      },
+      {
+        title: 'Kudu',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/kudu/kudu',
+          '/bigdata/kudu/kudu_build',
+          '/bigdata/kudu/kudu_paper',
         ]
       },
       {
