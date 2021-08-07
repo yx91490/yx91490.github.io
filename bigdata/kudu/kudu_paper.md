@@ -400,7 +400,7 @@ We ran this full sequence two times for each storage engine, deleting and reload
 
 We did not run workload E, which performs short range scans, because the Kudu client currently lacks the ability to specify a limit on the number of rows returned. We did not run workload F, because it relies on an atomic compare-and- swap primitive which Kudu does not yet support. When these features are added to Kudu, we plan to run these workloads as well.
 
-![image-20210807211806527](kudu_paper.assets/image-20210807211806527.png)
+![image-20210807211806527](./kudu_paper.assets/image-20210807211806527.png)
 
 >  Figure 1: Operation throughput of YCSB random-access workloads, comparing Kudu vs. HBase
 
