@@ -296,6 +296,7 @@ module.exports = {
         children: [
           '/bigdata/kudu/kudu',
           '/bigdata/kudu/kudu_paper',
+          '/bigdata/kudu/kudu_paper_translation',
         ]
       },
       {
