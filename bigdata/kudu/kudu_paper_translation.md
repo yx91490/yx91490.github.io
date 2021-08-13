@@ -190,3 +190,5 @@ RowSet Compaction有两个目标：
 
 [Kudu论文解读: Fast Analytics on Fast Data (上)](https://zhuanlan.zhihu.com/p/137238298)
 
+[Kudu论文解读: Fast Analytics on Fast Data (下)](https://zhuanlan.zhihu.com/p/137243163)
+
