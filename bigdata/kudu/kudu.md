@@ -452,6 +452,112 @@ $ sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=/hdp/kudu/wal --
 
 [kudu表无法正常访问的一种情况](https://segmentfault.com/a/1190000021635655)
 
+## Kudu数据迁移
+
+### Table copy方式
+
+使用命令行工具`kudu table copy`：
+
+```
+kudu table copy <master_addresses> <table_name> <dest_master_addresses> [-nocreate_table] [-dst_table=<table>] [-num_threads=<threads>] [-predicates=<predicates>] [-tablets=<tablets>] [-write_type=<type>] [-negotiation_timeout_ms=<ms>] [-timeout_ms=<ms>]
+```
+
+报错1：
+
+```
+Invalid argument: Table partitioning must be specified using add_hash_partitions or set_range_partition_columns
+```
+
+原因：迁移的表需要设置分区。
+
+报错2：
+
+```
+I0811 19:56:26.095109 16312 table_scanner.cc:429] Table impala:bdg_inf.id_name6 created successfully
+
+T a096989375c54f8fb3fc8b4a9fcb30a8 scanned count 857879 cost 3.41085 seconds
+T a6ec6df7fc6b442ea028b3b79e429010 scanned count 855723 cost 3.91296 seconds
+I0811 19:56:31.095449 16312 table_scanner.cc:612] Scanned count: 2436702
+T af000bf1847d43b5a943d4aa3fd1c541 scanned count 854948 cost 3.16102 seconds
+T 4599ec58b78848c7afd5b30cdf821aa1 scanned count 855450 cost 3.49121 seconds
+Total count 3424000 cost 7.40447 seconds
+W0811 19:56:33.499917 16318 client.cc:1713] Couldn't close scanner 6e89b20d9140457b88fe84f413e3d496: Service unavailable: reactor is shutting down (error 108)
+```
+
+### Impala SQL方式
+
+将表T1从C1集群迁移到C2集群，在C2集群创建表T2以及指向C1集群T2表的外表T3，在C2集群执行Impala SQL：
+
+```sql
+INSERT INTO T2 SELECT * FROM T3
+```
+
+### KuduBackupRestore方式
+
+备份：
+
+```shell
+spark-submit --class org.apache.kudu.backup.KuduBackup \
+  --master yarn \
+  --deploy-mode cluster \
+  --conf spark.executor.instances=10 \
+  --conf spark.executor.memory=5g \
+  kudu-backup2_2.11-1.14.0.jar \
+  --kuduMasterAddresses master1-host,master-2-host,master-3-host \
+  --rootPath hdfs:///kudu-backups \
+  tab1 tab2
+```
+
+恢复：
+
+```shell
+spark-submit --class org.apache.kudu.backup.KuduRestore \
+  --master yarn \
+  --deploy-mode cluster \
+  --conf spark.executor.instances=10 \
+  --conf spark.executor.memory=5g \
+  kudu-backup2_2.11-1.14.0.jar \
+  --kuduMasterAddresses master1-host,master-2-host,master-3-host \
+  --rootPath hdfs:///kudu-backups \
+  tab1 tab2
+```
+
+### Waterdrop方式
+
+使用kudu source和kudu sink插件：
+
+```
+source {
+    kudu {
+        kudu_master = "${SRC_KUDU_MASTER}"
+        kudu_table = "impala::${SRC_TABLE_NAME}"
+        result_table_name = "table_tmp"
+    }
+}
+transform {
+}
+sink {
+    kudu {
+        kudu_master= "${DST_KUDU_MASTER}"
+        kudu_table = "impala::${DST_TABLE_NAME}"
+        mode = "upsert"
+    }
+}
+```
+
+### 总结
+
+| 方案        | 配置                 | 时间  |
+| ----------- | -------------------- | ----- |
+| Waterdrop   | 5G内存 * 10 executor | 6min  |
+| Impala      | 128G内存 * 3 Impalad | 11min |
+| KuduBackup  | 5G内存 * 6 executor  | 23min |
+| KuduRestore | 5G内存 * 7 executor  | 12min |
+
+### 参考
+
+[copy: Copy table data to another table](https://kudu.apache.org/docs/command_line_tools_reference.html#table-copy)
+
 ## Kudu API
 
 在这里简要说下三种`Kudu`提交数据策略的含义：
@@ -502,6 +608,29 @@ $ sudo -u kudu kudu local_replica copy_from_remote --fs_wal_dir=/hdp/kudu/wal --
 [KUDU(五)kudu优化](https://big-data.blog.csdn.net/article/details/109152338)
 
 ## Kudu实践
+
+### Kudu运行指标
+
+我司kudu集群的一些运行指标：
+
+| 指标                       | 值                       | 备注                 |
+| -------------------------- | ------------------------ | -------------------- |
+| on_disk_size               | 2883144414171B           | 可以用来估算总数据量 |
+| du tserver:${fs_data_dirs} | 2883116588K              |                      |
+| du tserver:${fs_wal_dir}   | 344735380K               |                      |
+| 磁盘使用率                 | 20%,30%                  |                      |
+| CPU使用率                  | 平均最大30%, 最大平均80% |                      |
+| 内存使用率                 | 平均最大5%, 最大平均15%  |                      |
+| 网络入口流量               | 低谷60KB/s, 高峰1.5MB/s  |                      |
+| 网络出口流量               | 低谷60KB/s, 高峰4.8MB/s  |                      |
+| 磁盘读                     | 低谷为0KB/s,高峰5MB/s    |                      |
+| 磁盘写                     | 0.5MB/s                  |                      |
+| 查询QPS                    |                          |                      |
+| 写入QPS                    |                          |                      |
+
+
+
+
 
 [Kudu架构介绍及其在小米的应用实践](https://mp.weixin.qq.com/s/Y1_YO44SZbcQEYh1PYMwCA)
 
