@@ -484,6 +484,8 @@ Total count 3424000 cost 7.40447 seconds
 W0811 19:56:33.499917 16318 client.cc:1713] Couldn't close scanner 6e89b20d9140457b88fe84f413e3d496: Service unavailable: reactor is shutting down (error 108)
 ```
 
+当前1.9版本未支持，只能作罢。
+
 ### Impala SQL方式
 
 将表T1从C1集群迁移到C2集群，在C2集群创建表T2以及指向C1集群T2表的外表T3，在C2集群执行Impala SQL：
