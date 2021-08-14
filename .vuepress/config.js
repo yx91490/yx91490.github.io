@@ -298,6 +298,7 @@ module.exports = {
           '/bigdata/kudu/kudu',
           '/bigdata/kudu/kudu_paper',
           '/bigdata/kudu/kudu_paper_translation',
+          '/bigdata/kudu/kudu_note',
         ]
       },
       {
