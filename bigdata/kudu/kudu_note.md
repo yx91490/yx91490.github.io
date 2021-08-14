@@ -10,6 +10,10 @@ Kudu 设计最初的目标是:
 - 高可用、容错、持久性、响应时长稳定
 - 可以充分利用现代化的硬件设施，如 SSD NVMe
 
+## 架构
+
+<img src="./kudu_note.assets/kudu-architecture-2.png" alt="kudu架构" style="zoom: 50%;" />
+
 ## 表和模式
 
 1. 必须定义主键，不支持二级索引
@@ -158,6 +162,26 @@ DiskRowSet 实现：
 3. 用不可变的 B 树结构索引这些page
 4. 服务器LRU缓存里缓存了page及其索引
 
+列编码方式：
+
+| Column类型                | 支持的编码方式                | 默认编码方式 |
+| :------------------------ | :---------------------------- | :----------- |
+| int8, int16, int32, int64 | plain, bitshuffle, run length | bitshuffle   |
+| date, unixtime_micros     | plain, bitshuffle, run length | bitshuffle   |
+| float, double, decimal    | plain, bitshuffle             | bitshuffle   |
+| bool                      | plain, run length             | run length   |
+| string, varchar, binary   | plain, prefix, dictionary     | dictionary   |
+
+Bitshuffle编码：重新排列一个值块，以存储每个值的最高有效位，然后第二个最高有效位，依此类推。适合具有许多重复值的列或按主键排序时变化量很小的列。
+
+run length编码：通过存储值和计数将连续重复的值被压缩在一列中。适合按主键排序时具有许多连续重复值的列。
+
+dictionary编码：构建唯一值的字典，并将每个列值编码为字典中对应的索引。适合基数低的列。
+
+前缀编码：公共前缀被压缩在连续的列值中，适合公共前缀相同或主键的第一列相同的值。
+
+![kudu_diskrowset_cfile](./kudu_note.assets/kudu_diskrowset_cfile.png)
+
 <img src="./kudu_note.assets/v2-ab89f645dd7087e3b4fa98e8242f403f_1440w-20210813142133735.jpg" alt="img" style="zoom: 40%;" />
 
 数据更新流程：
@@ -203,7 +227,7 @@ Kudu如何确定待插入的主键是否已经存在？
 | 时机 | 根据delta和Base数据行数比率确定 | 根据背包问题确定                                           |
 | 备注 | 可以按列合并                    | 基于主键的合并                                             |
 
-<img src="kudu_note.assets/v2-fce7c3b9a57fa0b4808178496afab256_1440w.jpg" alt="img" style="zoom: 33%;" />
+<img src="./kudu_note.assets/v2-fce7c3b9a57fa0b4808178496afab256_1440w.jpg" alt="img" style="zoom: 40%;" />
 
 
 
@@ -216,3 +240,12 @@ Kudu多个后台任务包括：
 - Delta Compaction: 将 Delta Store 部分数据合并到 Base Data 提升读性能
 - RowSet Compaction: 将多个 Disk Rowsets 进行 Compaction, 提升读写效率，物理删除数据行
 
+## 参考
+
+[一文了解Kudu的核心原理](https://cloud.tencent.com/developer/article/1727786)
+
+[Apache Kudu Schema Design](https://kudu.apache.org/docs/schema_design.html)
+
+[Apache Kudu Background Maintenance Tasks](https://kudu.apache.org/docs/background_tasks.html)
+
+[Kudu Tablet 设计文档](https://github.com/apache/kudu/blob/ecbd8700e49bf60f15a9d261f0de425f2ba5413e/docs/design-docs/tablet.md)
