@@ -291,6 +291,14 @@ module.exports = {
         ]
       },
       {
+        title: 'ClickHouse',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/clickhouse/clickhouse',
+        ]
+      },
+      {
         title: 'Kudu',
         collapsable: false,
         sidebarDepth: 0,
