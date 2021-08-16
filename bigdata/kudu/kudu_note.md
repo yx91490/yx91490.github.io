@@ -240,9 +240,26 @@ Kudu多个后台任务包括：
 - Delta Compaction: 将 Delta Store 部分数据合并到 Base Data 提升读性能
 - RowSet Compaction: 将多个 Disk Rowsets 进行 Compaction, 提升读写效率，物理删除数据行
 
+## 与HBase对比
+
+| 对比项         | Kudu       | HBase     |
+| -------------- | ---------- | --------- |
+| 表元数据位置   | Master     | ZooKeeper |
+| 分区规则       | hash+range | key-range |
+| 二级索引       | 不支持     | 不支持    |
+| 列类型         | 支持       | 不支持    |
+| 外部一致性保证 | 默认不支持 | 不支持    |
+| 写入指定时间戳 | 不支持     | 支持      |
+| 列式存储       | 是         | 否        |
+| 延迟物化       | 支持       | 不支持    |
+
 ## 参考
 
 [一文了解Kudu的核心原理](https://cloud.tencent.com/developer/article/1727786)
+
+[Kudu设计原理初探](http://www.nosqlnotes.com/technotes/kudu-design/)
+
+[分布式存储系统Kudu与HBase的简要分析与对比](https://zhuanlan.zhihu.com/p/44517915)
 
 [Apache Kudu Schema Design](https://kudu.apache.org/docs/schema_design.html)
 
