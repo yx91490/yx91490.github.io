@@ -4,9 +4,24 @@
 2. 一个类和加载他的类加载器来确定他在java虚拟机的唯一性。
 3. 类相等涉及的范围：
    1. Class对象的equals()方法的返回结果
-   2. isAssignableFrom()方法的返回结果
-   3. isInstance()方法的返回结果
+   2. Class.isAssignableFrom()方法的返回结果
+   3. Class.isInstance()方法的返回结果
    4. instanceof关键字的判定结果
+4. 两个class对象是否相等的条件：
+   1. 类的完整类名一致
+   2. 加载这个类的ClassLoader实例对象相同
+
+类加载过程：
+
+|      | 过程   | 说明                                    |
+| ---- | ------ | --------------------------------------- |
+|      | 加载   | 读入内存，创建一个`java.lang.Class`对象 |
+| 连接 | 验证   | 校验文件格式                            |
+| 连接 | 准备   | 为类变量分配内存                        |
+| 连接 | 解析   | 的符号引用替换为直接引用                |
+|      | 初始化 | 执行类构造器\<clinit>()方法             |
+|      | 使用   |                                         |
+|      | 卸载   |                                         |
 
 ## 分类
 
@@ -20,11 +35,27 @@ BootstrapClassLoader > ExtClassLoader > AppClassLoader > UserClassLoader
 
 子类加载器把加载请求委派给父类加载器完成，父加载器无法完成时子加载器才会尝试自己去加载。保证类在jvm中的唯一性。	
 
+**为什么要破坏双亲委派模型**？
+
+由 classloader 加载模型中的可见性(visibility)决定的：父类加载的类对子类是可见的， 然而子类加载的类 对父类却是不可见的。这时候就需要委托子类加载器去加载class文件。
+
 **破坏双亲委派模型**
 
 1. 如果基础类又要回调用户的代码怎么办（如JNDI服务）？
 
    线程上下文类加载器 可以通过`Thread.setConextClassLoader()`方法进行设置
+
+SPI 是如何打破双亲委派模型的呢？
+
+```java
+// java.util.ServiceLoader#load(java.lang.Class<S>)
+public static <S> ServiceLoader<S> load(Class<S> service) {
+    ClassLoader cl = Thread.currentThread().getContextClassLoader();
+    return ServiceLoader.load(service, cl);
+}
+```
+
+通过从线程上下文（ThreadContext）获取 classloader ，借助这个classloader 可以拿到实现类的 Class。
 
 **tomcat类加载器架构**
 
@@ -55,3 +86,6 @@ BootstrapClassLoader
             |_JasperLoader
 ```
 
+## 参考
+
+[为什么说java spi破坏双亲委派模型？](https://www.zhihu.com/question/49667892)
