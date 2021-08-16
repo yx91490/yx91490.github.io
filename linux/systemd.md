@@ -37,3 +37,6 @@ journalctl --no-pager
 
 - [How to see full log from systemctl status service?](https://unix.stackexchange.com/questions/225401/how-to-see-full-log-from-systemctl-status-service)
 - [How use Systemd journalctl Command to Manage Logs](https://linoxide.com/linux-how-to/systemd-journalctl-command-logs/)
+- [Systemd 入门教程：实战篇](https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
+- [systemd unit file creating a service](https://linuxhint.com/systemd_unit_file_service/)
+
