@@ -23,6 +23,16 @@
 |      | 使用   |                                         |
 |      | 卸载   |                                         |
 
+由Java虚拟机自带的类加载器所加载的类，在虚拟机的生命周期中，始终不会被卸载。
+
+由用户自定义的类加载器加载的类是可以被卸载的。
+
+如果有下面的情况，类就会被卸载：
+
+1. 该类所有的实例都已经被回收，也就是java堆中不存在该类的任何实例。
+2. 加载该类的ClassLoader已经被回收。
+3. 该类对应的java.lang.Class对象没有任何地方被引用，无法在任何地方通过反射访问该类的方法。
+
 ## 分类
 
 1. 启动类加载器 BootstrapClassLoader <JAVA_HOME>/lib目录或者被-Xbootclasspath参数指定的路径中的rt.jar类库加载到内存中。无法被java程序直接引用。getClassLoader()中 return null代替。
