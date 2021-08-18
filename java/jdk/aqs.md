@@ -180,6 +180,74 @@ CLH队列需要一个虚拟头节点来启动。但我们不会在构造时创�
 
 感谢Dave Dice, Mark Moir, Victor Luchangco, BillScherer和Michael Scott，以及JSR-166的成员专家小组，提供有益的想法，讨论和批评关于这个类的设计。
 
-## 参考
+### 参考
 
 [AbstractQueuedSynchronizer.java](https://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/concurrent/locks/AbstractQueuedSynchronizer.java)
+
+## CLH队列
+
+CLH队列锁是一种基于链表的可扩展、高性能、公平的自旋锁。
+
+CLH锁出列只设置更新头部节点，插入队列只需要原子更新尾部的节点。
+
+申请线程仅仅在本地变量上自旋，它不断轮询前驱的状态，假设发现前驱释放了锁就结束自旋。
+
+AQS中阻塞队列采用的是用双向链表保存，用prve和next相互链接。而AQS中条件队列是使用单向列表保存的，用nextWaiter来连接。
+
+CLH阻塞队列采用的是双向链表队列，头部节点默认获取资源获得执行权限。后续节点不断自旋方式查询前置节点是否执行完成，直到头部节点执行完成将自己的waitStatus状态修改以通知后续节点可以获取资源执行。
+
+## 实现原理
+
+AQS使用一个Volatile的int类型的成员变量来表示同步状态，通过内置的FIFO队列来完成资源获取的排队工作，通过CAS完成对State值的修改。
+
+Node对象属性含义：
+
+| 方法和属性值 | 含义                                                         |
+| :----------- | :----------------------------------------------------------- |
+| waitStatus   | 当前节点在队列中的状态                                       |
+| prev         | 前驱指针                                                     |
+| next         | 后继指针                                                     |
+| thread       | 表示处于该节点的线程                                         |
+| nextWaiter   | 指向下一个处于CONDITION状态的节点（由于本篇文章不讲述Condition Queue队列，这个指针不多介绍） |
+
+waitStatus有下面几个枚举值：
+
+| 枚举      | 含义                                                  |
+| :-------- | :---------------------------------------------------- |
+| 0         | 当一个Node被初始化的时候的默认值                      |
+| CANCELLED | 为1，表示线程获取锁的请求已经取消了（超时或者被中断） |
+| CONDITION | 为-2，表示节点在等待队列中，节点线程等待唤醒          |
+| PROPAGATE | 为-3，当前线程处在SHARED情况下，该字段才会使用        |
+| SIGNAL    | 为-1，表示线程已经准备好了，就等资源释放了            |
+
+
+
+
+
+如何实现非公平锁？
+
+如何实现超时？
+
+如何实现中断？
+
+
+
+## 参考
+
+[CLH队列锁的原理](https://www.baiyp.ren/CLH%E9%98%9F%E5%88%97%E9%94%81.html)
+
+[并发之AQS原理(一)](https://www.cnblogs.com/yanlong300/p/9772271.html)
+
+[并发之AQS原理(二) CLH队列与Node解析](https://www.cnblogs.com/yanlong300/p/10953185.html)
+
+[并发之AQS原理(三) 如何保证并发](https://www.cnblogs.com/yanlong300/p/9791395.html)
+
+[并发研究之CPU缓存一致性协议(MESI)](https://www.cnblogs.com/yanlong300/p/8986041.html)
+
+[并发研究之Java内存模型（Java Memory Model)](https://www.cnblogs.com/yanlong300/p/9009687.html)
+
+[并发研究之可见性、有序性、原子性](https://www.cnblogs.com/yanlong300/p/9050733.html)
+
+[从ReentrantLock的实现看AQS的原理及应用](https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html)
+
+​	
