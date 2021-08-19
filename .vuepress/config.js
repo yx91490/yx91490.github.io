@@ -111,6 +111,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/jdk/java',
           '/java/jdk/ieee754',
           '/java/jdk/enum',
           'java/jdk/urlencode',
