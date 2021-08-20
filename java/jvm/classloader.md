@@ -41,7 +41,11 @@
 
 ## 双亲委派模型
 
+类加载器之间存在父子关系（这种关系不是继承关系，而是组合关系）：
+
+```
 BootstrapClassLoader > ExtClassLoader > AppClassLoader > UserClassLoader
+```
 
 子类加载器把加载请求委派给父类加载器完成，父加载器无法完成时子加载器才会尝试自己去加载。保证类在jvm中的唯一性。	
 
