@@ -292,6 +292,14 @@ module.exports = {
         ]
       },
       {
+        title: 'OLAP',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/olap/olap',
+        ]
+      },
+      {
         title: 'ClickHouse',
         collapsable: false,
         sidebarDepth: 0,
