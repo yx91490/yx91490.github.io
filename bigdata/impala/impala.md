@@ -162,6 +162,39 @@ Kudu注意事项：
 
 [Impala Type Conversion Functions](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_conversion_functions.html)
 
+## DDL
+
+将kudu表从一个impala集群托管到另一个impala集群：
+
+```sql
+-- 在A集群创建一个Kudu表
+CREATE TABLE id_city (
+   id INT NOT NULL,
+   city STRING NULL,
+   PRIMARY KEY (id) 
+) PARTITION BY HASH (id) PARTITIONS 4 STORED AS KUDU;
+
+-- 在B集群创建kudu外表
+CREATE external TABLE id_city 
+STORED AS KUDU
+TBLPROPERTIES ('kudu.table_name'='impala::default.id_city','kudu.master_addresses'='');
+
+-- 将B集群的kudu表改为内表：
+ALTER TABLE id_city SET TBLPROPERTIES('EXTERNAL'='false');
+
+-- 将A集群的kudu表改为外表：
+ALTER TABLE id_city SET TBLPROPERTIES('EXTERNAL'='true');
+
+-- 删除A集群的kudu表
+DROP TABLE id_city;
+```
+
+参考：
+
+[CREATE TABLE Statement](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_create_table.html#create_table)
+
+[ALTER TABLE Statement](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/impala_alter_table.html)
+
 ## 问题
 
 **PreparedStatement不能使用UPSERT语句的问题**
