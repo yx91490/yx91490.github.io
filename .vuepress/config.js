@@ -308,6 +308,14 @@ module.exports = {
         ]
       },
       {
+        title: 'Doris',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          'bigdata/doris/doris',
+        ]
+      },
+      {
         title: 'Kudu',
         collapsable: false,
         sidebarDepth: 0,
