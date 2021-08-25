@@ -82,6 +82,7 @@
 
 - [官方文档-描述符格式](http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html)
 - [官方文档-内置描述文件](http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html#)
+- https://stackoverflow.com/questions/47310215/merging-meta-inf-services-files-with-maven-assembly-plugin
 
 ## Maven-Shade-Plugin
 

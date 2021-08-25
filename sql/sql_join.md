@@ -116,3 +116,5 @@ SQL> select d.deptno,d.dname,d.loc
 我们再以Figure 1.1.3.4.2中的Ra和Rb为例，Ra∝Rb可以表述为：
 
 SELECT Ra.* FROM Ra INNER JOIN Rb ON Ra.Id = Rb.Id
+
+图示

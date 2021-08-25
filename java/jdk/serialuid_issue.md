@@ -1,0 +1,40 @@
+```
+Caused by: java.io.InvalidClassException: com.baijia.bdg.doris.DorisBatchLoadConfig; local class incompatible: stream classdesc serialVersionUID = 1438035286087305049, local class serialVersionUID = 3057338819755725089
+	at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:699)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1939)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1805)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2096)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2341)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2265)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2123)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2341)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2265)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2123)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2341)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2265)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2123)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2341)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2265)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2123)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1624)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:464)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:422)
+	at org.apache.spark.serializer.JavaDeserializationStream.readObject(JavaSerializer.scala:75)
+	at org.apache.spark.serializer.JavaSerializerInstance.deserialize(JavaSerializer.scala:114)
+	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:83)
+	at org.apache.spark.scheduler.Task.run(Task.scala:121)
+	at org.apache.spark.executor.Executor$TaskRunner$$anonfun$10.apply(Executor.scala:402)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:1360)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:408)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+```
+
+**由于序列化时该类的serialVersionUID是JVM根据类名及其属性的哈希值生成的。当类的属性有变动时，serialVersionUID也会相应变动，从而导致redis中的老数据反序列化为AlarmReq bean对象时，serialVersionUID匹配不上而失败，会报出java. io. InvalidClassException。**
+
+可能好多人在写对象以及序列化对象的时候，是没有加private static final long serialVersionUID的，但是也没有见到有报InvalidClassException异常的，那是因为你部署的单体系统架构，实时序列化和反序列化的，每次系统重启就又重新实例对象，所以即使改变了对象增加属性，也不会出现老对象和新对象serialVersionUID 不一致的情况，所以也就不会出现java. io. InvalidClassException。

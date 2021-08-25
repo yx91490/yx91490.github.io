@@ -101,6 +101,8 @@ select group_concat(`field`,'字符串',`field`  separator  ';') from table grou
 
 [Chapter 5 Connector/J Examples](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-examples.html)
 
+[彻底解决jdbc数据库连接超时重试-communication link failure的正确姿势](https://blog.csdn.net/lifetragedy/article/details/116641291)
+
 ## 导入导出
 
 第一步将数据导出到文本文件里：

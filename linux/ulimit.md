@@ -86,3 +86,4 @@ lsof -n |awk '{print $2}'|sort|uniq -c |sort -nr|more
 
 [第3期：Too many open files以及ulimit的探讨](https://juejin.im/post/5d4cf32f6fb9a06b1d21312c)
 
+https://stackoverflow.com/questions/16789288/java-lang-outofmemoryerror-unable-to-create-new-native-thread
