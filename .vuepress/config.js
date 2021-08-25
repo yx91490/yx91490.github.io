@@ -141,6 +141,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/jvm/arthas',
           '/java/jvm/jvm_parameter',
           '/java/jvm/classloader',
           '/java/jvm/java_memory_model',
