@@ -237,6 +237,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/bigdata/kylin/awesome_kylin',
           '/bigdata/kylin/read_kylin_source',
         ]
       },
