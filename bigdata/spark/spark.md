@@ -268,6 +268,15 @@ reduce端聚合内存，如果数据量比较大，reduce task拉取过来的数
 
 ##### ShuffleManager
 
+临时文件数量：
+
+| ShuffleManager     | 机制       | 数量                                       |
+| ------------------ | ---------- | ------------------------------------------ |
+| HashShuffleManager | 普通机制   | M（map task的个数）*R（reduce task的个数） |
+| HashShuffleManager | 优化机制   | C（core的个数）*R（Reduce的个数）          |
+| SortShuffleManager | 普通机制   | 2*M                                        |
+| SortShuffleManager | bypass机制 | 没有排序：2*M                              |
+
 | 参数                                    | 选项                            | 备注                                                         |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
 | spark.shuffle.manager                   | sort（默认）,hash,tungsten-sort |                                                              |
