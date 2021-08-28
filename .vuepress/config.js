@@ -41,6 +41,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/linux/shell',
+          '/linux/network',
           '/linux/rpm_yum',
           '/linux/centos6_centos7_diff',
           '/linux/docker',
