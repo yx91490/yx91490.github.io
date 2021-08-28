@@ -1,3 +1,5 @@
+# Kylin学习资料汇总
+
 ### [Kylin官网文档](http://kylin.apache.org/cn/docs/)
 
 - [Kylin 配置](http://kylin.apache.org/cn/docs/install/configuration.html)
@@ -43,5 +45,12 @@
 - [Apache Kylin Job 生成和调度详解](https://blog.bcmeng.com/post/kylin-job.html)
 - [Apache Kylin 精确去重和全局字典权威指南](https://blog.bcmeng.com/post/kylin-distinct-count-global-dict.html)
 
+### 其他文章
 
-### 微信公众号ApacheKylin
+- [Apache Kylin 的快速数据立方体算法——概述](https://www.infoq.cn/article/apache-kylin-algorithm)
+- [Apache Kylin精确计数与全局字典揭秘](https://hexiaoqiao.github.io/blog/2016/11/27/exact-count-and-global-dictionary-of-apache-kylin/)
+
+
+### 微信公众号：ApacheKylin
+
+- [终于等到你——Kylin 分布式全局字典](https://mp.weixin.qq.com/s/jK-nAOAxaI0k3_Yrt_KlLA)
