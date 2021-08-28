@@ -301,6 +301,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/bigdata/olap/olap',
+          '/bigdata/olap/data_analyze',
         ]
       },
       {
