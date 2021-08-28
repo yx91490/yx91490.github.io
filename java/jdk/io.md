@@ -2,15 +2,19 @@
 
 书中给出了5种IO模型：
 
-[1] blocking IO - 阻塞IO
-[2] nonblocking IO - 非阻塞IO
-[3] IO multiplexing - IO多路复用
-[4] signal driven IO - 信号驱动IO
-[5] asynchronous IO - 异步IO
+| 类型 | 英文             | 中文       |
+| ---- | ---------------- | ---------- |
+| 同步 | blocking IO      | 阻塞IO     |
+| 同步 | nonblocking IO   | 非阻塞IO   |
+| 同步 | IO multiplexing  | IO多路复用 |
+| 同步 | signal driven IO | 信号驱动IO |
+| 异步 | asynchronous IO  | 异步IO     |
 
-其中前面4种IO都可以归类为synchronous IO - 同步IO。
+一般情况下，一次网络IO读操作会涉及两个系统对象：
 
-一般情况下，一次网络IO读操作会涉及两个系统对象：(1) 用户进程(线程)Process；(2)内核对象kernel，两个处理阶段：
+1. 用户进程(线程)Process；
+
+2. 内核对象kernel，两个处理阶段：
 
 ```javascript
 [1] Waiting for the data to be ready - 等待数据准备好
