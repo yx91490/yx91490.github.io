@@ -131,6 +131,7 @@ module.exports = {
           '/java/jdk/no_such_method_error',
           '/java/jdk/io',
           '/java/jdk/multi_thread',
+          '/java/jdk/thread_pool',
           '/java/jdk/aqs',
           'java/jdk/condition',
           '/java/jdk/java_concurrent_framework',
