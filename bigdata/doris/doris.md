@@ -263,3 +263,77 @@ Bloom filter索引：
 
 ### Bitmap
 
+
+
+
+
+### ==杂记==
+
+Doris中一张表只能有一种数据模型，即要么是聚合模型，要么是明细模型，而且Roll Up表的数据模型必须和Base表一致，也就是说明细模型的Base 表不能有聚合模型的Roll Up表。
+Doris的聚合模型:
+Doris中的Repalce函数有个缺点：无法支持预聚合
+一个Column只能有一个预聚合函数，无法设置多个预聚合函数。
+
+Doris的明细模型:
+
+
+在 Doris 里 Rollup 作为一份聚合物化视图，其在查询中可以起到两个作用：
+索引
+聚合数据（仅用于聚合模型，即aggregate key）
+
+
+
+要命中聚合物化视图需要下面一些前提：
+1.查询或者子查询中涉及的所有列都存在一张独立的 Rollup 中。
+2.如果查询或者子查询中有 Join，则 Join 的类型需要是 Inner join。
+
+只要保证导入的数据中，每一行的 Key 都不完全相同，那么即使在聚合模型下，Doris 也可以保存完整的明细数据。
+ALTER SYSTEM drop FOLLOWER "172.16.44.213:9050";
+
+ALTER SYSTEM add  BACKEND "172.16.44.213:9050";
+SET PASSWORD FOR 'root' = PASSWORD('doris@8341');
+CREATE USER 'bdg_inf' IDENTIFIED BY 'fd43105f';
+
+分桶列的选择，是在 查询吞吐 和 查询并发 之间的一种权衡：
+
+
+
+模型选择
+最佳实践，
+参数调优
+需不需要自动拉起？
+MULTI LOAD?
+
+
+1.实时离线集群是否需要分离？目前最好做物理资源隔离，多租户特性是实验性的
+2.元数据备份？可以实现，建议所有数据备份
+3.视图？支持
+4.复杂类型？目前不支持
+5.窗口函数支持情况？ 
+6.精确percentile？ topn？
+
+
+
+
+1.BE挂了的情况：分情况讨论：OOM或者crash
+2.线上3台BE的并发能力：没有明确数字
+3.数据延迟：分钟级批量导入，batch可以大，但是不能太频繁
+4.json处理函数的性能如何？扫描全表，性能不高
+5.Spark load外置？可以
+6.复杂类型？array社区在做，map不支持
+7.Doris On ES，
+交互式数据分析平台 Doris Studio（基于metabase二次开发），
+离线大数据能力引擎Doris ETL（底层基于iceberg打通Doris能力），
+可视化运维管理平台Doris Manager
+8.json api?没有
+
+
+
+
+
+Doris实时平台监控项：
+1. 批次大小，批次频率，成功率失败率
+
+
+
+Doris 同时会限制集群内同时运行的导入任务数量，通常在 10-20 个不等。之后提交的导入作业会被拒绝。
