@@ -37,20 +37,27 @@
 - [你的 TopN 数据查询够快吗？](https://kyligence.io/zh/blog/skills-of-topn/)
 - [大数据分析常用去重算法分析『Bitmap 篇』](https://kyligence.io/zh/blog/count-distinct-bitmap/)
 - [大数据分析常用去重算法分析『HyperLogLog 篇』](https://kyligence.io/zh/blog/count-distinct-hyperloglog/)
+- [【开发实践】思科大数据团队如何将 Kylin 吞吐率提高 5 倍？](https://cn.kyligence.io/blog/how-cisco-big-data-team-increased-kylin-throughput-five-times/)
+- [Kylin 精确去重在用户行为分析中的妙用](https://cn.kyligence.io/blog/apache-kylin-count-distinct-application-in-user-behavior-analysis/)
 
-### [美团康凯森的博客](https://blog.bcmeng.com/)
+### [美团的博客](https://blog.bcmeng.com/)
 
 - [Apache Kylin Cube 构建原理](https://blog.bcmeng.com/post/kylin-cube.html)
 - [Apache Kylin 维度优化指南](https://blog.bcmeng.com/post/kylin-dimension.html)
 - [Apache Kylin Job 生成和调度详解](https://blog.bcmeng.com/post/kylin-job.html)
+- [Apache Kylin精确计数与全局字典揭秘](https://hexiaoqiao.github.io/blog/2016/11/27/exact-count-and-global-dictionary-of-apache-kylin/)
 - [Apache Kylin 精确去重和全局字典权威指南](https://blog.bcmeng.com/post/kylin-distinct-count-global-dict.html)
+- [Apache Kylin精确去重指标优化](https://hexiaoqiao.github.io/blog/2017/01/18/exact-count-optimization-of-apache-kylin/)
+- [Apache Kylin 在美团数十亿数据 OLAP 场景下的实践](https://www.infoq.cn/article/kylin-apache-in-meituan-olap-scenarios-practice)
 
 ### 其他文章
 
 - [Apache Kylin 的快速数据立方体算法——概述](https://www.infoq.cn/article/apache-kylin-algorithm)
-- [Apache Kylin精确计数与全局字典揭秘](https://hexiaoqiao.github.io/blog/2016/11/27/exact-count-and-global-dictionary-of-apache-kylin/)
+- [小米大数据：借助Apache Kylin打造高效、易用的一站式OLAP解决方案](https://mp.weixin.qq.com/s/JPK_wHHaI6KPbw3hP34H5g)
+- [可能是全网最深度的 Apache Kylin 查询剖析](https://www.jianshu.com/p/21df8303d2ae)
 
 
 ### 微信公众号：ApacheKylin
 
 - [终于等到你——Kylin 分布式全局字典](https://mp.weixin.qq.com/s/jK-nAOAxaI0k3_Yrt_KlLA)
+
