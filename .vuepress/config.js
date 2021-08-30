@@ -41,6 +41,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/linux/shell',
+          '/linux/network',
           '/linux/rpm_yum',
           '/linux/centos6_centos7_diff',
           '/linux/docker',
@@ -130,6 +131,7 @@ module.exports = {
           '/java/jdk/no_such_method_error',
           '/java/jdk/io',
           '/java/jdk/multi_thread',
+          '/java/jdk/thread_pool',
           '/java/jdk/aqs',
           'java/jdk/condition',
           '/java/jdk/java_concurrent_framework',
@@ -141,6 +143,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/java/jvm/arthas',
           '/java/jvm/jvm_parameter',
           '/java/jvm/classloader',
           '/java/jvm/java_memory_model',
@@ -236,6 +239,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/bigdata/kylin/awesome_kylin',
           '/bigdata/kylin/read_kylin_source',
         ]
       },
@@ -292,11 +296,28 @@ module.exports = {
         ]
       },
       {
+        title: 'OLAP',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/olap/olap',
+          '/bigdata/olap/data_analyze',
+        ]
+      },
+      {
         title: 'ClickHouse',
         collapsable: false,
         sidebarDepth: 0,
         children: [
           '/bigdata/clickhouse/clickhouse',
+        ]
+      },
+      {
+        title: 'Doris',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          'bigdata/doris/doris',
         ]
       },
       {

@@ -24,6 +24,32 @@ OP DAG经过逻辑优化器，对这个图上的边或者结点进行调整，�
 
 这就是一个SQL如何变成MapReduce作业的过程。要想观查这个过程的最终结果，可以打开Hive，输入Explain ＋ 语句，就能够看到。
 
+### Hive Hook函数
+
+Hive执行流程：
+
+```
+Driver.run()
+=> HiveDriverRunHook.preDriverRun()(hive.exec.driver.run.hooks)
+=> Driver.compile()
+=> HiveSemanticAnalyzerHook.preAnalyze()(hive.semantic.analyzer.hook)
+=> SemanticAnalyze(QueryBlock, LogicalPlan, PhyPlan, TaskTree)
+=> HiveSemanticAnalyzerHook.postAnalyze()(hive.semantic.analyzer.hook)
+=> QueryString redactor(hive.exec.query.redactor.hooks)
+=> QueryPlan Generation
+=> Authorization
+=> Driver.execute()
+=> ExecuteWithHookContext.run() || PreExecute.run() (hive.exec.pre.hooks)
+=> TaskRunner
+=> if failed, ExecuteWithHookContext.run()(hive.exec.failure.hooks)
+=> ExecuteWithHookContext.run() || PostExecute.run() (hive.exec.post.hooks)
+=> HiveDriverRunHook.postDriverRun()(hive.exec.driver.run.hooks)
+```
+
+参考
+
+[你想了解的Hive Query生命周期--钩子函数篇！](https://my.oschina.net/kavn/blog/1514648)
+
 ### Ｇroup By优化
 
 Ｇroup By优化通常有Map端数据聚合和倾斜数据分发两种方式。

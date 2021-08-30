@@ -180,6 +180,14 @@ git merge upstream/main
 git merge --ff-only origin/master
 ```
 
+### Git pull不能快进问题
+
+```
+git pull --rebase
+```
+
+参考：[Fatal: Not possible to fast-forward, aborting](https://stackoverflow.com/questions/13106179/fatal-not-possible-to-fast-forward-aborting/43460847)
+
 ## Git工作流
 
 ### Git flow

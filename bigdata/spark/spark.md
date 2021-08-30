@@ -19,6 +19,114 @@ Master URL有效格式：
 
 参考：[Master URLs](https://spark.apache.org/docs/2.4.0/submitting-applications.html#master-urls)
 
+## RDD编程
+
+#### 窄依赖和宽依赖
+
+![spark_deps](./spark.assets/spark_deps.png)
+
+每个 Transformation 操作都会生成一个新的 RDD，RDD 和它依赖的父 RDD（s）的关系有两种不同的类型，即窄依赖和宽依赖：
+
+- 窄依赖指的是子 RDD 只依赖于父 RDD 中一个固定数量的分区
+- 宽依赖指的是子 RDD 的每一个分区都依赖于父 RDD 的所有分区
+
+Spark 会将每一个 Job 分为多个不同的 Stage, 而 Stage 之间的依赖关系则形成了有向无环图。
+
+Spark 会根据 RDD 之间的依赖关系将 DAG 图划分为不同的阶段。
+
+对于窄依赖，由于 Partition 依赖关系的确定性，Partition 的转换处理就可以在同一个线程里完成，窄依赖就被 Spark 划分到同一个 stage 中。
+
+而对于宽依赖，只能等父RDD shuffle 处理完成后，下一个 stage 才能开始接下来的计算。
+
+#### 划分Stage过程
+
+- 首先根据rdd的算子操作顺序生成DAG有向无环图，接下里从最后一个rdd往前推，创建一个新的stage，把该rdd加入到该stage中，它是最后一个stage。
+- 在往前推的过程中运行遇到了窄依赖就把该rdd加入到本stage中，如果遇到了宽依赖，就从宽依赖切开，那么最后一个stage也就结束了。
+- 重新创建一个新的stage，按照第二个步骤继续往前推，一直到最开始的rdd，整个划分stage也就结束了
+
+#### 设置并行度
+
+// TODO
+
+### Transformations
+
+| Transformation                                               | Meaning                                                      |
+| :----------------------------------------------------------- | :----------------------------------------------------------- |
+| **map**(*func*)                                              | Return a new distributed dataset formed by passing each element of the source through a function *func*. |
+| **filter**(*func*)                                           | Return a new dataset formed by selecting those elements of the source on which *func* returns true. |
+| **flatMap**(*func*)                                          | Similar to map, but each input item can be mapped to 0 or more output items (so *func* should return a Seq rather than a single item). |
+| **mapPartitions**(*func*)                                    | Similar to map, but runs separately on each partition (block) of the RDD, so *func* must be of type Iterator<T> => Iterator<U> when running on an RDD of type T. |
+| **mapPartitionsWithIndex**(*func*)                           | Similar to mapPartitions, but also provides *func* with an integer value representing the index of the partition, so *func* must be of type (Int, Iterator<T>) => Iterator<U> when running on an RDD of type T. |
+| **sample**(*withReplacement*, *fraction*, *seed*)            | Sample a fraction *fraction* of the data, with or without replacement, using a given random number generator seed. |
+| **union**(*otherDataset*)                                    | Return a new dataset that contains the union of the elements in the source dataset and the argument. |
+| **intersection**(*otherDataset*)                             | Return a new RDD that contains the intersection of elements in the source dataset and the argument. |
+| **distinct**([*numPartitions*]))                             | Return a new dataset that contains the distinct elements of the source dataset. |
+| **groupByKey**([*numPartitions*])                            | When called on a dataset of (K, V) pairs, returns a dataset of (K, Iterable<V>) pairs. **Note:** If you are grouping in order to perform an aggregation (such as a sum or average) over each key, using `reduceByKey` or `aggregateByKey` will yield much better performance. **Note:** By default, the level of parallelism in the output depends on the number of partitions of the parent RDD. You can pass an optional `numPartitions` argument to set a different number of tasks. |
+| **reduceByKey**(*func*, [*numPartitions*])                   | When called on a dataset of (K, V) pairs, returns a dataset of (K, V) pairs where the values for each key are aggregated using the given reduce function *func*, which must be of type (V,V) => V. Like in `groupByKey`, the number of reduce tasks is configurable through an optional second argument. |
+| **aggregateByKey**(*zeroValue*)(*seqOp*, *combOp*, [*numPartitions*]) | When called on a dataset of (K, V) pairs, returns a dataset of (K, U) pairs where the values for each key are aggregated using the given combine functions and a neutral "zero" value. Allows an aggregated value type that is different than the input value type, while avoiding unnecessary allocations. Like in `groupByKey`, the number of reduce tasks is configurable through an optional second argument. |
+| **sortByKey**([*ascending*], [*numPartitions*])              | When called on a dataset of (K, V) pairs where K implements Ordered, returns a dataset of (K, V) pairs sorted by keys in ascending or descending order, as specified in the boolean `ascending` argument. |
+| **join**(*otherDataset*, [*numPartitions*])                  | When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (V, W)) pairs with all pairs of elements for each key. Outer joins are supported through `leftOuterJoin`, `rightOuterJoin`, and `fullOuterJoin`. |
+| **cogroup**(*otherDataset*, [*numPartitions*])               | When called on datasets of type (K, V) and (K, W), returns a dataset of (K, (Iterable<V>, Iterable<W>)) tuples. This operation is also called `groupWith`. |
+| **cartesian**(*otherDataset*)                                | When called on datasets of types T and U, returns a dataset of (T, U) pairs (all pairs of elements). |
+| **pipe**(*command*, *[envVars]*)                             | Pipe each partition of the RDD through a shell command, e.g. a Perl or bash script. RDD elements are written to the process's stdin and lines output to its stdout are returned as an RDD of strings. |
+| **coalesce**(*numPartitions*)                                | Decrease the number of partitions in the RDD to numPartitions. Useful for running operations more efficiently after filtering down a large dataset. |
+| **repartition**(*numPartitions*)                             | Reshuffle the data in the RDD randomly to create either more or fewer partitions and balance it across them. This always shuffles all data over the network. |
+| **repartitionAndSortWithinPartitions**(*partitioner*)        | Repartition the RDD according to the given partitioner and, within each resulting partition, sort records by their keys. This is more efficient than calling `repartition` and then sorting within each partition because it can push the sorting down into the shuffle machinery. |
+
+其中shuffle算子包括：repartition操作如repartition 和 coalesce，ByKey操作（除了countByKey）如groupByKey 和 reduceByKey，join操作如cogroup 和 join。
+
+### Actions
+
+| Action                                             | Meaning                                                      |
+| :------------------------------------------------- | :----------------------------------------------------------- |
+| **reduce**(*func*)                                 | Aggregate the elements of the dataset using a function *func* (which takes two arguments and returns one). The function should be commutative and associative so that it can be computed correctly in parallel. |
+| **collect**()                                      | Return all the elements of the dataset as an array at the driver program. This is usually useful after a filter or other operation that returns a sufficiently small subset of the data. |
+| **count**()                                        | Return the number of elements in the dataset.                |
+| **first**()                                        | Return the first element of the dataset (similar to take(1)). |
+| **take**(*n*)                                      | Return an array with the first *n* elements of the dataset.  |
+| **takeSample**(*withReplacement*, *num*, [*seed*]) | Return an array with a random sample of *num* elements of the dataset, with or without replacement, optionally pre-specifying a random number generator seed. |
+| **takeOrdered**(*n*, *[ordering]*)                 | Return the first *n* elements of the RDD using either their natural order or a custom comparator. |
+| **saveAsTextFile**(*path*)                         | Write the elements of the dataset as a text file (or set of text files) in a given directory in the local filesystem, HDFS or any other Hadoop-supported file system. Spark will call toString on each element to convert it to a line of text in the file. |
+| **saveAsSequenceFile**(*path*) (Java and Scala)    | Write the elements of the dataset as a Hadoop SequenceFile in a given path in the local filesystem, HDFS or any other Hadoop-supported file system. This is available on RDDs of key-value pairs that implement Hadoop's Writable interface. In Scala, it is also available on types that are implicitly convertible to Writable (Spark includes conversions for basic types like Int, Double, String, etc). |
+| **saveAsObjectFile**(*path*) (Java and Scala)      | Write the elements of the dataset in a simple format using Java serialization, which can then be loaded using `SparkContext.objectFile()`. |
+| **countByKey**()                                   | Only available on RDDs of type (K, V). Returns a hashmap of (K, Int) pairs with the count of each key. |
+| **foreach**(*func*)                                | Run a function *func* on each element of the dataset. This is usually done for side effects such as updating an [Accumulator](https://spark.apache.org/docs/2.4.0/rdd-programming-guide.html#accumulators) or interacting with external storage systems. **Note**: modifying variables other than Accumulators outside of the `foreach()` may result in undefined behavior. See [Understanding closures ](https://spark.apache.org/docs/2.4.0/rdd-programming-guide.html#understanding-closures-a-nameclosureslinka)for more details. |
+
+### 参考
+
+[Transformations](https://spark.apache.org/docs/2.4.0/rdd-programming-guide.html#transformations)
+
+[Actions](https://spark.apache.org/docs/2.4.0/rdd-programming-guide.html#actions)
+
+[Wide and Narrow dependencies in Apache Spark](https://medium.com/@dvcanton/wide-and-narrow-dependencies-in-apache-spark-21acf2faf031)
+
+[Spark中的narrow/wide dependency如何理解，有什么作用?](https://www.zhihu.com/question/37137360)
+
+[Job 逻辑执行图](https://github.com/JerryLead/SparkInternals/blob/master/markdown/2-JobLogicalPlan.md)
+
+[Spark性能调优：合理设置并行度](https://whiteding.fun/2020/05/26/Spark%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%EF%BC%9A%E5%90%88%E7%90%86%E8%AE%BE%E7%BD%AE%E5%B9%B6%E8%A1%8C%E5%BA%A6/)
+
+## 配置
+
+| 属性名                    | 默认值                                                       | 含义                                     |
+| ------------------------- | ------------------------------------------------------------ | ---------------------------------------- |
+| spark.default.parallelism | 对于像是`reduceByKey`、 `join`的分布式shuffle操作，取值为父RDD最大的分区数，对于像`parallelize`这样的没有父RDD的操作，它依赖于cluster manager：<br />Local模式：本机的核数<br />Mesos fine grained mode: 8<br />其他：2和所有executor节点核数的最大值 | RDD中transformations算子默认返回的分区数 |
+|                           |                                                              |                                          |
+|                           |                                                              |                                          |
+|                           |                                                              |                                          |
+
+### 参考
+
+[Spark Configuration](https://spark.apache.org/docs/2.4.0/configuration.html#execution-behavior)
+
+[通过spark.default.parallelism谈Spark并行度](https://zhuanlan.zhihu.com/p/97700916)
+
+## 代码示例
+
+### 参考
+
+[examples](https://github.com/apache/spark/tree/master/examples/src/main/scala/org/apache/spark/examples)
+
 ## 源码编译
 
 ```shell
@@ -67,6 +175,18 @@ spark.sql("select * from ods.tab1").show();
 将RDD序列化后可以大大减少内存的空间占用，序列化的唯一的缺点就是在获取数据的时候需要反序列化。
 
 在内存资源极度充足的情况下为了数据的高可靠性，可以使用双副本机制进行持久化。
+
+| 存储级别                              | 意义                                                         |
+| :------------------------------------ | :----------------------------------------------------------- |
+| MEMORY_ONLY                           | 将 RDD 作为反序列化的 Java 对象存储在 JVM 中。如果 RDD 不适合内存，某些分区将不会被缓存，并且会在每次需要时重新计算。这是默认级别。 |
+| MEMORY_AND_DISK                       | 将 RDD 作为反序列化的 Java 对象存储在 JVM 中。如果 RDD 不适合内存，则存储不适合磁盘的分区，并在需要时从那里读取它们。 |
+| MEMORY_ONLY_SER （Java 和 Scala）     | 将 RDD 存储为*序列化的*Java 对象（每个分区一个字节数组）。这通常比反序列化对象更节省空间，尤其是在使用[快速序列化器时](https://spark.apache.org/docs/2.4.0/tuning.html)，但读取时更占用 CPU。 |
+| MEMORY_AND_DISK_SER （Java 和 Scala） | 与 MEMORY_ONLY_SER 类似，但将不适合内存的分区溢出到磁盘，而不是在每次需要时即时重新计算它们。 |
+| DISK_ONLY                             | 仅将 RDD 分区存储在磁盘上。                                  |
+| MEMORY_ONLY_2、MEMORY_AND_DISK_2 等   | 与上述级别相同，但在两个集群节点上复制每个分区。             |
+| OFF_HEAP（实验性）                    | 与 MEMORY_ONLY_SER 类似，但将数据存储在 [堆外内存中](https://spark.apache.org/docs/2.4.0/configuration.html#memory-management)。这需要启用堆外内存。 |
+
+参考：[RDD Persistence](https://spark.apache.org/docs/2.4.0/rdd-programming-guide.html#rdd-persistence)
 
 #### 广播变量
 
@@ -147,6 +267,15 @@ spark默认的网络连接的超时时长，是60s；如果卡住60s都无法建
 reduce端聚合内存，如果数据量比较大，reduce task拉取过来的数据很多，那么就会频繁发生reduce端聚合内存不够用，频繁发生spill操作，溢写到磁盘上去。后面在进行聚合操作的时候，很可能会多次读取磁盘中的数据，进行聚合。默认不调优，在数据量比较大的情况下，可能频繁地发生reduce端的磁盘文件的读写。
 
 ##### ShuffleManager
+
+临时文件数量：
+
+| ShuffleManager     | 机制       | 数量                                       |
+| ------------------ | ---------- | ------------------------------------------ |
+| HashShuffleManager | 普通机制   | M（map task的个数）*R（reduce task的个数） |
+| HashShuffleManager | 优化机制   | C（core的个数）*R（Reduce的个数）          |
+| SortShuffleManager | 普通机制   | 2*M                                        |
+| SortShuffleManager | bypass机制 | 没有排序：2*M                              |
 
 | 参数                                    | 选项                            | 备注                                                         |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
@@ -312,6 +441,22 @@ val cachedUsersRDD = usersRDD.cache()
 
 ## 原理
 
+### Join原理
+
+| 类型                  | 特点                                   | 适用场景                                    | 相关配置参数                             |
+| --------------------- | -------------------------------------- | ------------------------------------------- | ---------------------------------------- |
+| Broadcast Hash Join   | 没有Shuffle                            | 等值Join，不能用于Full Outer Join           | spark.sql.autoBroadcastJoinThreshold=10M |
+| Sort Merge Join       | 有Shuffle，内存比Hash Join要少         | 只适用等值Join，且Join条件中的key是可排序的 | spark.sql.join.prefersortmergeJoin=true  |
+| Shuffle Hash Join     | 有Shuffle                              | 等值Join，不能用于Full Outer Join           |                                          |
+| Broadcast Nested Join | 需要广播数据集和嵌套循环               | 默认                                        |                                          |
+| Cartesian Join        | 结果的分区数等于输入数据集的分区数之积 | Cross Join                                  |                                          |
+
+#### 参考
+
+[SparkSQL – 有必要坐下来聊聊Join](http://hbasefly.com/2017/03/19/sparksql-basic-join/)
+
+[Spark的五种JOIN策略解析](https://jiamaoxiang.top/2020/11/01/Spark%E7%9A%84%E4%BA%94%E7%A7%8DJOIN%E6%96%B9%E5%BC%8F%E8%A7%A3%E6%9E%90/)
+
 ### Shuffle原理
 
 在spark中，发生shuffle操作主要是以下几个算子：
@@ -360,8 +505,11 @@ shuffle前半部分的task在写入数据到磁盘文件之前，都会先写入
 合并map端输出文件，对咱们的spark的性能有哪些方面的影响呢？
 
 - 减少map task写入磁盘文件的IO
-
 - 减少网络传输的性能消耗
+
+#### Hadoop和Spark Shuffle机制对比
+
+参考：[Hadoop和Spark Shuffle机制对比](https://cloud.tencent.com/developer/news/447236)
 
 ### 内存管理
 

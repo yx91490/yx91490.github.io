@@ -530,6 +530,10 @@ b)    用了Order by
 > [Hive小文件合并](https://blog.csdn.net/yycdaizi/article/details/43341239)
 >
 > [Hive优化之小文件问题及其解决方案](https://blog.csdn.net/lzm1340458776/article/details/43567209)
+>
+> [Hive/HiveQL常用优化方法全面总结（上篇）](https://www.jianshu.com/p/8e2f2f0d4b6c)
+>
+> [Hive/HiveQL常用优化方法全面总结（下篇）](https://www.jianshu.com/p/deb4a6f91d3b)
 
 ### Hive SQL优化
 
