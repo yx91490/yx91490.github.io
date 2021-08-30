@@ -455,6 +455,8 @@ val cachedUsersRDD = usersRDD.cache()
 
 [SparkSQL – 有必要坐下来聊聊Join](http://hbasefly.com/2017/03/19/sparksql-basic-join/)
 
+[Spark的五种JOIN策略解析](https://jiamaoxiang.top/2020/11/01/Spark%E7%9A%84%E4%BA%94%E7%A7%8DJOIN%E6%96%B9%E5%BC%8F%E8%A7%A3%E6%9E%90/)
+
 ### Shuffle原理
 
 在spark中，发生shuffle操作主要是以下几个算子：
