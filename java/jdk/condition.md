@@ -175,7 +175,7 @@ Condition实现可以提供与Object监视器方法不同的行为和语义，�
 
 实现可以更倾向于响应中断，而不是响应信号的正常方法返回，或超过指示指定等待时间的流逝。在这两种情况下，实现都必须确保信号被重定向到另一个等待线程(如果有的话)。
 
-### await方法注释
+### await(long, TimeUnit)方法注释
 
 使当前线程等待，直到收到信号或被中断，或指定的等待时间过去。这种方法在行为上相当于：
 
@@ -251,3 +251,26 @@ awaitNanos(unit.toNanos(time)) > 0
 #### 实现注意事项
 
 当调用此方法时，实现可能(通常也确实)要求当前线程持有与此Condition关联的锁。实现必须记录这个前提条件以及在未持有锁时所采取的任何操作。通常，会抛出一个异常，如IllegalMonitorStateException。
+
+### 参考
+
+[Interface Condition](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/locks/Condition.html)
+
+## await方法对比
+
+| 方法                   | 响应信号 | 响应中断 | 支持超时时间 | 返回值             |
+| ---------------------- | -------- | -------- | ------------ | ------------------ |
+| await()                | T        | T        | F            | void               |
+| awaitUninterruptibly() | T        | F        | F            | void               |
+| awaitNanos(long)       | T        | T        | T            | 剩余等待时间       |
+| await(long, TimeUnit)  | T        | T        | T            | 是否有剩余等待时间 |
+| awaitUntil(Date)       | T        | T        | T            | 是否有剩余等待时间 |
+
+## 与Object方法对比
+
+| 对比项           | Condition | Object.wait | Object.signal |
+| ---------------- | --------- | ----------- | ------------- |
+| 通知的顺序保证   | 有        |             |               |
+| 执行通知时持有锁 | 不需要    |             |               |
+|                  |           |             |               |
+
