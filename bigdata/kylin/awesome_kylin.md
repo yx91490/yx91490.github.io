@@ -50,14 +50,13 @@
 - [Apache Kylin精确去重指标优化](https://hexiaoqiao.github.io/blog/2017/01/18/exact-count-optimization-of-apache-kylin/)
 - [Apache Kylin 在美团数十亿数据 OLAP 场景下的实践](https://www.infoq.cn/article/kylin-apache-in-meituan-olap-scenarios-practice)
 
+### 微信公众号：ApacheKylin
+
+- [终于等到你——Kylin 分布式全局字典](https://mp.weixin.qq.com/s/jK-nAOAxaI0k3_Yrt_KlLA)
+
 ### 其他文章
 
 - [Apache Kylin 的快速数据立方体算法——概述](https://www.infoq.cn/article/apache-kylin-algorithm)
 - [小米大数据：借助Apache Kylin打造高效、易用的一站式OLAP解决方案](https://mp.weixin.qq.com/s/JPK_wHHaI6KPbw3hP34H5g)
 - [可能是全网最深度的 Apache Kylin 查询剖析](https://www.jianshu.com/p/21df8303d2ae)
-
-
-### 微信公众号：ApacheKylin
-
-- [终于等到你——Kylin 分布式全局字典](https://mp.weixin.qq.com/s/jK-nAOAxaI0k3_Yrt_KlLA)
-
+- [Kylin Cube构建步骤剖析&优化点](https://blog.csdn.net/lemonZhaoTao/article/details/109953231)
