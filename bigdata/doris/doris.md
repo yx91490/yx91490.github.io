@@ -92,7 +92,7 @@ BE负责执行查询计划、数据存储
 
 | 物理算子       | 性能 | 场景                 |
 | -------------- | ---- | -------------------- |
-| Hash Join      | 块   | 等值Join             |
+| Hash Join      | 快   | 等值Join             |
 | Nest Loop Join | 慢   | 不等值Join或笛卡尔积 |
 
 ### shuffle方式
@@ -164,6 +164,8 @@ Join调优案例：
 ### 参考
 
 [Apache Doris 的Join实现与调优技巧实践](https://www.slidestalk.com/Baiyulan/ApacheDorisJoin70066?video)
+
+[Runtime Filter](https://doris.apache.org/master/zh-CN/administrator-guide/runtime-filter.html)
 
 ## 导入机制
 
