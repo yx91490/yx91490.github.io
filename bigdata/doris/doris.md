@@ -165,6 +165,10 @@ Join调优案例：
 
 [Apache Doris 的Join实现与调优技巧实践](https://www.slidestalk.com/Baiyulan/ApacheDorisJoin70066?video)
 
+[Colocation Join](https://doris.apache.org/master/zh-CN/administrator-guide/colocation-join.html)
+
+[Bucket Shuffle Join](https://doris.apache.org/master/zh-CN/administrator-guide/bucket-shuffle-join.html)
+
 [Runtime Filter](https://doris.apache.org/master/zh-CN/administrator-guide/runtime-filter.html)
 
 ## 导入机制
