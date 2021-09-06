@@ -57,6 +57,7 @@
 ### 其他文章
 
 - [Apache Kylin 的快速数据立方体算法——概述](https://www.infoq.cn/article/apache-kylin-algorithm)
+- [【案例分享】Apache Kylin在美团点评的应用](https://zhuanlan.zhihu.com/p/27461561)
 - [小米大数据：借助Apache Kylin打造高效、易用的一站式OLAP解决方案](https://mp.weixin.qq.com/s/JPK_wHHaI6KPbw3hP34H5g)
 - [可能是全网最深度的 Apache Kylin 查询剖析](https://www.jianshu.com/p/21df8303d2ae)
 - [Kylin Cube构建步骤剖析&优化点](https://blog.csdn.net/lemonZhaoTao/article/details/109953231)
