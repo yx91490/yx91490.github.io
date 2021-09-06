@@ -154,3 +154,28 @@ Doris使用上需要注意的一点是写入的频率最好控制在分钟级，
 - OLAP引擎里做ETL任务要慎重，容易影响集群稳定性
 - 禁止本地直连生产环境进行调试
 
+## OLAP计算模型
+
+<img src="./olap.assets/image-20210905201219266.png" alt="image-20210905201219266" style="zoom: 67%;" />
+
+| 计算模型       | 说明                                                         | 优点                                  | 缺点                         |
+| -------------- | ------------------------------------------------------------ | ------------------------------------- | ---------------------------- |
+| Scatter-Gather | 相当于MapReduce中的一趟Map和Reduce，中间计算结果往往存储在内存中，通过网络直接交换。没有shuffle过程 |                                       | 无法完成大表Join，高基数聚合 |
+| MapReduce      | 任务之间需要等待，中间数据落盘，多轮迭代                     | 失败任务可以重试，适合大数据量ETL操作 | 慢                           |
+| MPP            | 流水线执行，数据内存传输                                     |                                       | 失败任务不可以重试           |
+
+### 参考
+
+[第1章04节 | 常见开源OLAP技术架构对比](https://zhuanlan.zhihu.com/p/266402829)
+
+## 案例实践
+
+### 有序漏斗/留存分析
+
+Apache Kylin中使用`intersect_count()`进行计算，参考：
+
+[KYLIN-2088](https://issues.apache.org/jira/browse/KYLIN-2088)
+
+[Retention Or Conversion Rate Analyze in Apache Kylin](http://kylin.apache.org/blog/2016/11/28/intersect-count/)
+
+[用 Apache Kylin 做精准留存分析，对刷量 say『 No』！](https://uzshare.com/view/790704)
