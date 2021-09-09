@@ -235,6 +235,14 @@ module.exports = {
         ]
       },
       {
+        title: 'Waterdrop',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/waterdrop/waterdrop',
+        ]
+      },
+      {
         title: 'Kylin',
         collapsable: false,
         sidebarDepth: 0,
