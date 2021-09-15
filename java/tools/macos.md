@@ -94,3 +94,17 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 ```
 
 参考：[Install and Use GNU Command Line Tools on macOS/OS X](https://www.topbug.net/blog/2013/04/14/install-and-use-gnu-command-line-tools-in-mac-os-x/)
+
+## 配置
+
+### 开启F1 - F12功能键
+
+关于 -> 系统偏好设置 -> 键盘：
+
+<img src="./macos.assets/keyboard.png" alt="keyboard" style="zoom:50%;" />
+
+### 交换Fn键和Ctrl键
+
+安装[Karabiner-Elements](https://karabiner-elements.pqrs.org/)并配置如下：
+
+<img src="./macos.assets/fn-1699444.png" alt="fn" style="zoom: 33%;" />
