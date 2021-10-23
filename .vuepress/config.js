@@ -90,6 +90,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           '/java/maven/maven',
+          '/java/maven/maven_lifecycle',
           '/java/maven/maven_archetype',
           '/java/maven/maven_plugin',
           '/java/maven/maven_modules',
