@@ -188,6 +188,24 @@ git pull --rebase
 
 参考：[Fatal: Not possible to fast-forward, aborting](https://stackoverflow.com/questions/13106179/fatal-not-possible-to-fast-forward-aborting/43460847)
 
+### 生成及合入patch
+
+生成patch 的方法：
+
+```shell
+git format-patch <commitId>
+```
+
+打入patch 的方法：
+
+```shell
+git am <file1>, <file2>...
+```
+
+参考
+
+[Git 打补丁-- patch 和 diff 的使用（详细）](https://juejin.cn/post/6844903646384095245)
+
 ## Git工作流
 
 ### Git flow
