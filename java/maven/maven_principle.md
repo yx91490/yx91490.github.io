@@ -26,15 +26,15 @@ mvn <phase1> <phase2> <phase3>...
 
 `mvn clean`实际执行的阶段：
 
-![mvn clean](./maven_lifecycle.assets/mvn clean.png)
+![mvn clean](./maven_lifecycle.assets/mvn_clean.png)
 
 `mvn clean install`实际执行的阶段：
 
-![mvn clean install](./maven_lifecycle.assets/mvn clean install.png)
+![mvn clean install](./maven_lifecycle.assets/mvn_clean_install.png)
 
 `mvn test`实际执行的阶段：
 
-![mvn test](./maven_lifecycle.assets/mvn test.png)
+![mvn test](./maven_lifecycle.assets/mvn_test.png)
 
 ### 插件和生命周期阶段绑定
 
