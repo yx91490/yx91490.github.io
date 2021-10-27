@@ -63,11 +63,11 @@ Git协议的缺点是缺少身份验证。它还需要防火墙访问端口9418�
 
 ## Git命令
 
-#### clone单个分支
+### clone单个分支
 
     git clone --single-branch -b "jdk/jdk" git@github.com:yx91490/openjdk.git openjdk2
 
-#### 修改已push的user信息
+### 修改已push的user信息
 
 执行脚本：
 
@@ -107,7 +107,7 @@ git merge --allow-unrelated-histories
 
 参考：[changing author info](https://help.github.com/en/articles/changing-author-info)
 
-#### 修改已push commit的提交日期
+### 修改已push commit的提交日期
 
 1. 修改日期格式：
 
@@ -126,7 +126,7 @@ git merge --allow-unrelated-histories
         fi'
    ```
 
-#### 从远程仓库同步tags
+### 从远程仓库同步tags
 
 ```bash
 git fetch --all --tags
@@ -134,7 +134,7 @@ git fetch --all --tags
 
 参考：[How To Checkout Git Tags](https://devconnected.com/how-to-checkout-git-tags/)
 
-#### 删除远程分支
+### 删除远程分支
 
 ```
 git push origin --delete <branch_name>
@@ -142,7 +142,7 @@ git push origin --delete <branch_name>
 
 参考：[git删除远程分支和本地分支](https://www.cnblogs.com/luosongchao/p/3408365.html)
 
-### 同步Fork的仓库
+### 同步上游仓库
 
 1.配置上游remote：
 
@@ -174,9 +174,10 @@ git merge upstream/main
 
 [Syncing a fork](https://docs.github.com/en/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork)
 
-### “仅快进”的合并
+### 合并
 
 ```shell
+# “仅快进”的合并
 git merge --ff-only origin/master
 ```
 
@@ -205,6 +206,31 @@ git am <file1>, <file2>...
 参考
 
 [Git 打补丁-- patch 和 diff 的使用（详细）](https://juejin.cn/post/6844903646384095245)
+
+### 子模块
+
+克隆并自动初始化并更新仓库中的每一个子模块：
+
+```shell
+git clone --recurse-submodules https://github.com/<account>/<repo>
+```
+
+或者克隆之后再进行子模块的初始化：
+
+```shell
+# 克隆不包含子模块
+git clone https://github.com/<account>/<repo>
+
+# 初始化本地配置文件
+git submodule init
+
+# 从该项目中抓取所有数据并检出父项目中列出的合适的提交
+git submodule update
+```
+
+参考：
+
+[7.11 Git 工具 - 子模块](https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97)
 
 ## Git工作流
 
