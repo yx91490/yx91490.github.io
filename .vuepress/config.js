@@ -347,6 +347,7 @@ module.exports = {
         children: [
           '/bigdata/impala/impala',
           '/bigdata/impala/impala_admin',
+          '/bigdata/impala/impala_issues',
         ]
       },
       {
