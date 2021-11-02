@@ -218,29 +218,23 @@ Sleeping for 17 seconds before retrying
 [Errno socket error] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:618)
 Sleeping for 13 seconds before retrying
 Getting package info from /simple/boto3/
-Before urlopen
 [Errno 2] No such file or directory: '/simple/boto3/'
 Sleeping for 155 seconds before retrying
 Getting package info from https://pypi.tuna.tsinghua.edu.cn/simple/boto3/
-Before urlopen
 [pid  2847] open("/etc/pki/tls/cert.pem", O_RDONLY) = 8
 [pid  2847] open("/etc/hosts", O_RDONLY|O_CLOEXEC) = 8
 [Errno socket error] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:618)
 Sleeping for 18 seconds before retrying
 Getting package info from /simple/botocore/
-Before urlopen
 [Errno 2] No such file or directory: '/simple/botocore/'
 Sleeping for 108 seconds before retrying
 Getting package info from https://pypi.tuna.tsinghua.edu.cn/simple/botocore/
-Before urlopen
 [pid  2849] open("/etc/pki/tls/cert.pem", O_RDONLY) = 6
 [pid  2849] open("/etc/hosts", O_RDONLY|O_CLOEXEC) = 6
 Getting package info from https://pypi.tuna.tsinghua.edu.cn/simple/simplejson/
-Before urlopen
 [pid  2846] open("/etc/pki/tls/cert.pem", O_RDONLY) = 9
 [pid  2846] open("/etc/hosts", O_RDONLY|O_CLOEXEC) = 9
 ccd cGetting package info from https://pypi.tuna.tsinghua.edu.cn/simple/allpairs/
-Before urlopen
 [pid  2848] open("/etc/pki/tls/cert.pem", O_RDONLY) = 10
 [pid  2848] open("/etc/hosts", O_RDONLY|O_CLOEXEC) = 10
 c[Errno socket error] [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:618)
