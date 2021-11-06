@@ -23,7 +23,7 @@ We believe that Raft is superior to Paxos and other consensus algorithms, both f
 
 ## 2 Replicated state machines
 
-![image20211104232244010](./raft_paper.assets/image20211104232244010.png)
+![image20211104232244010](./raft_paper.assets/image-20211104232244010.png)
 
 > Figure 1: Replicated state machine architecture. The consensus algorithm manages a replicated log containing state machine commands from clients. The state machines process identical sequences of commands from the logs, so they produce the same outputs.
 
@@ -51,11 +51,11 @@ There were numerous points in the design of Raft where we had to choose among al
 
 ## 5 The Raft consensus algorithm
 
-![image20211104232747561](./raft_paper.assets/image20211104232747561.png)
+![image20211104232747561](./raft_paper.assets/image-20211104232747561.png)
 
 > Figure 2: A condensed summary of the Raft consensus algorithm (excluding membership changes and log compaction). The server behavior in the upperleft box is described as a set of rules that trigger independently and repeatedly. Section numbers such as §5.2 indicate where particular features are discussed. A formal specification [31] describes the algorithm more precisely.
 
-<img src="./raft_paper.assets/image20211104232828729.png" alt="image20211104232828729" style="zoom:50%;" />
+<img src="./raft_paper.assets/image-20211104232828729.png" alt="image20211104232828729" style="zoom:50%;" />
 
 > Figure 3: Raft guarantees that each of these properties is true at all times. The section numbers indicate where each property is discussed.
 
@@ -71,11 +71,11 @@ After presenting the consensus algorithm, this section discusses the issue of av
 
 - 5.1 Raft basics
 
-![image20211104233011229](./raft_paper.assets/image20211104233011229.png)
+![image20211104233011229](./raft_paper.assets/image-20211104233011229.png)
 
 > Figure 4: Server states. Followers only respond to requests from other servers. If a follower receives no communication, it becomes a candidate and initiates an election. A candidate that receives votes from a majority of the full cluster becomes the new leader. Leaders typically operate until they fail.
 
-![image20211104233112608](./raft_paper.assets/image20211104233112608.png)
+![image20211104233112608](./raft_paper.assets/image-20211104233112608.png)
 
 > Figure 5: Time is divided into terms, and each term begins with an election. After a successful election, a single leader manages the cluster until the end of the term. Some elections fail, in which case the term ends without choosing a leader. The transitions between terms may be observed at different times on different servers.
 
@@ -87,7 +87,7 @@ Different servers may observe the transitions between terms at different times, 
 
 - 5.2 Leader election
 
-![image20211104233231178](./raft_paper.assets/image20211104233231178.png)
+![image20211104233231178](./raft_paper.assets/image-20211104233231178.png)
 
 > Figure 6: Logs are composed of entries, which are numbered sequentially. Each entry contains the term in which it was created (the number in each box) and a command for the state machine. An entry is considered committed if it is safe for that entry to be applied to state machines.
 
@@ -97,7 +97,7 @@ Elections are an example of how understandability guided our choice between desi
 
 - 5.3 Log replication
 
-![image20211104233532422](./raft_paper.assets/image20211104233532422.png)
+![image20211104233532422](./raft_paper.assets/image-20211104233532422.png)
 
 > Figure 7: When the leader at the top comes to power, it is possible that any of scenarios (a–f) could occur in follower logs. Each box represents one log entry; the number in the box is its term. A follower may be missing entries (a–b), may have extra uncommitted entries (c–d), or both (e–f). For example, scenario (f) could occur if that server was the leader for term 2, added several entries to its log, then crashed before committing any of them; it restarted quickly, became leader for term 3, and added a few more entries to its log; before any of the entries in either term 2 or term 3 were committed, the server crashed again and remained down for several terms.
 
@@ -119,7 +119,7 @@ The previous sections described how Raft elects leaders and replicates log entri
 
 #- 5.4.1 Election restriction
 
-![image20211104233737401](./raft_paper.assets/image20211104233737401.png)
+![image20211104233737401](./raft_paper.assets/image-20211104233737401.png)
 
 > Figure 8: A time sequence showing why a leader cannot determine commitment using log entries from older terms. In (a) S1 is leader and partially replicates the log entry at index \2. In (b) S1 crashes; S5 is elected leader for term 3 with votes from S3, S4, and itself, and accepts a different entry at log index 2. In (c) S5 crashes; S1 restarts, is elected leader, and continues replication. At this point, the log entry from term 2 has been replicated on a majority of the servers, but it is not committed. If S1 crashes as in (d), S5 could be elected leader (with votes from S2, S3, and S4) and overwrite the entry with its own entry from term 3. However, if S1 replicates an entry from its current term on a majority of the servers before crashing, as in (e), then this entry is committed (S5 cannot win an election). At this point all preceding entries in the log are committed as well.
 
@@ -128,7 +128,7 @@ In any leaderbased consensus algorithm, the leader must eventually store all of 
 
 #- 5.4.2 Committing entries from previous terms
 
-![image20211104233832941](./raft_paper.assets/image20211104233832941.png)
+![image20211104233832941](./raft_paper.assets/image-20211104233832941.png)
 
 > Figure 9: If S1 (leader for term T) commits a new log entry from its term, and S5 is elected leader for a later term U, then there must be at least one server (S3) that accepted the log entry and also voted for S5.
 
@@ -178,7 +178,7 @@ The broadcast time and MTBF are properties of the underlying system, while the e
 
 ## 6 Cluster membership changes
 
-![image20211104234829476](./raft_paper.assets/image20211104234829476.png)
+![image20211104234829476](./raft_paper.assets/image-20211104234829476.png)
 
 > Figure 11: Timeline for a configuration change. Dashed lines  show configuration entries that have been created but not committed, and solid lines show the latest committed configuration entry. The leader first creates the Cold,new configuration entry in its log and commits it to Cold,new (a majority of Cold and a majority of Cnew). Then it creates the Cnew entry and commits it to a majority of Cnew. There is no point in time in which Cold and Cnew can both make decisions independently.
 
@@ -193,7 +193,7 @@ There are three more issues to address for reconfiguration. The first issue is t
 
 ## 7 Log compaction
 
-![image20211104234937062](./raft_paper.assets/image20211104234937062.png)
+![image20211104234937062](./raft_paper.assets/image-20211104234937062.png)
 
 > Figure 12: A server replaces the committed entries in its log  (indexes 1 through 5) with a new snapshot, which stores just the current state (variables x and y in this example). The snapshot’s last included index and term serve to position the snapshot in the log preceding entry 6.
 
@@ -201,7 +201,7 @@ Raft’s log grows during normal operation to incorporate more client requests, 
 
 Incremental approaches to compaction, such as log cleaning [36] and logstructured merge trees [30, 5], are also possible. These operate on a fraction of the data at once, so they spread the load of compaction more evenly over time. They first select a region of data that has accumulated many deleted and overwritten objects, then they rewrite the live objects from that region more compactly and free the region. This requires significant additional mechanism and complexity compared to snapshotting, which simplifies the problem by always operating on the entire data set. While log cleaning would require modifications to Raft, state machines can implement LSM trees using the same interface as snapshotting.  Figure 12 shows the basic idea of snapshotting in Raft.  Each server takes snapshots independently, covering just the committed entries in its log. Most of the work consists of the state machine writing its current state to the snapshot. Raft also includes a small amount of metadata in the snapshot: the last included index is the index of the last entry in the log that the snapshot replaces (the last entry the state machine had applied), and the last included term is the term of this entry. These are preserved to support the AppendEntries consistency check for the first log entry following the snapshot, since that entry needs a previous log index and term. To enable cluster membership changes (Section 6), the snapshot also includes the latest configuration in the log as of last included index. Once a server completes writing a snapshot, it may delete all log entries up through the last included index, as well as any prior snapshot.  Although servers normally take snapshots independently, the leader must occasionally send snapshots to followers that lag behind. This happens when the leader has already discarded the next log entry that it needs to send to a follower. Fortunately, this situation is unlikely in normal operation: a follower that has kept up with the leader would already have this entry. However, an exceptionally slow follower or a new server joining the cluster (Section 6) would not. The way to bring such a follower uptodate is for the leader to send it a snapshot over the network.
 
-![image20211104235032877](./raft_paper.assets/image20211104235032877.png)
+![image20211104235032877](./raft_paper.assets/image-20211104235032877.png)
 
 The leader uses a new RPC called InstallSnapshot to send snapshots to followers that are too far behind; see Figure 13. When a follower receives a snapshot with this RPC, it must decide what to do with its existing log entries. Usually the snapshot will contain new information not already in the recipient’s log. In this case, the follower discards its entire log; it is all superseded by the snapshot and may possibly have uncommitted entries that conflict with the snapshot. If instead the follower receives a snapshot that describes a prefix of its log (due to retransmission or by mistake), then log entries covered by the snapshot are deleted but entries following the snapshot are still valid and must be retained.  This snapshotting approach departs from Raft’s strong leader principle, since followers can take snapshots without the knowledge of the leader. However, we think this departure is justified. While having a leader helps avoid conflicting decisions in reaching consensus, consensus has already been reached when snapshotting, so no decisions conflict. Data still only flows from leaders to followers, just followers can now reorganize their data.  We considered an alternative leaderbased approach in which only the leader would create a snapshot, then it would send this snapshot to each of its followers. However, this has two disadvantages. First, sending the snapshot to each follower would waste network bandwidth and slow the snapshotting process. Each follower already has the information needed to produce its own snapshots, and it is typically much cheaper for a server to produce a snapshot from its local state than it is to send and receive one over the network. Second, the leader’s implementation would be more complex. For example, the leader would need to send snapshots to followers in parallel with replicating new log entries to them, so as not to block new client requests.  There are two more issues that impact snapshotting performance. First, servers must decide when to snapshot. If a server snapshots too often, it wastes disk bandwidth and energy; if it snapshots too infrequently, it risks exhausting its storage capacity, and it increases the time required to replay the log during restarts. One simple strategy is to take a snapshot when the log reaches a fixed size in bytes. If this size is set to be significantly larger than the expected size of a snapshot, then the disk bandwidth overhead for snapshotting will be small.  The second performance issue is that writing a snapshot can take a significant amount of time, and we do not want this to delay normal operations. The solution is to use copyonwrite techniques so that new updates can be accepted without impacting the snapshot being written. For example, state machines built with functional data structures naturally support this. Alternatively, the operating system’s copyonwrite support (e.g., fork on Linux) can be used to create an inmemory snapshot of the entire state machine (our implementation uses this approach).
 
@@ -215,11 +215,11 @@ We have implemented Raft as part of a replicated state machine that stores confi
 
 - 9.1 Understandability
 
-![image20211104235252365](./raft_paper.assets/image20211104235252365.png)
+![image20211104235252365](./raft_paper.assets/image-20211104235252365.png)
 
 To measure Raft’s understandability relative to Paxos, we conducted an experimental study using upperlevel undergraduate and graduate students in an Advanced Operating Systems course at Stanford University and a Distributed Computing course at U.C. Berkeley. We recorded a video lecture of Raft and another of Paxos, and created corresponding quizzes. The Raft lecture covered the content of this paper except for log compaction; the Paxos lecture covered enough material to create an equivalent replicated state machine, including singledecree Paxos, multi-decree Paxos, reconfiguration, and a few optimizations needed in practice (such as leader election). The quizzes tested basic understanding of the algorithms and also required students to reason about corner cases. Each student watched one video, took the corresponding quiz, watched the second video, and took the second quiz.  About half of the participants did the Paxos portion first and the other half did the Raft portion first in order to account for both individual differences in performance and experience gained from the first portion of the study.  We compared participants’ scores on each quiz to determine whether participants showed a better understanding of Raft.  We tried to make the comparison between Paxos and Raft as fair as possible. The experiment favored Paxos in two ways: 15 of the 43 participants reported having some prior experience with Paxos, and the Paxos video is 14% longer than the Raft video. As summarized in Table 1, we have taken steps to mitigate potential sources of bias. All of our materials are available for review [28, 31].  On average, participants scored 4.9 points higher on the Raft quiz than on the Paxos quiz (out of a possible 60 points, the mean Raft score was 25.7 and the mean Paxos score was 20.8); Figure 14 shows their individual scores.  A paired ttest states that, with 95% confidence, the true distribution of Raft scores has a mean at least 2.5 points larger than the true distribution of Paxos scores.  We also created a linear regression model that predicts a new student’s quiz scores based on three factors: which quiz they took, their degree of prior Paxos experience, and the order in which they learned the algorithms. The model predicts that the choice of quiz produces a 12.5point difference in favor of Raft. This is significantly higher than the observed difference of 4.9 points, because many of the actual students had prior Paxos experience, which helped Paxos considerably, whereas it helped Raft slightly less.  Curiously, the model also predicts scores 6.3 points lower on Raft for people that have already taken the Paxos quiz; although we don’t know why, this does appear to be statistically significant.  We also surveyed participants after their quizzes to see which algorithm they felt would be easier to implement or explain; these results are shown in Figure 15. An overwhelming majority of participants reported Raft would be easier to implement and explain (33 of 41 for each question). However, these selfreported feelings may be less reliable than participants’ quiz scores, and participants may have been biased by knowledge of our hypothesisthat Raft is easier to understand.  A detailed discussion of the Raft user study is available at [31].
 
-![image20211104235428208](./raft_paper.assets/image20211104235428208.png)
+![image20211104235428208](./raft_paper.assets/image-20211104235428208.png)
 
 - 9.2 Correctness
 
@@ -231,7 +231,7 @@ To measure Raft’s understandability relative to Paxos, we conducted an experim
 
 > Table 1: Concerns of possible bias against Paxos in the study, steps taken to counter each, and additional materials available.
 
-![image20211106171748298](./raft_paper.assets/image20211106171748298.png)
+![image20211106171748298](./raft_paper.assets/image-20211106171748298.png)
 
 We have developed a formal specification and a proof of safety for the consensus mechanism described in Section 5. The formal specification [31] makes the information summarized in Figure 2 completely precise using the TLA+ specification language [17]. It is about 400 lines long and serves as the subject of the proof. It is also useful on its own for anyone implementing Raft. We have mechanically proven the Log Completeness Property using the TLA proof system [7]. However, this proof relies on invariants that have not been mechanically checked (for example, we have not proven the type safety of the specification). Furthermore, we have written an informal proof [31] of the State Machine Safety property which is complete (it relies on the specification alone) and relatively precise (it is about 3500 words long).
 
