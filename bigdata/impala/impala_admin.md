@@ -120,3 +120,5 @@ TRuntimeProfileTree(nodes=[TRuntimeProfileNode(info_strings_display_order=[], in
 
 [Re: How to parse a query plan /summary/profile](http://mail-archives.apache.org/mod_mbox/impala-user/201908.mbox/%3CCAEoRBexmjJ7hNfHo_yLFyc0KGQDvMPKNTH--VPOfTO-w=X18qQ@mail.gmail.com%3E)
 
+[How to understand zlib-compressed query profiles of Apache Impala](https://stackoverflow.com/questions/61296108/how-to-understand-zlib-compressed-query-profiles-of-apache-impala)
+
