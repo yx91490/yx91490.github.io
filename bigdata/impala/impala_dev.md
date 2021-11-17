@@ -1,6 +1,41 @@
 # Impala开发笔记
 
-## 编译源码
+## 编译构建
+
+### bin/bootstrap_system.sh
+
+为开发环境做些准备，大体执行流程：
+
+- 导出环境变量 IMPALA_HOME
+- 如果是交互模式，询问是否愿意更改环境配置，是则继续，否则退出
+- 判断发行版版本，以及是否在Docker内
+- 安装一堆软件包，包括编译相关，kerberos，postgresql等
+- 安装apache-ant-1.9.14和apache-maven-3.5.4到目录/usr/local下
+- 启动ssh服务
+- 初始化postgresql并启动
+- 为HMS创建账号，用户名：hiveuser，密码：password
+- 配置到localhost的免密登录
+- 配置`/etc/hosts`
+- 创建目录：`/var/lib/hadoop-hdfs`
+- 配置系统最大打开文件数为1048576，最大进程数为unlimited
+- 如果IMPALA_HOME目录不存在，则checkout Impala源码，并导出环境变量 IMPALA_HOME到`~/.bashrc`
+- 配置JAVA_HOME，并固化到`bin/impala-config-local.sh`
+- 下载maven软件包到本地仓库
+
+在Docker里运行此脚本需要做的准备：
+
+```shell
+# 添加参数--privileged
+docker run --privileged --cap-add SYS_TIME -d -it --name impala_build ubuntu:16.04 bash
+# 赋予容器一个非root无需密码的sudoer：
+apt-get update
+apt-get install sudo
+adduser --disabled-password --gecos '' impdev
+echo 'impdev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# 使用新建的用户运行：
+su - impdev -c /bootstrap_development.sh
+```
 
 ### buildall.sh
 
@@ -67,4 +102,6 @@
 # 构建并升级metastore schema至最新版.
 ./buildall.sh -upgrade_metastore_db
 ```
+
+## 源码分析
 
