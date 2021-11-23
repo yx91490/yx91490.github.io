@@ -1,12 +1,12 @@
 # Maven常用插件配置
 
-## Maven-Assembly-Plugin
+## maven-assembly-plugin
 
-### `assembly`目标
+### `assembly:assembly`
 
 2.x版本中的`assembly`目标在3.x版本中已删除，新版旧版都可以使用`single`目标代替。
 
-### `single`目标
+### `assembly:single`
 
 #### 描述文件
 
@@ -83,9 +83,9 @@
 - [官方文档-描述符格式](http://maven.apache.org/plugins/maven-assembly-plugin/assembly.html)
 - [官方文档-内置描述文件](http://maven.apache.org/plugins/maven-assembly-plugin/descriptor-refs.html#)
 
-## Maven-Shade-Plugin
+## maven-shade-plugin
 
-### `shade`目标
+### `shade:shade`
 
 使用Transformer合并HDFS ServiceLoader的配置文件：
 
@@ -109,3 +109,35 @@
 </plugin>
 ```
 
+## maven-dependency-plugin
+
+### dependency:analyze
+
+将依赖分为三类：
+
+- used and declared
+- used and undeclared
+- unused and declared
+
+此目标总是执行`test-compile`阶段。
+
+[maven-dependency-analyzer](http://maven.apache.org/shared/maven-dependency-analyzer/) 作为默认的分析器，因为工作在字节码层面而非源码层面，所以某些情况检测不到，包括常量、仅保留在源代码的注解和 Javadoc 中的链接。
+
+| 名称                              | 类型     | 描述                                                         |
+| --------------------------------- | -------- | ------------------------------------------------------------ |
+| analyzer                          | String   | 指定依赖分析器                                               |
+| failOnWarning                     | boolean  | 发现告警时让构建失败                                         |
+| ignoreNonCompile                  | boolean  | 对于未使用的依赖分析忽略这些scope：Runtime/Provided/Test/System |
+| ignoreUnusedRuntime               | boolean  | 对于未使用的依赖分析忽略这些scope：Runtime                   |
+| ignoredDependencies               | String[] | 对于“声明但未使用”和“使用但未声明”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
+| ignoredUnusedDeclaredDependencies | String[] | 对于“声明但未使用”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
+| ignoredUsedUndeclaredDependencies | String[] | 对于“使用但未声明”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
+| outputXML                         | boolean  |                                                              |
+| scriptableFlag                    | String   |                                                              |
+| scriptableOutput                  | boolean  |                                                              |
+| skip                              | boolean  | 跳过插件的执行                                               |
+| usedDependencies                  | String[] | 强制依赖被使用，依赖格式：`groupId:artifactId`               |
+
+### 参考
+
+[Apache Maven Dependency Plugin – dependency:analyze](https://maven.apache.org/plugins/maven-dependency-plugin/)
