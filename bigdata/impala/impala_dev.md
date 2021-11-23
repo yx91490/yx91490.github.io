@@ -2,6 +2,16 @@
 
 ## 编译构建
 
+执行脚本：
+
+```shell
+bash bin/bootstrap_system.sh
+source bin/impala-config.sh
+buildall.sh -release -notests
+```
+
+## 源码分析
+
 ### bin/bootstrap_system.sh
 
 为开发环境做些准备，大体执行流程：
@@ -10,7 +20,7 @@
 - 如果是交互模式，询问是否愿意更改环境配置，是则继续，否则退出
 - 判断发行版版本，以及是否在Docker内
 - 安装一堆软件包，包括编译相关，kerberos，postgresql等
-- 安装apache-ant-1.9.14和apache-maven-3.5.4到目录/usr/local下
+- 下载apache-ant-1.9.14和apache-maven-3.5.4并安装到目录`/usr/local`下
 - 启动ssh服务
 - 初始化postgresql并启动
 - 为HMS创建账号，用户名：hiveuser，密码：password
@@ -34,7 +44,7 @@ adduser --disabled-password --gecos '' impdev
 echo 'impdev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # 使用新建的用户运行：
-su - impdev -c /bootstrap_development.sh
+su - impdev -c bin/bootstrap_development.sh
 ```
 
 ### buildall.sh
@@ -102,6 +112,4 @@ su - impdev -c /bootstrap_development.sh
 # 构建并升级metastore schema至最新版.
 ./buildall.sh -upgrade_metastore_db
 ```
-
-## 源码分析
 
