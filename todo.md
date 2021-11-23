@@ -42,3 +42,5 @@ shell 计算算子count distinct
 sql on json
 RAID, redis cache policy, 
 java validator
+
+lombok
