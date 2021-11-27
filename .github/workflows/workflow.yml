@@ -5,7 +5,7 @@ on:
       - gh-pages
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: "Step1: Checkout Code"
@@ -18,4 +18,4 @@ jobs:
         BASE_BRANCH: gh-pages
         BRANCH: master
         FOLDER: .vuepress/dist
-        BUILD_SCRIPT: npm install -D vuepress && npx vuepress build .
+        BUILD_SCRIPT: npm run build

@@ -1,6 +1,5 @@
 .vuepress/dist
 node_modules
-package.json
 yarn.lock
 yarn-error.log
 .DS_Store

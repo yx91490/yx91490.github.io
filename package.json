@@ -1,0 +1,13 @@
+{
+   "name": "yx91490_blog",
+   "scripts": {
+      "dev": "npx vuepress dev .",
+      "build": "npx vuepress build ."
+   },
+   "dependencies": {
+      "@vuepress/plugin-google-analytics": "^1.8.2",
+      "@vuepress/plugin-medium-zoom": "^1.8.2",
+      "vuepress": "^1.8.2",
+      "vuepress-plugin-right-anchor": "^0.5.5"
+   }
+}
