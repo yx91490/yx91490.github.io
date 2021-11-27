@@ -407,8 +407,19 @@ module.exports = {
     activeHeaderLinks: false,
   },
   plugins: [
-    ['@vuepress/plugin-google-analytics', {
-        ga: 'UA-140404299-1' // UA-00000000-0
-    }],
-  ]
+    ['@vuepress/medium-zoom'],
+    ['@vuepress/plugin-google-analytics', { ga: 'UA-140404299-1' }],
+    ['vuepress-plugin-right-anchor',
+      {
+        showDepth: 3,
+        ignore: ['/'],
+        expand: {trigger: 'click', clickModeDefaultOpen: false }
+      }
+    ]
+  ],
+  markdown: {
+    anchor: {
+      permalinkSymbol: '$'
+    },
+  }
 }
