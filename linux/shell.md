@@ -26,7 +26,7 @@ bash -v myscript.sh
 bash -x myscript.sh
 ```
 
-### 设置
+### set选项
 
 | 短参数 | 长参数         | 说明                                                         |
 | ------ | -------------- | ------------------------------------------------------------ |
@@ -56,6 +56,15 @@ bash -x myscript.sh
 | -v     | -o verbose     |                                                              |
 |        | -o vi          |                                                              |
 | -x     | -o xtrace      | 用来在运行结果之前，先输出执行的那一行命令                   |
+|        | --             | 如果该选项后不跟参数，则重置位置参数，否则将位置参数设置为选项后的参数 |
+
+参考：
+
+[The Set Builtin](https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html)
+
+[Bash 脚本 set 命令教程](http://www.ruanyifeng.com/blog/2017/11/bash-set.html)
+
+### 退出状态码
 
 如果要根据命令的退出状态码做如下的分支操作，当状态码不为0且设置`set -o errexit`时会直接退出：
 
@@ -641,6 +650,22 @@ Shell 和其他编程语言一样，支持多种运算符，包括：
 | ------ | ---------- | ------------------------------------------- |
 | &&     | 逻辑的 AND | [[ \$a -lt 100 && $b -gt 100 ]] 返回 false  |
 | \|\|   | 逻辑的 OR  | [[ \$a -lt 100 \|\| $b -gt 100 ]] 返回 true |
+
+可以用逻辑运算符模拟三目运算符：
+
+```shell
+if command1; then
+    command2
+else
+    command3
+fi
+```
+
+等价于：
+
+```
+command1 && command2 || command3
+```
 
 ### 字符串运算符
 
