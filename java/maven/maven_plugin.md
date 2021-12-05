@@ -109,6 +109,83 @@
 </plugin>
 ```
 
+指定主类：
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <configuration>
+        <transformers>
+            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                <mainClass>foo.bar.MainClass</mainClass>
+            </transformer>
+        </transformers>
+    </configuration>
+ </plugin>
+```
+
+解决报错问题：
+
+```
+java.lang.SecurityException: Invalid signature file digest for Manifest main attributes
+    at sun.security.util.SignatureFileVerifier.processImpl(SignatureFileVerifier.java:284)
+    at sun.security.util.SignatureFileVerifier.process(SignatureFileVerifier.java:238)
+    at java.util.jar.JarVerifier.processEntry(JarVerifier.java:316)
+    at java.util.jar.JarVerifier.update(JarVerifier.java:228)
+    at java.util.jar.JarFile.initializeVerifier(JarFile.java:383)
+    at java.util.jar.JarFile.getInputStream(JarFile.java:450)
+    at sun.misc.JarIndex.getJarIndex(JarIndex.java:137)
+    at sun.misc.URLClassPath$JarLoader$1.run(URLClassPath.java:839)
+    at sun.misc.URLClassPath$JarLoader$1.run(URLClassPath.java:831)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at sun.misc.URLClassPath$JarLoader.ensureOpen(URLClassPath.java:830)
+    at sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:803)
+    at sun.misc.URLClassPath$3.run(URLClassPath.java:530)
+    at sun.misc.URLClassPath$3.run(URLClassPath.java:520)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at sun.misc.URLClassPath.getLoader(URLClassPath.java:519)
+    at sun.misc.URLClassPath.getLoader(URLClassPath.java:492)
+    at sun.misc.URLClassPath.getNextLoader(URLClassPath.java:457)
+    at sun.misc.URLClassPath.getResource(URLClassPath.java:211)
+    at java.net.URLClassLoader$1.run(URLClassLoader.java:365)
+    at java.net.URLClassLoader$1.run(URLClassLoader.java:362)
+    at java.security.AccessController.doPrivileged(Native Method)
+    at java.net.URLClassLoader.findClass(URLClassLoader.java:361)
+    at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+    at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:331)
+    at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+    at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:495)
+Error: A JNI error has occurred, please check your installation and try again
+Exception in thread "main"
+```
+
+解决：
+
+```xml
+ <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+   <configuration>
+     <minimizeJar>true</minimizeJar>
+     <filters>
+       <filter>
+         <artifact>*:*</artifact>
+         <excludes>
+           <exclude>META-INF/*.SF</exclude>
+           <exclude>META-INF/*.DSA</exclude>
+           <exclude>META-INF/*.RSA</exclude>
+         </excludes>
+       </filter>
+     </filters>
+   </configuration>
+</plugin>
+```
+
+参考：
+
+[Invalid signature file digest for Manifest main attributes exception while trying to run jar file](https://stackoverflow.com/questions/34855649/invalid-signature-file-digest-for-manifest-main-attributes-exception-while-tryin)
+
 ## maven-dependency-plugin
 
 ### dependency:analyze
