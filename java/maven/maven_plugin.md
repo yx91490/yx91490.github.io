@@ -132,11 +132,10 @@
 | ignoredDependencies               | String[] | 对于“声明但未使用”和“使用但未声明”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
 | ignoredUnusedDeclaredDependencies | String[] | 对于“声明但未使用”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
 | ignoredUsedUndeclaredDependencies | String[] | 对于“使用但未声明”的列表忽略这些依赖，过滤语法：`[groupId]:[artifactId]:[type]:[version]`，可以使用`*`通配符。 |
-| outputXML                         | boolean  |                                                              |
-| scriptableFlag                    | String   |                                                              |
-| scriptableOutput                  | boolean  |                                                              |
+| outputXML                         | boolean  | 输出缺失依赖的xml（使用但未声明）                            |
 | skip                              | boolean  | 跳过插件的执行                                               |
-| usedDependencies                  | String[] | 强制依赖被使用，依赖格式：`groupId:artifactId`               |
+| usedDependencies                  | String[] | 强制依赖被使用（覆盖由字节码层面分析造成的不完整结果），依赖格式：`groupId:artifactId` |
+| Verbose                           | boolean  | 输出使用到的依赖                                             |
 
 ### 参考
 
