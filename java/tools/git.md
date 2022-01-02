@@ -67,7 +67,37 @@ Git协议的缺点是缺少身份验证。它还需要防火墙访问端口9418�
 
     git clone --single-branch -b "jdk/jdk" git@github.com:yx91490/openjdk.git openjdk2
 
-### 修改已push的user信息
+### 修改历史commit的author信息
+
+按如下输入进入一个类似vim编辑器的交互页：
+
+```
+git rebase -i HEAD~3
+```
+
+将要修改的`commit 1`开头的`pick`改成`edit`：
+
+```
+edit aaaa commit 1
+pick bbbb commit 2
+pick cccc commit 3
+```
+
+然后保存退出，即`:wq`。接着输入下面的命令来修改提交者信息：
+
+```
+$git commit --amend --author="Foo <foo@bar.com>"
+```
+
+最后输入保存命令：
+
+```
+git commit --continue
+```
+
+参考：[Git修改历史commit的author信息](https://juejin.cn/post/6993513552199811102)
+
+### 修改已push的所有user信息
 
 执行脚本：
 
