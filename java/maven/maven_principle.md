@@ -1,5 +1,11 @@
 # Maven原理
 
+## 超级POM
+
+任何一个Maven项目都隐式地继承了一个超级POM，位于maven-model-builder模块的[org/apache/maven/model/pom-4.0.0.xml](https://github.com/apache/maven/blob/maven-3.0/maven-model-builder/src/main/resources/org/apache/maven/model/pom-4.0.0.xml)资源路径下。
+
+参考：[Super POM](https://maven.apache.org/ref/3-LATEST/maven-model-builder/super-pom.html)
+
 ## 生命周期
 
 ### 生命周期阶段
