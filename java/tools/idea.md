@@ -73,3 +73,11 @@ private List<$to$> to$to$List(List <$from$> inputList) {
 
 <img src="./macos.assets/image-20201202144214247.png" alt="idea_key" style="zoom: 50%;" />
 
+## 报错处理
+
+### Test framework quit unexpectedly，错误: 找不到或无法加载主类 IDEA
+
+打开Preferences => Build,Execution,Deployment => Build Tools => Maven  =>  Running Tests，去掉argLine勾选：
+
+![image-20220105194738298](/Users/me/repo/yx91490/java/tools/idea.assets/image-20220105194738298.png)
+
