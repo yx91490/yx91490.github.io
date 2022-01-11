@@ -113,6 +113,132 @@ su - impdev -c bin/bootstrap_development.sh
 ./buildall.sh -upgrade_metastore_db
 ```
 
+### Frontend
+
+impalad服务端接收请求入口：`impala-beeswax-server.cc#ImpalaServer::query()`
+
+Frontend.cc#Frontend::GetExecRequest() 通过JNI接口调用
+
+org.apache.impala.planner.Planner.createPlan()
+
+#### org.apache.impala.planner.PlanNode
+
+slot, materialized, conjuncts,
+
+#### org.apache.impala.planner.PlanNodeId
+
+#### org.apache.impala.analysis.TupleDescriptor
+
+
+
+#### org.apache.impala.catalog.FeView
+
+LocalView
+
+=======
+
+#### 类型系统
+
+##### org.apache.impala.catalog.PrimitiveType
+
+为什么有了对应的thrift类还要有PrimitiveType？
+
+org.apache.impala.catalog.Type
+
+org.apache.impala.catalog.ScalarType
+
+#### SQL解析
+
+##### org.apache.impala.analysis.StatementBase
+
+子类：
+
+| 类名                                | 抽象类 | 说明 |
+| ----------------------------------- | ------ | ---- |
+| QueryStmt                           | T      |      |
+| ModifyStmt                          | T      |      |
+| AlterDbStmt                         | T      |      |
+| AlterTableStmt                      | T      |      |
+| AlterTableSetColumnStats            | T      |      |
+| AlterTableOrViewSetOwnerStmt        | T      |      |
+| CommentOnStmt                       | T      |      |
+| CommentOnTableOrViewStmt            | T      |      |
+| CreateFunctionStmtBase              | T      |      |
+| CreateOrAlterViewStmtBase           | T      |      |
+| AdminFnStmt                         |        |      |
+| AlterDbSetOwnerStmt                 |        |      |
+| AlterTableAddColsStmt               |        |      |
+| AlterTableAddDropRangePartitionStmt |        |      |
+| AlterTableAddPartitionStmt          |        |      |
+| AlterTableAlterColStmt              |        |      |
+| AlterTableDropColStmt               |        |      |
+| AlterTableDropPartitionStmt         |        |      |
+| AlterTableOrViewRenameStmt          |        |      |
+| AlterTableRecoverPartitionsStmt     |        |      |
+| AlterTableReplaceColsStmt           |        |      |
+| AlterTableSetCachedStmt             |        |      |
+| AlterTableSetFileFormatStmt         |        |      |
+| AlterTableSetLocationStmt           |        |      |
+| AlterTableSetOwnerStmt              |        |      |
+| AlterTableSetRowFormatStmt          |        |      |
+| AlterTableSetStmt                   |        |      |
+| AlterTableSetTblProperties          |        |      |
+| AlterTableSortByStmt                |        |      |
+| AlterViewSetOwnerStmt               |        |      |
+| AlterViewStmt                       |        |      |
+| AuthorizationStmt                   |        |      |
+| CommentOnColumnStmt                 |        |      |
+| CommentOnDbStmt                     |        |      |
+| CommentOnTableStmt                  |        |      |
+| CommentOnViewStmt                   |        |      |
+| ComputeStatsStmt                    |        |      |
+| CopyTestCaseStmt                    |        |      |
+| CreateDataSrcStmt                   |        |      |
+| CreateDbStmt                        |        |      |
+| CreateDropRoleStmt                  |        |      |
+| CreateTableAsSelectStmt             |        |      |
+| CreateTableDataSrcStmt              |        |      |
+| CreateTableLikeFileStmt             |        |      |
+| CreateTableLikeStmt                 |        |      |
+| CreateTableStmt                     |        |      |
+| CreateUdaStmt                       |        |      |
+| CreateUdfStmt                       |        |      |
+| CreateUdtStmt                       |        |      |
+| CreateViewStmt                      |        |      |
+| DeleteStmt                          |        |      |
+| DescribeDbStmt                      |        |      |
+| DescribeTableStmt                   |        |      |
+| DropDataSrcStmt                     |        |      |
+| DropDbStmt                          |        |      |
+| DropFunctionStmt                    |        |      |
+| DropStatsStmt                       |        |      |
+| DropTableOrViewStmt                 |        |      |
+| GrantRevokePrivStmt                 |        |      |
+| GrantRevokeRoleStmt                 |        |      |
+| InsertStmt                          |        |      |
+| LoadDataStmt                        |        |      |
+| ResetMetadataStmt                   |        |      |
+| SelectStmt                          |        |      |
+| SetStmt                             |        |      |
+| ShowCreateFunctionStmt              |        |      |
+| ShowCreateTableStmt                 |        |      |
+| ShowDataSrcsStmt                    |        |      |
+| ShowDbsStmt                         |        |      |
+| ShowFilesStmt                       |        |      |
+| ShowFunctionsStmt                   |        |      |
+| ShowGrantPrincipalStmt              |        |      |
+| ShowRolesStmt                       |        |      |
+| ShowStatsStmt                       |        |      |
+| ShowTablesStmt                      |        |      |
+| TruncateStmt                        |        |      |
+| UnionStmt                           |        |      |
+| UpdateStmt                          |        |      |
+| UseStmt                             |        |      |
+| ValuesStmt                          |        |      |
+
+
+
+
 ## 贡献代码
 
 ### 提Issue
