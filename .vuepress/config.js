@@ -348,6 +348,7 @@ module.exports = {
           '/bigdata/impala/impala',
           '/bigdata/impala/impala_admin',
           '/bigdata/impala/impala_dev',
+          '/bigdata/impala/impala_community',
           '/bigdata/impala/impala_issues',
         ]
       },
