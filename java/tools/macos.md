@@ -95,6 +95,28 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
 参考：[Install and Use GNU Command Line Tools on macOS/OS X](https://www.topbug.net/blog/2013/04/14/install-and-use-gnu-command-line-tools-in-mac-os-x/)
 
+## 为脚本创建App入口
+
+方式一：
+
+```
+mkdir -p ${name}.app/Contents/MacOS/${name}
+chmod 755 ${name}.app/Contents/MacOS/${name}
+```
+
+方式二（未生效）：
+
+修改`${name}.app/Contents/Info.plist`：
+
+```xml
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>MyScript</string>
+</dict>
+```
+
+参考：[Converting a Shell Script Into a *.app File](https://stackoverflow.com/questions/30792569/converting-a-shell-script-into-a-app-file)。
+
 ## 配置
 
 ### 开启F1 - F12功能键
@@ -108,3 +130,4 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 安装[Karabiner-Elements](https://karabiner-elements.pqrs.org/)并配置如下：
 
 <img src="./macos.assets/fn-1699444.png" alt="fn" style="zoom: 33%;" />
+
