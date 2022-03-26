@@ -73,6 +73,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/clang/make',
           '/clang/c_qsort',
           '/clang/c_keyword',
           '/clang/c_array_func',
