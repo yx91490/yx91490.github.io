@@ -51,16 +51,16 @@ foo.class.getProtectionDomain().getCodeSource()
 
 | 终结符             | 类型             |
 | ------------------ | ---------------- |
-| Z                  | boolean          |
-| C                  | char             |
 | B                  | byte             |
-| S                  | short            |
-| I                  | int              |
-| J                  | long             |
-| F                  | float            |
+| C                  | char             |
 | D                  | double           |
-| V                  | void             |
+| F                  | float            |
+| I                  | int              |
 | Ljava/lang/Object; | java.lang.Object |
+| J                  | **long**         |
+| S                  | short            |
+| V                  | void             |
+| Z                  | **boolean**      |
 | [                  | Array            |
 
 做个实验： 
