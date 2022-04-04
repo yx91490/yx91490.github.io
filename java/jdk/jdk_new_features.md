@@ -99,14 +99,14 @@
 - 针对G1，提供可中止的混合垃圾收集
 - 针对G1，及时释放已申请但未使用的内存
 
-#### JDK 13
+### JDK 13
 
 - switch优化更新（预览版）
 - 文本块（预览阶段）
 - ZGC：取消使用未使用的内存
 - 重新实现旧版 Socket API
 
-#### JDK 14
+### JDK 14
 
 - Switch 表达式
 - instanceof的模式匹配（预览版）
@@ -117,7 +117,7 @@
 - 移除 CMS 垃圾收集器
 - 弃用 ParallelScavenge + SerialOld 的垃圾收集器组合
 
-#### JDK 15
+### JDK 15
 
 - 文本块
 - ZGC生产环境可用
@@ -125,7 +125,7 @@
 - 模式匹配的instanceof（第二预览版）
 -  Sealed Classes（第一预览版）
 
-#### JDK16
+### JDK16
 
 - Vector API (第一预览版)
 - Record类（最终版）
@@ -133,7 +133,7 @@
 - 模式匹配的instanceof（最终版）
 -  提供jpackage用于打包独立Java应用程序的工具
 
-#### JDK 17
+### JDK 17
 
 - Vector API (第二预览版)
 - switch新增模式（预览版）
