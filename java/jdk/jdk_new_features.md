@@ -44,11 +44,11 @@
 - try-with-resources语句
 - 一个catch块中可以处理多个异常类型
 
-### JDK 8
+### JDK 8 (LTS)
 
 - Lambda表达式
 - 方法引用
-- 接口中的默认方法
+- 接口中的默认方法和静态方法
 - 重复注解支持对同一个声明或类型的多次使用应用相同的注解类型
 - 类型注解支持在使用类型的任何地方应用批注，而不仅限于声明
 - 改进类型推断：根据目标类型自动推断
@@ -80,7 +80,7 @@
 
 - 局部变量类型推断
 
-### JDK 11
+### JDK 11 (LTS)
 
 - 在Lambda表达式中使用var
 - Unicode 10
@@ -90,6 +90,56 @@
 - 无操作垃圾回收器
 - 飞行记录器
 
+### JDK 12
+
+- Shenandoah低暂停时间垃圾收集器（实验性）
+- 微基准测试套件
+- switch 表达式（预览阶段）
+- JVM 常量 API
+- 针对G1，提供可中止的混合垃圾收集
+- 针对G1，及时释放已申请但未使用的内存
+
+#### JDK 13
+
+- switch优化更新（预览版）
+- 文本块（预览阶段）
+- ZGC：取消使用未使用的内存
+- 重新实现旧版 Socket API
+
+#### JDK 14
+
+- Switch 表达式
+- instanceof的模式匹配（预览版）
+- 文本块（第二预览版本）
+- Record 类（预览）
+- 适用于 Windows 的 ZGC
+- 适用于 macOS 的 ZGC
+- 移除 CMS 垃圾收集器
+- 弃用 ParallelScavenge + SerialOld 的垃圾收集器组合
+
+#### JDK 15
+
+- 文本块
+- ZGC生产环境可用
+- Record类（第二预览版）
+- 模式匹配的instanceof（第二预览版）
+-  Sealed Classes（第一预览版）
+
+#### JDK16
+
+- Vector API (第一预览版)
+- Record类（最终版）
+-  Sealed Classes（第二预览版）
+- 模式匹配的instanceof（最终版）
+-  提供jpackage用于打包独立Java应用程序的工具
+
+#### JDK 17
+
+- Vector API (第二预览版)
+- switch新增模式（预览版）
+-  Sealed Classes（最终版）
+- 默认启用Parallel GC
+
 ### 参考
 
 - [Java Programming Language Enhancements](https://docs.oracle.com/javase/7/docs/technotes/guides/language/enhancements.html)
@@ -97,3 +147,6 @@
 - [Java 8 特性 – 终极手册](http://ifeve.com/java-8-features-tutorial/)
 - [Java 8新特性终极指南](http://www.importnew.com/11908.html)
 - [Java 7中的Try-with-resources](http://ifeve.com/java-7%E4%B8%AD%E7%9A%84try-with-resources/)
+- [Java version history](https://en.wikipedia.org/wiki/Java_version_history)
+- [JDK17新特性详解](https://my.oschina.net/mdxlcj/blog/5261402)
+- [New Features in Java 17](https://www.baeldung.com/java-17-new-features)
