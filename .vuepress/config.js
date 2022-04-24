@@ -84,6 +84,16 @@ module.exports = {
         ]
       },
     ],
+    '/python': [
+      {
+        title: 'Python',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/python/python',
+        ]
+      },
+    ],
     '/java': [ 
       {
         title: 'Maven',
@@ -397,6 +407,7 @@ module.exports = {
           { text: 'SQL', link: '/sql/' },
           { text: 'Linux', link: '/linux/' },
           { text: 'C语言', link: '/clang/' },
+          { text: 'Python', link: '/python/' },
           { text: '图示速查', link: '/diagram/' },
           { text: '资料收藏', link: '/collection/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
