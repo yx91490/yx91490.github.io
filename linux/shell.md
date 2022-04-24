@@ -723,7 +723,9 @@ test is a shell builtin
 
 [What is /bin/sh -c?](https://stackoverflow.com/questions/3985193/what-is-bin-sh-c)
 
-## 退出状态码
+## 管道
+
+### 管道与退出状态码
 
 对于非管道命令使用 $? 能够检查前一个命令的退出状态；对于管道命令也有 PIPESTATUS 变量允许检查从管道所有部分返回的代码。
 
@@ -736,6 +738,17 @@ cmd1 | cmd2 | cmd3
 cmd1 退出代码在 `${PIPESTATUS[0]}` 中，cmd3 退出代码在 `${PIPESTATUS[2]}` 中，因此 `$?` 总是与 `${PIPESTATUS: -1}` 相同。
 
 参考：[bash shell 获取管道前的退出状态码](https://www.qiansw.com/bash-shell-gets-the-exit-status-code-before-the-pipe.html)
+
+### 管道与循环
+
+```shell
+producer-command | while read line
+do
+	consumer-command
+done
+```
+
+
 
 ## TODO
 
