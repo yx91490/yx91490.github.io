@@ -1,5 +1,45 @@
 # 操作系统ulimit
 
+## ulimit -a
+
+执行`ulimit -a`查看所有值：
+
+```shell
+core file size          (blocks, -c) unlimited
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 514562
+max locked memory       (kbytes, -l) unlimited
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 65536
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 10240
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 10240
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+```
+
+## ulimit -u (max user processes)
+
+```shell
+# 内核可以分配的最大进程描述符
+cat /proc/sys/kernel/pid_max
+sysctl kernel.pid_max
+# 内核task_struct 中包含的最大元素数
+cat /proc/sys/kernel/threads-max
+
+# 单个用户可用的最大进程数
+ulimit -u
+cat  /etc/security/limits.conf
+cat /etc/security/limits.d/20-nproc.conf
+```
+
+## ulimit -n (open files)
+
 有时候程序会报错“too many files open”：
 
 ```
@@ -11,7 +51,7 @@ Caused by: java.io.IOException: 打开的文件过多
 	... 29 more
 ```
 
-## 查看限制
+### 查看限制
 
 从Linux内核的角度获取当前打开文件的数量：
 
@@ -37,7 +77,7 @@ ulimit -n
 cat /proc/<pid>/limits
 ```
 
-## 更改限制
+### 更改限制
 
 更改每个进程的最大打开文件数：`ulimit -n 4096`
 
@@ -56,7 +96,7 @@ soft nofile 2048
 hard nofile 32768
 ```
 
-## 查看进程文件打开数
+### 查看进程文件打开数
 
 查看进程文件打开数方式一：
 
@@ -76,7 +116,7 @@ lsof -p <pid> |wc -l
 lsof -n |awk '{print $2}'|sort|uniq -c |sort -nr|more
 ```
 
-## 参考
+### 参考
 
 [为什么在Linux中限制打开文件的数量？](https://qastack.cn/unix/36841/why-is-number-of-open-files-limited-in-linux)
 
