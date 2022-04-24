@@ -1,5 +1,33 @@
 # Spark
 
+## 安装部署
+
+安装`spark-2.4.0-bin-without-hadoop.tgz` 与`hadoop3.1.1`：
+
+```
+Error: A JNI error has occurred, please check your installation and try again
+Exception in thread "main" java.lang.NoClassDefFoundError: org/slf4j/Logger
+	at java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2701)
+	at java.lang.Class.privateGetMethodRecursive(Class.java:3048)
+	at java.lang.Class.getMethod0(Class.java:3018)
+	at java.lang.Class.getMethod(Class.java:1784)
+	at sun.launcher.LauncherHelper.validateMainClass(LauncherHelper.java:650)
+	at sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:632)
+Caused by: java.lang.ClassNotFoundException: org.slf4j.Logger
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:419)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:352)
+	... 7 more
+```
+
+解决方法：
+
+```shell
+echo "export SPARK_DIST_CLASSPATH=$(hadoop classpath)" >> ${SPARK_HOME}/conf/spark-env.sh
+```
+
 ## 应用提交
 
 Master URL有效格式：
