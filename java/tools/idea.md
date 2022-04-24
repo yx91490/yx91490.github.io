@@ -1,5 +1,11 @@
 # Idea配置总结
 
+## 配置Highlight Level为Syntax
+
+Editor => Inspections => 取消选中Java
+
+<img src="./idea.assets/image-20220316103915844.png" alt="image-20220316103915844" style="zoom:30%;" />
+
 ## 代码模板
 
 在工作中发现要大量写一些有固定模式的代码，比如声明一个logger: 
@@ -79,5 +85,5 @@ private List<$to$> to$to$List(List <$from$> inputList) {
 
 打开Preferences => Build,Execution,Deployment => Build Tools => Maven  =>  Running Tests，去掉argLine勾选：
 
-![image-20220105194738298](/Users/me/repo/yx91490/java/tools/idea.assets/image-20220105194738298.png)
+![image-20220105194738298](./idea.assets/image-20220105194738298.png)
 
