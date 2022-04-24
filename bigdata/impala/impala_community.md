@@ -2,7 +2,7 @@
 
 ## 贡献代码
 
-### 提Issue
+### 提交Issue
 
 如果想给Impala社区报告Bug，或者贡献feature以及文档，首先去[Jira搜索](https://issues.apache.org/jira/issues/?jql=project%20%3D%20IMPALA) 里搜一下该问题有没有人已经提过，如果没有那么就可以在[Impala Jira Tracker](https://issues.apache.org/jira/projects/IMPALA/) 上提一个新的issue以记录问题。
 
@@ -18,7 +18,7 @@
 
 在Description里面可以具体描述问题，最好把相关的上下文信息都写清楚，比如Impala版本，相关组件配置等等。
 
-### 订阅开发者邮件
+### 订阅dev邮件
 
 Issue创建完成之后可能并没有指派人，也没有权限指派给自己。这个时候需要先订阅一下Impala开发者邮件：
 
@@ -54,3 +54,95 @@ Issue创建完成之后可能并没有指派人，也没有权限指派给自己
 
 [Impala Community](https://impala.apache.org/community.html)
 
+## 提交代码
+
+### 登录
+
+Impala使用gerrit管理代码，托管在https://gerrit.cloudera.org。需要使用Github账号进行登录验证：
+
+点击页面右上角`Github Sign-in`链接进行登录：
+
+<img src="./impala_community.assets/gerrit_host-9582739.png" alt="gerrit_host"  />
+
+<img src="./impala_community.assets/gerrit_auth.png" alt="gerrit_auth" style="zoom:33%;" />
+
+### 添加SSH公钥
+
+单击页面右上角用户名，在弹出的菜单点击Settings进入配置：
+
+![gerrit_settings](./impala_community.assets/gerrit_settings.png)
+
+点击左侧的Profile，配置username和email地址：
+
+![gerrit_profile](./impala_community.assets/gerrit_profile.png)
+
+点击SSH Public Keys，将公钥内容粘贴到右侧输入框，点击add进行确认：
+
+![gerrit_ssh](./impala_community.assets/gerrit_ssh.png)
+
+### 配置git remote
+
+ssh协议与http协议二选一：
+
+SSH协议方式：
+
+```shell
+cd ${IMPALA_HOME}
+git remote add asf-gerrit ssh://<your-github-username>@gerrit.cloudera.org:29418/Impala-ASF
+
+```
+
+HTTP协议方式：
+
+```shell
+cd ${IMPALA_HOME}
+git remote add asf-gerrit http://<your-github-username>@gerrit.cloudera.org:8080/a/Impala-ASF
+```
+
+需要输入账号和密码的时候，需要从页面获取专用用户名和密码：
+
+![gerrit_http](./impala_community.assets/gerrit_http.png)
+
+### 安装 pre-commit hook
+
+Gerrit通过唯一`Change-Id`来跟踪不同的patch，`Change-Id`会追加到Commit信息里，没有`Change-Id`的话Gerrit会拒绝该次提交。
+
+安装pre-commit hook来自动生成`Change-Id`：
+
+```shell
+cd ${IMPALA_HOME}
+curl -o .git/hooks/commit-msg https://gerrit.cloudera.org/tools/hooks/commit-msg
+chmod u+x .git/hooks/commit-msg
+```
+
+### 提交Patch
+
+如果不想让reviewer看到，提交到分支：`refs/drafts/<branch-name>`；
+
+如果已经准备好了，可以让reviewer来review，提交到分支：`refs/for/<branch-name>`。
+
+大部分情况下`<branch-name>`是master。
+
+提交一个草稿的示例：
+
+```
+$ git push asf-gerrit HEAD:refs/drafts/master
+Counting objects: 3, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 332 bytes | 0 bytes/s, done.
+Total 3 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2)
+remote: Processing changes: new: 1, refs: 1, done
+remote:
+remote: New Changes:
+remote:   http://gerrit.cloudera.org:8080/8335 test [DRAFT]
+remote:
+To ssh://XXXX@gerrit.cloudera.org:29418/Impala-ASF
+```
+
+如果确认更改无误，可以点击右侧的publish按钮发布到社区。变更中的每个commit都会被翻译成一封邮件发送给每位成员。
+
+### 参考
+
+[Using Gerrit to submit and review patches](https://cwiki.apache.org/confluence/display/IMPALA/Using+Gerrit+to+submit+and+review+patches)
