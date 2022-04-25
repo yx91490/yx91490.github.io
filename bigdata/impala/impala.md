@@ -229,3 +229,92 @@ Use Kudu AUTO_FLUSH_BACKGROUND mode
 
 https://issues.apache.org/jira/browse/IMPALA-4134
 
+## Admission Control
+
+### 配置
+
+对于使用名为`default`的单个资源池的简单配置 ，可以在命令行上指定配置选项：
+
+| 配置项                      | 类型    | 默认值 | 说明                                                         |
+| --------------------------- | ------- | ------ | ------------------------------------------------------------ |
+| --queue_wait_timeout_ms     | int64   | 60000  | 请求在队列中等待的超时时间（单位：毫秒）                     |
+| --default_pool_max_requests | int64   | -1     | 在请求排队之前允许运行的最大并发数。<br />是一个软限制，在负载较重时，并发查询的总数可能会略高。<br />负值表示没有限制。 |
+| --default_pool_max_queued   | int64   | 无限制 | 在拒绝请求之前允许排队的最大请求数。<br />是一个软限制，在负载较重时，排队查询的总数可能会略高。<br />负值或 0 表示一旦达到最大并发请求，请求总是被拒绝。 |
+| --default_pool_mem_limit    | string  | ""     | 在对该资源池的新请求排队之前，该资源池中所有未完成的请求可以使用的最大内存量（跨整个集群）。<br />以字节、兆字节或千兆字节为单位，由一个数字后跟大写或小写后缀`b`（可选）`m`、 或`g`指定。可以为兆字节和千兆字节指定浮点值。还可以通过指定`%`后缀将其指定为物理内存的百分比。<br />0 或不设置表示无限制。<br />是一个软限制，在负载较重的时候，并发查询使用的总内存可能会略高一些。 |
+| --disable_pool_max_requests | Boolean | false  | 解除针对每个资源池的最大运行请求的限制。                     |
+| --disable_pool_mem_limits   | Boolean | false  | 解除每个资源池的内存限制。                                   |
+
+对于具有使用不同设置的多个资源池的高级配置，需要手动设置配置文件：
+
+- 通过`--‑‑fair_scheduler_allocation_path=fair-scheduler.xml`指定`fair-scheduler.xml`配置文件的路径
+
+- 通过`--‑‑llama_site_path=llama-site.xml`指定`llama-site.xml`配置文件的路径
+
+fair-scheduler.xml示例：
+
+```xml
+<allocations>
+    <queue name="root">
+        <aclSubmitApps> </aclSubmitApps>
+        <queue name="default">
+            <maxResources>50000 mb, 0 vcores</maxResources>
+            <aclSubmitApps>*</aclSubmitApps>
+        </queue>
+        <queue name="development">
+            <maxResources>200000 mb, 0 vcores</maxResources>
+            <aclSubmitApps>user1,user2 dev,ops,admin</aclSubmitApps>
+        </queue>
+        <queue name="production">
+            <maxResources>1000000 mb, 0 vcores</maxResources>
+            <aclSubmitApps> ops,admin</aclSubmitApps>
+        </queue>
+    </queue>
+    <queuePlacementPolicy>
+        <rule name="specified" create="false"/>
+        <rule name="default" />
+    </queuePlacementPolicy>
+</allocations>
+```
+
+llama-site.xml示例：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property>
+    <name>llama.am.throttling.maximum.placed.reservations.root.default</name>
+    <value>10</value>
+  </property>
+  <property>
+    <name>llama.am.throttling.maximum.queued.reservations.root.default</name>
+    <value>50</value>
+  </property>
+  <property>
+    <!--指定该资源池里运行查询的默认查询选项-->
+    <name>impala.admission-control.pool-default-query-options.root.default</name>
+    <value>mem_limit=128m,query_timeout_s=20,max_io_buffers=10</value>
+  </property>
+  <property>
+    <!--队列排队的超时时间，单位：毫秒-->
+    <name>impala.admission-control.pool-queue-timeout-ms.root.default</name>
+    <value>30000</value>
+  </property>
+  <property>
+    <name>impala.admission-control.max-query-mem-limit.root.default.regularPool</name>
+    <value>1610612736</value><!--1.5GB-->
+  </property>
+  <property>
+    <name>impala.admission-control.min-query-mem-limit.root.default.regularPool</name>
+    <value>52428800</value><!--50MB-->
+  </property>
+  <property>
+    <name>impala.admission-control.clamp-mem-limit-query-option.root.default.regularPool</name>
+    <value>true</value>
+  </property>
+</configuration>
+```
+
+### 参考
+
+[Configuring Admission Control](https://impala.apache.org/docs/build/html/topics/impala_admission_config.html)
+
