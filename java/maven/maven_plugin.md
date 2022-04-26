@@ -1,5 +1,86 @@
 # Maven常用插件配置
 
+https://maven.apache.org/guides/mini/guide-configuring-plugins.html
+
+## maven-compiler-plugin
+
+### 传递编译参数
+
+3.3及以下版本：
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.0</version>
+  <configuration>
+    <compilerArgument>-verbose -bootclasspath ${java.home}/lib/rt.jar</compilerArgument>
+  </configuration>
+</plugin>
+```
+
+或者：
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.0</version>
+  <configuration>
+    <compilerArguments>
+      <verbose/>
+      <bootclasspath>${java.home}/lib/rt.jar</bootclasspath>
+      <Xmaxerrs>1000</Xmaxerrs>
+      <Xlint:unchecked/>
+    </compilerArguments>
+  </configuration>
+</plugin>
+```
+
+3.3以上版本：
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.9.0</version>
+  <configuration>
+    <compilerArgs>
+      <arg>-verbose</arg>
+      <arg>-Xlint:all,-options,-path</arg>
+    </compilerArgs>
+  </configuration>
+</plugin>
+```
+
+参考
+
+[3.0-Pass Compiler Arguments](https://maven.apache.org/plugins-archives/maven-compiler-plugin-3.0/examples/pass-compiler-arguments.html)
+
+[3.9.0-Pass Compiler Arguments](https://maven.apache.org/plugins/maven-compiler-plugin/examples/pass-compiler-arguments.html)
+
+## maven-source-plugin
+
+创建当前项目源文件的 jar 存档。
+
+>  从插件的 3.0.0 版本开始，所有可以通过命令行使用的属性都基于以下模式`maven.source.*`命名。
+
+### 插件目标
+
+| 目标                      | 说明                                                         |
+| ------------------------- | ------------------------------------------------------------ |
+| source:jar                | 将项目主源码打包到一个jar中                                  |
+| source:jar-no-fork        | 类似于jar，但不fork构建声明，适合附加到构建生命周期。        |
+| source:test-jar           | 将项目测试源码打包到一个jar中                                |
+| source:test-jar-no-fork   | 类似于test-jar，但不fork构建，适合附加到构建生命周期。       |
+| source:aggregate          | 聚合所有模块的源码到一个项目中                               |
+| source:generated-test-jar | 将测试源码打包到一个jar中                                    |
+| source:help               | 展示帮助信息，使用命令mvn source:help -Ddetail=true -Dgoal=<goal-name>`展示参数详情 |
+
+### 参考
+
+[Apache Maven Source Plugin](https://maven.apache.org/plugins/maven-source-plugin)
+
 ## maven-assembly-plugin
 
 ### `assembly:assembly`
@@ -217,3 +298,54 @@ Exception in thread "main"
 ### 参考
 
 [Apache Maven Dependency Plugin – dependency:analyze](https://maven.apache.org/plugins/maven-dependency-plugin/)
+
+## maven-pmd-plugin
+
+### 简介
+
+是一个静态代码检测工具。它可以用来检查：
+
+- 潜在的bug：空的try/catch/finally/switch语句
+- 未使用的代码：未使用的局部变量、参数、私有方法等
+- 可选的代码：String/StringBuffer的滥用
+- 复杂的表达式：不必须的if语句、可以使用while循环完成的for循环
+- 重复的代码：拷贝/粘贴代码意味着拷贝/粘贴bugs
+
+### 默认规则集
+
+[Using Rule Sets](https://maven.apache.org/plugins/maven-pmd-plugin/examples/usingRuleSets.html)
+
+### 自定义规则集
+
+参考：
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-pmd-plugin</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.p3c</groupId>
+            <artifactId>p3c-pmd</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <rulesets>
+            <ruleset>rulesets/java/ali-concurrent.xml</ruleset>
+            <ruleset>rulesets/java/ali-exception.xml</ruleset>
+            <ruleset>rulesets/java/ali-flowcontrol.xml</ruleset>
+            <ruleset>rulesets/java/ali-naming.xml</ruleset>
+            <ruleset>rulesets/java/ali-oop.xml</ruleset>
+            <ruleset>rulesets/java/ali-orm.xml</ruleset>
+            <ruleset>rulesets/java/ali-other.xml</ruleset>
+            <ruleset>rulesets/java/ali-set.xml</ruleset>
+        </rulesets>
+    </configuration>
+</plugin>
+```
+
+### 参考
+
+[添加PMD插件扫描潜在的bug](https://www.cnblogs.com/woshimrf/p/using-pmd.html)
+
