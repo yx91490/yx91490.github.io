@@ -30,6 +30,7 @@ module.exports = {
           '/sql/sql_join',
           '/sql/mysql',
           '/sql/mysql_installation',
+          '/sql/postgresql',
           'sql/oracle_db_data_type.md',
         ]
       },
