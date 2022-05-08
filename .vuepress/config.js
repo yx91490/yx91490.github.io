@@ -363,6 +363,7 @@ module.exports = {
           '/bigdata/impala/impala_dev',
           '/bigdata/impala/impala_community',
           '/bigdata/impala/impala_issues',
+          'bigdata/impala/impala_paper_translation',
         ]
       },
       {
