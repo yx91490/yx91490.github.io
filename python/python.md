@@ -38,5 +38,41 @@ pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
 
 ### 类
 
+## 调试
 
+### PYTHONPATH
 
+module文件的查找路径，在python中打印：
+
+```python
+import sys
+print(sys.path)
+```
+
+参考：
+
+[PYTHONPATH](https://docs.python.org/2/using/cmdline.html#envvar-PYTHONPATH)
+
+[sys.path](https://docs.python.org/2/library/sys.html#sys.path)
+
+### pdb
+
+使用`pdb`：
+
+```shell
+python -m pdb foo.py
+```
+
+| 命令 | 说明     |
+| ---- | -------- |
+| n    | 单步执行 |
+| p    | 查看变量 |
+| q    | 结束调试 |
+
+### IDE
+
+在VsCode中可以通过`Run and Debug`进行打断点调试。
+
+### 参考
+
+[调试](https://www.liaoxuefeng.com/wiki/1016959663602400/1017602696742912)
