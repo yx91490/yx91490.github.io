@@ -75,7 +75,7 @@ https://maven.apache.org/guides/mini/guide-configuring-plugins.html
 | source:test-jar-no-fork   | 类似于test-jar，但不fork构建，适合附加到构建生命周期。       |
 | source:aggregate          | 聚合所有模块的源码到一个项目中                               |
 | source:generated-test-jar | 将测试源码打包到一个jar中                                    |
-| source:help               | 展示帮助信息，使用命令mvn source:help -Ddetail=true -Dgoal=<goal-name>`展示参数详情 |
+| source:help               | 展示帮助信息，使用命令`mvn source:help -Ddetail=true -Dgoal=<goal-name>`展示参数详情 |
 
 ### 参考
 
