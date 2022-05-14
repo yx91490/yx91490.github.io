@@ -5,6 +5,8 @@ module.exports = {
     ['meta', { name: 'google-site-verification', content: 'j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ'}],
     ['meta', { name: 'baidu-site-verification', content: '4z2bGbjYMB'}],
     ['link', { rel: 'icon', href: '/logo.png' }],
+    [ 'script', { async: true, src: 'https://www.googletagmanager.com/gtag/js?id=G-QQHZM2VLM0'}],
+    [ 'script', {}, ["window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-QQHZM2VLM0');"]],
     ['script', {},
     `
     var _hmt = _hmt || [];
