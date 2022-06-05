@@ -117,13 +117,38 @@ chmod u+x .git/hooks/commit-msg
 
 ### 提交Patch
 
-如果不想让reviewer看到，提交到分支：`refs/drafts/<branch-name>`；
+提交patch前的检查：
 
-如果已经准备好了，可以让reviewer来review，提交到分支：`refs/for/<branch-name>`。
+变更中的每个commit都会被翻译成一封邮件发送给每位reviewer，所以在push之前，务必将patch rebase成一个commit：
 
-大部分情况下`<branch-name>`是master。
+```shell
+git fetch asf-gerrit
+git rebase -i asf-gerrit/master
+```
 
-提交一个草稿的示例：
+commit的描述信息有规范的格式：
+
+```
+ IMPALA-11301: 一句话的描述。
+ 
+ 详细的描述。
+ 
+ Tests:
+ 关于如何进行的测试，比如手动还是添加了测试代码等。
+ 
+ Change-Id: 自动生成的唯一change-Id
+```
+
+注意：Change-Id生成了就不要更改，否则review地址就会发生变化。
+
+关于远程分支：
+
+- 如果不想让reviewer看到，提交到分支：`refs/drafts/<branch-name>`；之后如果确认更改无误，可以点击右侧的publish按钮发布到社区。
+
+- 如果已经准备好了，可以让reviewer来review，提交到分支：`refs/for/<branch-name>`。
+- 大部分情况下`<branch-name>`是master。
+
+提交一个patch到drafts的示例：
 
 ```
 $ git push asf-gerrit HEAD:refs/drafts/master
@@ -141,7 +166,12 @@ remote:
 To ssh://XXXX@gerrit.cloudera.org:29418/Impala-ASF
 ```
 
-如果确认更改无误，可以点击右侧的publish按钮发布到社区。变更中的每个commit都会被翻译成一封邮件发送给每位成员。
+关于CI：
+
+普通contributors可以运行一下两个jenkins任务来验证patch的正确性：
+
+- [pre-review-test：用来编译和运行测试。](https://jenkins.impala.io/job/pre-review-test/build?delay=0sec)
+- [gerrit-verify-dryrun-external](https://jenkins.impala.io/job/gerrit-verify-dryrun-external/build?delay=0sec) ：运行全套的验证程序，包括使用不同的构建工具编译impala，执行所有的BE测试，FE测试，端到端测试，和Apache RAT验证。
 
 ### 参考
 
