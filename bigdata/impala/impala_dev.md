@@ -218,66 +218,72 @@ su - impdev -c bin/bootstrap_development.sh
 
 ### buildall.sh
 
-[第20行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L20)设置了shell执行在一个比较严格的模式，出现error或者未赋值变量，或管道中有失败则立即终止执行。
+编译前的准备步骤包括：
 
-[第55行至85行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L55,L85) 设置内部变量的默认值。
+- [第55行至85行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L55,L85) 设置内部变量的默认值。
+- [第88行至286行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L88,L286)解析命令行参数并设置内部变量。
 
-[第88行至286行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L88,L286)解析命令行参数并设置内部变量。
+- [第344行至349行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L344,L349)校验启用kerberos的集群上不支持运行测试或者加载测试数据。
 
-[第288行至第334行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L288,L334)重新确定变量`CMAKE_BUILD_TYPE`的值。首先`CMAKE_BUILD_TYPE`变量初始值与`CODE_COVERAGE`变量值可能产生4种情况：
+- [第351行至356行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L351,L356)校验加载测试数据的hive元数据快照仅支持hdfs文件系统。
 
-| CMAKE_BUILD_TYPE | CODE_COVERAGE | 结果                  |
-| ---------------- | ------------- | --------------------- |
-| Debug            | 1             | CODE_COVERAGE_DEBUG   |
-| Release          | 1             | CODE_COVERAGE_RELEASE |
-| Release          | 0             | RELEASE               |
-| Debug            | 0             | （空）                |
+- [第575行至578行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L575)调用脚本`bin/clean.sh`清理之前的构建目录。
+- 在函数[`create_log_dirs()`](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L365,L380)中创建统一的日志目录。
+- 在函数[`bootstrap_dependencies()`](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L382,L422)，中下载python依赖和toolchain：
+  - 如果`SKIP_PYTHON_DOWNLOAD=false`则执行脚本`infra/python/deps/download_requirements`下载python的依赖。
+  - 如果`SKIP_TOOLCHAIN_BOOTSTRAP=true`且`DOWNLOAD_CDH_COMPONENTS=true`，或者`SKIP_TOOLCHAIN_BOOTSTRAP=false`，则执行脚本`bin/bootstrap_toolchain.py`下载toolchain。
 
-前3种非空情况连同`TIDY`，`UBSAN`，`UBSAN_FULL`，`TSAN`， `TSAN_FULL`为真的情况会形成互斥，最终变量`CMAKE_BUILD_TYPE`的值只能取其中之一，或者为空（表示Debug）。
+编译过程首先调用cmake命令生成Makefile，即函数[`generate_cmake_files()`](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L460,L501)，cmake的参数包括：`-DCMAKE_BUILD_TYPE`，`-DBUILD_SHARED_LIBS`，`-GNinja`，`-DCMAKE_TOOLCHAIN_FILE`，`-DCACHELINESIZE_AARCH64` 。不同构建需求的区别主要在于参数`CMAKE_BUILD_TYPE`的不同，它的默认值是`Debug`，除了默认值之外还有9种互斥的情况：
 
-[第344行至349行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L344,L349)校验启用kerberos的集群上不支持运行测试或者加载测试数据。
+- `CODE_COVERAGE_DEBUG`，由参数`-codecoverage`和`-release`确定。
+- `CODE_COVERAGE_RELEASE`，由参数`-codecoverage`和`-release`确定。
+- `RELEASE`，由参数`-release`确定。
+- `ADDRESS_SANITIZER`，由参数`-asan`确定。
+- `TIDY`，由参数`-tidy`确定。
+- `UBSAN`，由参数`-ubsan`确定。
+- `UBSAN_FULL`，由参数`-full_ubsan`确定。
+- `TSAN`，由参数`-tsan`确定。
+- `TSAN_FULL`，由参数`-full_tsan`确定。
 
-[第351行至356行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L351,L356)校验加载测试数据的hive元数据快照仅支持hdfs文件系统。
+如果指定了参数`-cmake_only`则仅会根据参数`CMAKE_BUILD_TYPE`生成Makefile。
 
-[第365行至380行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L365,L380)定义了函数`create_log_dirs()`。
+如果指定了参数`-fe_only`则在生成Makefile之后仅编译`FE`部分。
 
-[第382行至422行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L382,L422)定义了函数`bootstrap_dependencies()`，主要包括python依赖和编译工具链：
+如果以上两个参数都没有指定，则会调用函数[`build_all_components()`](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L435,L455)构建所有组件（包括FE和BE等）。
 
-- 如果`SKIP_PYTHON_DOWNLOAD=false`则执行脚本`$IMPALA_HOME/infra/python/deps/download_requirements`下载python的依赖。
-- 如果`SKIP_TOOLCHAIN_BOOTSTRAP=true`且`DOWNLOAD_CDH_COMPONENTS=true`，或者`SKIP_TOOLCHAIN_BOOTSTRAP=false`，则执行脚本`$IMPALA_HOME/bin/bootstrap_toolchain.py`下载toolchain。
+- 如果指定了参数`-release_and_debug`，则会依次生成RELEASE和DEBUG类型的Makefile；否则根据参数确定的`CMAKE_BUILD_TYPE`来生成Makefile。
 
-[第425至428行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L425,L428)定义了函数`build_fe()`，主要包括2个步骤：
+- 然后调用`make`命令执行编译过程，make命令的目标有三种情况：
 
-- 生成cmake文件
-- 执行`make java`命令
+| 编译测试文件 | 是否编译不相关目标 | MAKE目标                |
+| ------------ | ------------------ | ----------------------- |
+| False        | True               | notests_all_targets     |
+| False        | False              | notests_regular_targets |
+| True         | 任意               | （空）                  |
 
-[第435行至455行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L435,L455)定义了函数`build_all_components()`，主要完成两件事：
+接下来是minicluster相关，[第506行至534行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L506,L534)定义了函数`reconfigure_test_cluster()`，主要作用是调用`bin/create-test-configuration.sh`脚本生成impala依赖的hadoop配置文件，同时还会执行格式化元数据相关操作（会先kill掉minicluster集群）：
 
-- 生成cmake文件
-- 执行`make`命令
+- `-format_cluster`的操作最终是删除了hdfs和kudu的数据目录：
 
-make命令的目标有三种情况：
+  [buildall.sh](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L542) => [testdata/bin/run-all.sh](https://github.com/apache/impala/blob/4.0.0/testdata/bin/run-all.sh#L54) => [testdata/bin/run-mini-dfs.sh](https://github.com/apache/impala/blob/4.0.0/testdata/bin/run-mini-dfs.sh#L38) => [testdata/cluster/admin](https://github.com/apache/impala/blob/4.0.0/testdata/cluster/admin#L459,L463)
 
-| BUILD_TESTS | build_independent_targets | MAKE_TARGETS            |
-| ----------- | ------------------------- | ----------------------- |
-| 0           | 1                         | notests_all_targets     |
-| 0           | 0                         | notests_regular_targets |
-| 1           | 任意                      | （空）                  |
+- `-format_metastore`操作最终在pg数据库里删除重建了metastore的db，并执行`schematool -initSchema`命令：
 
-[第460行至501行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L460,L501)定义了函数`generate_cmake_files()`，主要步骤：
+  [buildall.sh](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L533) => [bin/create-test-configuration.sh](https://github.com/apache/impala/blob/4.0.0/bin/create-test-configuration.sh#L162,L165)
 
-- 拼接cmake参数，包括：`-DCMAKE_BUILD_TYPE`，`-DBUILD_SHARED_LIBS`，`-GNinja`，`-DCMAKE_TOOLCHAIN_FILE`，`-DCACHELINESIZE_AARCH64`
-- 执行cmake命令
+- `-format_ranger_policy_db`的操作同样删除重建了Ranger Policy的db，并在`RANGER_HOME`目录下生成`install.properties`配置文件，并执行`db_setup.py`：
 
-[第506行至534行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L506,L534)定义了函数`reconfigure_test_cluster()`：
+  [buildall.sh](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L533) => [bin/create-test-configuration.sh](https://github.com/apache/impala/blob/4.0.0/bin/create-test-configuration.sh#L185,L193)
 
-- 强制kill掉impala集群
-- 如果有修改元数据的操作则kill掉minicluster集群
-- 调用`${IMPALA_HOME}/bin/create-test-configuration.sh`脚本生成impala依赖的hadoop配置文件
+- `-upgrade_metastore_db`最终是执行`schematool -upgradeSchema`命令：
 
-[第537行至543行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L537,L543)定义了函数`start_test_cluster_dependencies()`，主要是调用脚本`$IMPALA_HOME/testdata/bin/run-all.sh`启动minicluster集群。
+  [buildall.sh](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L533) => [bin/create-test-configuration.sh](https://github.com/apache/impala/blob/4.0.0/bin/create-test-configuration.sh#L181)
 
-[第548行至565行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L548,L565)定义了函数`load_test_data()`，用来执行数据加载步骤：
+如果指定了参数`-metastore_snapshot_file`，则调用脚本[`testdata/bin/load-metastore-snapshot.sh`](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L620,L623)加载Hive metastore的元数据。
+
+[第537行至543行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L537,L543)定义了函数`start_test_cluster_dependencies()`，主要是调用脚本`testdata/bin/run-all.sh`启动minicluster集群。
+
+在minicluster集群启动之后，[第548行至565行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L548,L565)定义了函数`load_test_data()`，用来执行数据加载步骤：
 
 - 执行脚本`$IMPALA_HOME/bin/create_testdata.sh`
 
@@ -290,25 +296,7 @@ make命令的目标有三种情况：
   | 空            | 不为空                  | -skip_metadata_load -skip_snapshot_load |
   | 空            | 空                      | 空                                      |
 
-[第567行至573行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L567,L573)定义了函数`run_all_tests()`，调用脚本`${IMPALA_HOME}/bin/run-all-tests.sh`运行测试。
-
-[第575行至578行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L575)会调用脚本`$IMPALA_HOME/bin/clean.sh`清理之前的构建目录。
-
-[第620行至623行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L620,L623)调用脚本`${IMPALA_HOME}/testdata/bin/load-metastore-snapshot.sh`加载Hive metastore的元数据。
-
-
-
-
-
-
-
-
-
-
-
-格式化cluster？
-
-
+在数据加载完成之后，[第567行至573行](https://github.com/apache/impala/blob/4.0.0/buildall.sh#L567,L573)定义了函数`run_all_tests()`，调用脚本`bin/run-all-tests.sh`运行测试。
 
 ### report_build_error.sh
 
@@ -335,8 +323,6 @@ setup_report_build_error函数功能：如果接收到错误，打印行号。
 [-create_ranger_policy_db] : If true, creates a new Ranger policy db.
 [-upgrade_metastore_db] : If true, upgrades the schema of HMS db.
 ```
-
-
 
 ### Frontend
 
@@ -461,4 +447,16 @@ org.apache.impala.catalog.ScalarType
 | UseStmt                             |        |      |
 | ValuesStmt                          |        |      |
 
+## UDF开发
 
+### 内存申请
+
+如何申请自动回收的内存，并用类初始化它？
+
+Is_null初始为什么是false？(ptr=nullptr, len=0)
+
+函数内dst内存一直不会serialize？
+
+对象生命周期
+
+Roaringbitmap.reset?
