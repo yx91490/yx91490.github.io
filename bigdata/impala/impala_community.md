@@ -168,7 +168,7 @@ To ssh://XXXX@gerrit.cloudera.org:29418/Impala-ASF
 
 关于CI：
 
-普通contributors可以运行一下两个jenkins任务来验证patch的正确性：
+普通contributors可以运行以下两个jenkins任务来验证patch的正确性：
 
 - [pre-review-test：用来编译和运行测试。](https://jenkins.impala.io/job/pre-review-test/build?delay=0sec)
 - [gerrit-verify-dryrun-external](https://jenkins.impala.io/job/gerrit-verify-dryrun-external/build?delay=0sec) ：运行全套的验证程序，包括使用不同的构建工具编译impala，执行所有的BE测试，FE测试，端到端测试，和Apache RAT验证。
