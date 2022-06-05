@@ -1,6 +1,6 @@
 # Impala社区
 
-## 贡献代码
+## 贡献社区
 
 ### 提交Issue
 
@@ -129,7 +129,7 @@ git rebase -i asf-gerrit/master
 commit的描述信息有规范的格式：
 
 ```
- IMPALA-11301: 一句话的描述。
+ IMPALA-JiraId: 一句话的描述。
  
  详细的描述。
  
