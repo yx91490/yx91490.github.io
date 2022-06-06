@@ -28,6 +28,12 @@ git clone https://github.com/apache/hadoop.git
 
 另一个好处是，HTTPS是常用的协议，因此公司防火墙通常被设置为允许通过这些端口的通信。
 
+记住密码配置：
+
+```shell
+git config --global credential.helper store
+```
+
 ### SSH协议
 
 格式：
