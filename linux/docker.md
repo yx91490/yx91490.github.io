@@ -380,7 +380,21 @@ docker run --network=host  -i -t ubuntu:latest /bin/bash
 
 1.如果配置的网络模式是默认的bridge模式，通常会选择暴露若干个服务的端口，但是容器创建以后有时想另外暴露几个端口，如何在不删除容器的情况下更改暴露的端口？
 
+方式一：
+
 可以在停止docker服务后修改`/var/lib/container/<containerId>/hostconfig.json`，以及`/var/lib/container/<containerId>/config.v2.json`这两个文件。
+
+方式二：
+
+```shell
+HostIP=192.168.1.1
+HostPort=30000
+ContainerIP=172.17.0.2
+ContainerPort=30000
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport ${HostPort} -j DNAT --to-destination ${ContainerIP}:${ContainerPort}
+iptables -t nat -A POSTROUTING -d ${ContainerIP}/32 -p tcp -m tcp --sport 80 -j SNAT --to-source ${HostIP}
+iptables -t filter -A INPUT -p tcp -m state --state NEW -m tcp --dport ${HostPort} -j ACCEPT
+```
 
 2.我们知道对容器中的hosts文件修改重启之后会失效，如何更改hosts使之不失效？
 
