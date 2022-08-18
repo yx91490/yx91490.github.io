@@ -70,6 +70,77 @@ alias ninja='ninja -j ${IMPALA_BUILD_THREADS}'
 echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 ```
 
+### 国内镜像加速
+
+编译Impala源码的时候会下载大量的依赖包，由于大部分地址在国内的访问速度堪忧，给国内开发者增加了门槛。现提供一个非官方的镜像地址及相应配置方式，仅供参考。
+
+编译Impala时会下载的依赖主要包括4个部分：
+
+1. 预置的 maven jar 包
+2. python 包
+3. maven jar 包
+4. toolchain 包
+
+其中：
+
+第 1 部分可以在bootstrap_system.sh脚本中注释掉，参考：IMPALA-11439。
+
+第2 部分可以通过配置pypi的国内各种镜像地址来加速，如：`export PYPI_MIRROR=https://pypi.tuna.tsinghua.edu.cn`。
+
+第 3 部分：~/.m2/settings.xml做如下配置：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"
+          xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <servers>
+        <server>
+            <id>rdc-releases</id>
+            <username>${username}</username>
+            <password>${password}</password>
+        </server>
+    </servers>
+    <mirrors>
+        <mirror>
+            <id>aliyunmaven</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </mirror>
+        <mirror>
+            <id>rdc-releases</id>
+            <mirrorOf>*,!central</mirrorOf>
+            <url>https://packages.aliyun.com/maven/repository/${repoId}</url>
+        </mirror>
+    </mirrors>
+</settings>
+```
+
+
+变量repoId，username，password请在“图解代码”公众号发送关键字“Impala镜像”获取。
+
+第 4 部分：配置以下环境变量：
+
+```bash
+export DOWNLOAD_CDH_COMPONENTS=false
+export SKIP_TOOLCHAIN_BOOTSTRAP=false
+export IMPALA_TOOLCHAIN_HOST=packages.aliyun.com/maven/repository/${repoId}
+export IMPALA_HADOOP_URL='https://${toolchain_host}/build/hadoop/${version}/hadoop-${version}.tar.gz'
+export IMPALA_HBASE_URL='https://${toolchain_host}/build/hbase/${version}/hbase-${version}-bin.tar.gz'
+export IMPALA_HIVE_URL='https://${toolchain_host}/build/apache-hive/${version}/apache-hive-${version}-bin.tar.gz'
+export IMPALA_HIVE_SOURCE_URL='https://${toolchain_host}/build/hive/${version}/hive-${version}-source.tar.gz'
+export IMPALA_RANGER_URL='https://${toolchain_host}/build/ranger/${version}/ranger-${version}-admin.tar.gz'
+export IMPALA_TEZ_URL='https://${toolchain_host}/build/tez/${version}/tez-${version}-minimal.tar.gz'
+```
+
+写入~/.netrc文件：
+
+```
+machine packages.aliyun.com login ${username} password ${password}
+```
+
+注意：此maven 库里已上传 4.0 分支所需依赖，如果编译其他分支遇到缺包的情况可以联系我。
+
 ### buildall.sh详细用法
 
 主要作用是编译代码，启动impala依赖的minicluster集群（包括HDFS，Hive，HBase，Kudu等），启动Impala集群（包括catalogd, statestored, impalad），加载测试元数据及数据，执行测试。
@@ -175,11 +246,10 @@ echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 
 ### 术语表
 
-| 术语     | 说明 |
-| -------- | ---- |
-| lhs, rhs |      |
-|          |      |
-|          |      |
+| 术语     | 说明                                |
+| -------- | ----------------------------------- |
+| lhs, rhs | Left-side-hand, right-side-hand缩写 |
+| c'tor    | constructor缩写                     |
 
 ### bootstrap_system.sh
 
@@ -314,6 +384,14 @@ setup_report_build_error函数功能：如果接收到错误，打印行号。
 - llvm输出目录
 - cmake生成文件
 
+### download_requirements
+
+替代pip命令从PyPI源下载python包，可以通过环境变量`PYPI_MIRROR`设置PyPI源镜像地址，下载的python包列表在`infra/python/deps/requirements.txt`等文件中指定。
+
+至于为什么不用pip命令下载，注释说的意思是不同操作系统下载不稳定和不一致（Impala也只支持Linux啊，感觉站不住脚），还有避免执行可能会失败的某些包的setup.py，参考：[IMPALA-3778](http://issues.apache.org/jira/browse/IMPALA-3778)。
+
+### bootstrap_toolchain.py
+
 ### create-test-configuration.sh
 
 使用说明：
@@ -323,6 +401,18 @@ setup_report_build_error函数功能：如果接收到错误，打印行号。
 [-create_ranger_policy_db] : If true, creates a new Ranger policy db.
 [-upgrade_metastore_db] : If true, upgrades the schema of HMS db.
 ```
+
+### load-metastore-snapshot.sh
+
+### create_testdata.sh
+
+### create-load-data.sh
+
+### run-all.sh
+
+### run-mini-dfs.sh
+
+### run-all-tests.sh
 
 ### Frontend
 
