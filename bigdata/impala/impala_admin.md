@@ -116,6 +116,15 @@ TRuntimeProfileTree(nodes=[TRuntimeProfileNode(info_strings_display_order=[], in
 
 完整解析代码可以参考：[impala_profile_log_parse](https://github.com/centercode/code-samples/tree/1ec4a638c71a9a593f38bab1acdc6e65ce6a9183/impala-sample/impala_profile_log_parse)。
 
+Impala4.0内置了一个 profile 解析工具，使用方式：
+
+```bash
+# Docker 方式
+cat ${path_to_profile_file} | docker run -i apache/impala:4.0.0-impala_profile_tool
+# 开发环境
+${IMPALA_HOME}/be/build/latest/util/impala-profile-tool < ${path_to_profile_file}
+```
+
 ### 参考
 
 [Re: How to parse a query plan /summary/profile](http://mail-archives.apache.org/mod_mbox/impala-user/201908.mbox/%3CCAEoRBexmjJ7hNfHo_yLFyc0KGQDvMPKNTH--VPOfTO-w=X18qQ@mail.gmail.com%3E)
