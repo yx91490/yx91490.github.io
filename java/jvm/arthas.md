@@ -1,5 +1,18 @@
 # Arthas学习笔记
 
+## 使用方式
+
+下载地址：[arthas-packaging-3.6.4-bin.zip](https://maven.aliyun.com/repository/public/com/taobao/arthas/arthas-packaging/3.6.4/arthas-packaging-3.6.4-bin.zip) 。
+
+启动命令：
+
+```shell
+# 命令行方式
+./as.h
+# jar方式
+java -jar arthas-boot.jar
+```
+
 ## 命令列表
 
 | 命令        | 功能                                                         |
