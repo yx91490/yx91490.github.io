@@ -90,7 +90,14 @@ echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 
 其中：
 
-第 1 部分不是必须的，4.2.0以下可以在bootstrap_system.sh脚本中注释掉，参考：[IMPALA-11439](http://issues.apache.org/jira/browse/IMPALA-11439)。
+第 1 部分不是必须的，4.2.0以下可以在bootstrap_system.sh脚本中注释掉，参考：[IMPALA-11439](http://issues.apache.org/jira/browse/IMPALA-11439)。4.2.0以上在初始化的时候通过环境变量跳过：
+
+```shell
+# 不下载预置maven包
+export PREPOPULATE_M2_REPOSITORY=false
+# 初始化编译环境
+${IMPALA_HOME}/bin/bootstrap_system.sh
+```
 
 第 2 部分可以通过配置PYPI的国内镜像地址（4.1.0以下需要打个 patch：[IMPALA-10994](http://issues.apache.org/jira/browse/IMPALA-10994)）来加速，如：
 
@@ -133,7 +140,7 @@ ${IMPALA_HOME}/infra/python/deps/download_requirements
 </settings>
 ```
 
-之后再运行 mvn 命令的时候就能使用镜像地址了。
+之后再运行 mvn 命令的时候就能使用镜像地址进行加速了。
 
 第 4 部分：写入~/.netrc文件（变量username，password的获取参考第 3 部分）：
 
