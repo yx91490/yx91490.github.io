@@ -72,22 +72,39 @@ echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 
 ### 国内镜像加速
 
-编译Impala源码的时候会下载大量的依赖包，由于大部分地址在国内的访问速度堪忧，给国内开发者增加了门槛。现提供一个非官方的镜像地址及相应配置方式，仅供参考。
+编译Impala源码的时候会下载大量的依赖包，由于大部分地址在国内的访问速度堪忧，给国内开发者增加了门槛。现提供一个非官方的镜像地址及相应配置方式，适用于Impala 4.0.0以上，仅供参考。
+
+注：由于服务端限制单个文件不超过 500MB，需要对某些包做裁剪（软链接重复文件），裁剪情况如下：
+
+| 版本  | c++依赖包（ToolchainPackage） | cluster组件（CdpComponent） |
+| ----- | ----------------------------- | --------------------------- |
+| 4.0.0 | 裁剪了kudu                    | 完整                        |
+| 4.1.0 | 裁剪了kudu                    | 裁剪ranger                  |
 
 编译Impala时会下载的依赖主要包括4个部分：
 
-1. 预置的 maven jar 包
-2. python 包
+1. 预置的 maven jar包
+2. python包
 3. maven jar 包
-4. toolchain 包
+4. toolchain包
 
 其中：
 
-第 1 部分可以在bootstrap_system.sh脚本中注释掉，参考：IMPALA-11439。
+第 1 部分不是必须的，可以在bootstrap_system.sh脚本中注释掉，参考：[IMPALA-11439](http://issues.apache.org/jira/browse/IMPALA-11439)。
 
-第2 部分可以通过配置pypi的国内各种镜像地址来加速，如：`export PYPI_MIRROR=https://pypi.tuna.tsinghua.edu.cn`。
+第 2 部分可以通过配置PYPI的国内镜像地址（4.1.0以下需要打个 patch：[IMPALA-10994](http://issues.apache.org/jira/browse/IMPALA-10994)）来加速，如：
 
-第 3 部分：~/.m2/settings.xml做如下配置：
+```shell
+export PYPI_MIRROR=https://pypi.tuna.tsinghua.edu.cn
+```
+
+通过下面命令单独下载python包：
+
+```shell
+${IMPALA_HOME}/infra/python/deps/download_requirements
+```
+
+第 3 部分：配置~/.m2/settings.xml如下（变量repoId，username，password请在“图解代码”公众号发送关键字“Impala镜像”获取）：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -116,13 +133,12 @@ echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 </settings>
 ```
 
-
-变量repoId，username，password请在“图解代码”公众号发送关键字“Impala镜像”获取。
+之后再运行 mvn 命令的时候就能使用镜像地址了。
 
 第 4 部分：配置以下环境变量：
 
 ```bash
-export DOWNLOAD_CDH_COMPONENTS=false
+export DOWNLOAD_CDH_COMPONENTS=true
 export SKIP_TOOLCHAIN_BOOTSTRAP=false
 export IMPALA_TOOLCHAIN_HOST=packages.aliyun.com/maven/repository/${repoId}
 export IMPALA_HADOOP_URL='https://${toolchain_host}/build/hadoop/${version}/hadoop-${version}.tar.gz'
@@ -139,7 +155,11 @@ export IMPALA_TEZ_URL='https://${toolchain_host}/build/tez/${version}/tez-${vers
 machine packages.aliyun.com login ${username} password ${password}
 ```
 
-注意：此maven 库里已上传 4.0 分支所需依赖，如果编译其他分支遇到缺包的情况可以联系我。
+运行以下命令下载 toolchain：
+
+```shell
+${IMPALA_HOME}/bin/bootstrap_toolchain.py
+```
 
 ### buildall.sh详细用法
 
