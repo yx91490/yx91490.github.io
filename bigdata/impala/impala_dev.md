@@ -135,11 +135,22 @@ ${IMPALA_HOME}/infra/python/deps/download_requirements
 
 之后再运行 mvn 命令的时候就能使用镜像地址了。
 
-第 4 部分：配置以下环境变量：
+第 4 部分：写入~/.netrc文件（变量username，password的获取参考第 3 部分）：
 
-```bash
+```
+machine packages.aliyun.com login ${username} password ${password}
+```
+
+运行以下命令下载 toolchain（变量repoId的获取参考第 3 部分）：
+
+```shell
+# 禁止重复下载python包
+export SKIP_PYTHON_DOWNLOAD=true
+# 下载minicluster依赖的组件
 export DOWNLOAD_CDH_COMPONENTS=true
+# 下载c++的依赖包
 export SKIP_TOOLCHAIN_BOOTSTRAP=false
+
 export IMPALA_TOOLCHAIN_HOST=packages.aliyun.com/maven/repository/${repoId}
 export IMPALA_HADOOP_URL='https://${toolchain_host}/build/hadoop/${version}/hadoop-${version}.tar.gz'
 export IMPALA_HBASE_URL='https://${toolchain_host}/build/hbase/${version}/hbase-${version}-bin.tar.gz'
@@ -147,17 +158,8 @@ export IMPALA_HIVE_URL='https://${toolchain_host}/build/apache-hive/${version}/a
 export IMPALA_HIVE_SOURCE_URL='https://${toolchain_host}/build/hive/${version}/hive-${version}-source.tar.gz'
 export IMPALA_RANGER_URL='https://${toolchain_host}/build/ranger/${version}/ranger-${version}-admin.tar.gz'
 export IMPALA_TEZ_URL='https://${toolchain_host}/build/tez/${version}/tez-${version}-minimal.tar.gz'
-```
 
-写入~/.netrc文件：
-
-```
-machine packages.aliyun.com login ${username} password ${password}
-```
-
-运行以下命令下载 toolchain：
-
-```shell
+# 执行下载动作
 ${IMPALA_HOME}/bin/bootstrap_toolchain.py
 ```
 
