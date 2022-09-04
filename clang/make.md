@@ -29,6 +29,12 @@ clean:
         rm *.o temp
 ```
 
+为 make 添加target的补全：
+
+```
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+```
+
 #### 前置条件（prerequisites）
 
 前置条件通常是空格分隔的多个文件名。
@@ -304,3 +310,5 @@ $(shell arg1 arg2...)
 [Make 命令教程](https://www.ruanyifeng.com/blog/2015/02/make.html)
 
 [GNU make/Makefile 简明实用教程](https://literaryno4.github.io/makefile_tutorial.html/)
+
+[bash completion of makefile target](https://stackoverflow.com/questions/4188324/bash-completion-of-makefile-target)
