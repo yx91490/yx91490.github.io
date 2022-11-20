@@ -360,6 +360,7 @@ module.exports = {
         collapsable: false,
         sidebarDepth: 0,
         children: [
+          '/bigdata/impala/cup',
           '/bigdata/impala/impala',
           '/bigdata/impala/impala_admin',
           '/bigdata/impala/impala_dev',
