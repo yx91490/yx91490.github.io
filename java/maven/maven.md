@@ -34,6 +34,15 @@ Maven作为build工具时经常出现此问题，原因是未指定具体编码�
 
 Maven官网在FAQ中，列出了这个问题：[How do I prevent “WARNING Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!”](http://maven.apache.org/general.html#encoding-warning)
 
+Maven的六类属性：
+
+1. 内置属性
+2. POM属性
+3. 自定义属性
+4. Settings属性
+5. Java系统属性
+6. 环境变量属性
+
 #### 配置资源目录
 
 把除了`src/main/resources`目录以外的目录里的文件加入ClassPath中，pom.xml里配置：
@@ -308,6 +317,130 @@ profile可以让我们针对不同环境定义一系列的配置信息。这样�
 
 > [使用 Maven Profile 和 Filtering 打各种环境的包](https://segmentfault.com/a/1190000003908040)  
 > [Introduction to Build Profiles](https://maven.apache.org/guides/introduction/introduction-to-profiles.html)
+
+##### 激活Profile
+
+1. 命令行激活
+
+2.  Settings 文件显示激活：
+
+   ```xml
+   <settings>
+       <activeProfiles>
+           <activeProfile>profile1</activeProfile>
+       </activeProfiles>
+   </settings>
+   ```
+
+3.  系统属性激活：
+
+   ```xml
+   <profiles>
+       <profile>
+           <activation>
+               <!--命令行中激活： mvn clean install -Dproperty1 -->
+               <property>
+                   <name>property1</name>
+               </property>
+           </activation>
+       </profile>
+   </profiles>
+   ```
+
+   ```xml
+   <profiles>
+       <profile>
+           <activation>
+               <!--命令行中激活： mvn clean install -Dproperty1=value1 -->
+               <property>
+                   <name>property1</name>
+                   <value>value1</value>
+               </property>
+           </activation>
+       </profile>
+   </profiles>
+   ```
+
+   注意不是Maven属性，父pom的属性在子POM出现之前就已经展开了。
+
+   参考：[SystemPropertyProfileActivator.java](https://github.com/apache/maven/blob/maven-3.8.0/maven-compat/src/main/java/org/apache/maven/profiles/activation/SystemPropertyProfileActivator.java)。
+
+4. 操作系统环境激活：
+
+   ```xml
+   <profiles>
+       <profile>
+           <activation>
+               <os>
+                   <name>Window XP</name>
+                   <family>Windows</family>
+                   <arch>x86</arch>
+                   <version>5.1.2600</version>
+               </os>
+           </activation>
+       </profile>
+   </profiles>
+   ```
+
+5.  文件存在与否激活：
+
+   ```xml
+   <profiles>
+       <profile>
+           <activation>
+               <file>
+                   <missing>file1</missing>
+                   <exists>file2</exists>
+               </file>
+           </activation>
+       </profile>
+   </profiles>
+   ```
+
+6. 默认激活：
+
+   ```xml
+   <profiles>
+       <profile>
+           <activation>
+               <activeByDefault>true</activeByDefault>
+           </activation>
+       </profile>
+   </profiles>
+   ```
+
+可以使用如下命令查看当前激活的 profile：
+
+```shell
+mvn help:active-profiles
+```
+
+也可以使用如下命令查看所有的 profile：
+
+```shell
+mvn help:all-profiles
+```
+
+默认激活多个Profile：
+
+1. 在配置文件中激活profile：.mvn/jvm.config
+2. settings.xml中配置
+
+#### 取消激活Profile
+
+```shell
+mvn groupId:artifactId:goal -P '!profile-1,!profile-2,!?profile-3'
+```
+
+或者：
+
+```shell
+ mvn groupId:artifactId:goal -P -profile-1,-profile-2,-?profile-3
+```
+
+参考：
+
+[Guide to Maven Profiles](https://www.baeldung.com/maven-profiles)
 
 ## （三）Maven命令行
 
