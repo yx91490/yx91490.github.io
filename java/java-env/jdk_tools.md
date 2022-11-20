@@ -155,3 +155,12 @@ echo 0 > /proc/sys/kernel/yama/ptrace_scope
 kernel.yama.ptrace_scope = 0
 ```
 
+### java命令
+
+远程调试：
+
+```
+java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005 myPackage.myMainClassname
+```
+
+`suspend=y`使进程等待连接。
