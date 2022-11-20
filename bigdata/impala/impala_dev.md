@@ -27,6 +27,10 @@ buildall.sh -release -notests
 - 如果要跳过构建BE测试，将 `-notests` 传递给 buildall.sh 命令
 - 如果不需要完全清理，则将 `-noclean` 传递给 buildall.sh 命令
 
+#### 参考
+
+[Building Impala](https://cwiki.apache.org/confluence/display/IMPALA/Building+Impala)
+
 ### 增量构建
 
 ```shell
@@ -69,6 +73,10 @@ alias ninja='ninja -j ${IMPALA_BUILD_THREADS}'
 ```shell
 echo "export SKIP_TOOLCHAIN_BOOTSTRAP=true" >> bin/impala-config-local.sh
 ```
+
+#### 参考
+
+[Tips for Faster Impala Builds](https://cwiki.apache.org/confluence/display/IMPALA/Tips+for+Faster+Impala+Builds)
 
 ### 国内镜像加速
 
@@ -255,17 +263,41 @@ ${IMPALA_HOME}/bin/bootstrap_toolchain.py
 ./buildall.sh -upgrade_metastore_db
 ```
 
-### 参考
+### 编译时间优化
 
-[Building Impala](https://cwiki.apache.org/confluence/display/IMPALA/Building+Impala)
+#### 编译展开分析
 
-[Tips for Faster Impala Builds](https://cwiki.apache.org/confluence/display/IMPALA/Tips+for+Faster+Impala+Builds)
+在cmake中指定编译选型"-save-temps"保留编译中间文件：
+
+```cmake
+# be/CMakeLists.txt
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -save-temps")
+```
+
+#### 头文件依赖分析
+
+通过工具统计出编译源文件直接和间接依赖的头文件的总个数。
+
+#### 编译耗时统计
+
+从结果上看各个文件的编译耗时以及各个编译阶段的耗时情况，正常情况下，是和文件展开大小以及头文件引用个数是正相关的。
+
+cmake通过指定环境变量能打印出编译和链接阶段的耗时情况：
+
+```cmake
+# export IMPALA_BUILD_THREADS=1
+# be/CMakeLists.txt
+set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
+set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
+```
+
+#### 参考
+
+[C++服务编译耗时优化原理及实践](https://tech.meituan.com/2020/12/10/apache-kylin-practice-in-meituan.html)
 
 ## 代码调试
 
 ### 参考
-
-
 
 [Impala Debugging Tips](https://cwiki.apache.org/confluence/display/IMPALA/Impala+Debugging+Tips)
 
