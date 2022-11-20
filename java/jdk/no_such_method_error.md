@@ -63,7 +63,7 @@ foo.class.getProtectionDomain().getCodeSource()
 | Z                  | **boolean**      |
 | [                  | Array            |
 
-做个实验： 
+做个实验（javap -s Demo.class）： 
 
 ```java
 Compiled from "Demo.java"
