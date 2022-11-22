@@ -230,7 +230,7 @@ git pull --rebase
 生成patch 的方法：
 
 ```shell
-git format-patch <commitId>
+git format-patch <SinceCommitId>
 ```
 
 打入patch 的方法：
