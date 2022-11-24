@@ -34,11 +34,63 @@ sudo python2 -m pip uninstall pip
 pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
 ```
 
+### 使用
+
+| 子命令     | 功能                             |
+| ---------- | -------------------------------- |
+| install    | 安装包                           |
+| download   | 下载包                           |
+| uninstall  | 卸载包                           |
+| freeze     | 以requirements格式输出已安装的包 |
+| list       | 列出已安装的包                   |
+| show       | 展示已安装包的信息               |
+| check      | 验证已安装包的依赖是兼容的       |
+| config     | 管理本地和全局的配置             |
+| search     | 从PyPI查找包，官方已停用此命令   |
+| cache      | 检查和管理pip的wheel缓存         |
+| wheel      | 从requirements构建wheels         |
+| hash       | 计算包存档的hash                 |
+| completion | 一个辅助命令用来做命令补全       |
+| debug      | 展示有用的调试信息               |
+| help       | 展示命令的帮助                   |
+
+#### pip show
+
+`pip show impala-shell`输出：
+
+```
+Name: impala-shell
+Version: 4.1.1
+Summary: Impala Shell
+Home-page: https://impala.apache.org/
+Author: Impala Dev
+Author-email: dev@impala.apache.org
+License: Apache Software License
+Location: /Users/me/Library/Python/2.7/lib/python/site-packages
+Requires: bitarray, six, sqlparse, sasl, setuptools, thrift, configparser, prettytable, thrift-sasl
+Required-by: 
+```
+
+Location是包的安装路径。
+
 ## Python2语法
 
 ### 类
 
 ## 调试
+
+## Python3语法
+
+### 判断版本
+
+```python
+# Python 3.5.1 (v3.5.1:37a07cee5969, Dec  5 2015, 21:12:44)
+# [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+# Type "help", "copyright", "credits" or "license" for more information.
+import sys
+sys.version_info
+# sys.version_info(major=3, minor=5, micro=1, releaselevel='final', serial=0)
+```
 
 ### PYTHONPATH
 
