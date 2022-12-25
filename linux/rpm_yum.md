@@ -47,6 +47,8 @@ $ sudo rpm -e 包名
 
 | 操作                     | 命令                                                      |
 | ------------------------ | --------------------------------------------------------- |
+| 清除缓存数据             | yum clean all                                             |
+| 生成元数据缓存           | yum makecache                                             |
 | 更新包列表               | yum check-update                                          |
 | 更新已安装的包           | yum update                                                |
 | 搜索某个包               | yum search $search_string                                 |
