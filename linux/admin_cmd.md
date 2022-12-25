@@ -204,3 +204,134 @@ h:help
     Press 'h' or '?' for help with Windows,
 ```
 
+### tcpdump
+
+### ethtool
+
+### sudo
+
+默认sudo不会传递当前用户的PATH环境变量，而是使用系统默认的，查看sudo使用的PATH：
+
+```shell
+sudo env | grep PATH
+# PATH=/sbin:/bin:/usr/sbin:/usr/bin
+```
+
+参考：[Command not found with sudo, but works without sudo](https://stackoverflow.com/questions/54026213/)
+
+### ss
+
+
+
+### sysctl
+
+sysctl is used to modify kernel parameters at runtime. The parameters available are those listed under `/proc/sys/`.
+
+Usage：
+
+```
+Usage:
+ sysctl [options] [variable[=value] ...]
+
+Options:
+  -a, --all            display all variables
+  -A                   alias of -a
+  -X                   alias of -a
+      --deprecated     include deprecated parameters to listing
+  -b, --binary         print value without new line
+  -e, --ignore         ignore unknown variables errors
+  -N, --names          print variable names without values
+  -n, --values         print only values of a variables
+  -p, --load[=<file>]  read values from file
+  -f                   alias of -p
+      --system         read values from all system directories
+  -r, --pattern <expression>
+                       select setting that match expression
+  -q, --quiet          do not echo variable set
+  -w, --write          enable writing a value to variable
+  -o                   does nothing
+  -x                   does nothing
+  -d                   alias of -h
+
+ -h, --help     display this help and exit
+ -V, --version  output version information and exit
+```
+
+列出所有变量：
+
+```
+sysctl -a
+```
+
+读取单个变量：
+
+```
+sysctl net.ipv4.ip_local_reserved_ports
+```
+
+临时写入单个变量：
+
+```
+sysctl -w net.ipv4.ip_local_reserved_ports=21000
+```
+
+加载配置文件（默认/etc/sysctl.conf）：
+
+```
+sysctl -p
+```
+
+### 文件权限
+
+用户分为三类：
+
+1. 文件的 owner
+2. 文件 group 的其他 user
+3. 其他人
+
+普通权限：
+
+| 权限 | 符号 | 数字 | 应用于文件     | 应用于目录                 |
+| ---- | ---- | ---- | -------------- | -------------------------- |
+| 读   | r    | 4    | 读取文件的权限 | 列出目录内容的权限         |
+| 写   | w    | 2    | 写入文件的权限 | 创建和删除目录内文件的权限 |
+| 执行 | x    | 1    | 执行文件的权限 | 访问目录内文件的权限       |
+
+特殊权限：
+
+| 权限     | 符号 | 数字 | 应用于可执行文件                           | 应用于目录                                                   |
+| -------- | ---- | ---- | ------------------------------------------ | ------------------------------------------------------------ |
+| setuid位 | s    | 4    | 执行时，设置进程的 user id 为文件的 owner  | 目录中创建的文件赋予跟目录相同的 owner，设置子目录的setuid位 |
+| setgid位 | s    | 2    | 执行时，设置进程的 group id 为文件的 group | 目录中创建的文件赋予跟目录相同的 group，设置子目录的setgid位 |
+| sticky位 | t    | 1    |                                            | 只有对应 owner 才能删除或重命名目录中的文件。                |
+
+#### 符号模式
+
+设置权限格式：
+
+```
+users operation permissions
+users ::= [ugoa]
+operation ::= [+-=]
+permissions ::= [rwxXst]
+```
+
+例子：
+
+```
+// 所有用户均只赋予读写权限
+a=rw
+// 取消除了 owner 之外的人的所有权限
+go-rwx
+// 所有用户有权限搜索目录，
+// setuid
+u+s
+// setgid
+g+s
+set sticky
++t
+```
+
+#### 参考
+
+[27 File permissions](https://www.gnu.org/software/coreutils/manual/html_node/File-permissions.html)
