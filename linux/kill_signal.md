@@ -177,6 +177,8 @@ $ /bin/kill -L
 | SIGINT  | kill -2  | 相当于ctrl+c，信号被当前进程树接收到 |
 | SIGKILL | kill -9  | 不能被捕获                           |
 | SIGTERM | kill -15 | 只有当前进程收到，子进程不会收到     |
+| SIGCONT | kill -18 | 继续停止的进程                       |
+| SIGSTOP | kill -19 | 停止进程                             |
 
 ### 守护进程和普通进程的区别
 
@@ -190,3 +192,4 @@ $ /bin/kill -L
 
 - [java多线程的几种状态](https://blog.csdn.net/u014636245/article/details/92596602)
 - [一些常用的kill信号的对比和总结](https://wenku.baidu.com/view/595dde27ccbff121dd3683fb.html)
+- [How to Pause/Resume a process in Linux](https://stackoverflow.com/questions/27844970/how-to-pause-resume-a-process-in-linux)
