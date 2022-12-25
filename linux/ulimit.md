@@ -116,6 +116,13 @@ lsof -p <pid> |wc -l
 lsof -n |awk '{print $2}'|sort|uniq -c |sort -nr|more
 ```
 
+### 查看进程的线程数
+
+```shell
+cat /proc/<pid>/status | grep Threads
+ls /proc/<pid>/task |wc -l
+```
+
 ### 参考
 
 [为什么在Linux中限制打开文件的数量？](https://qastack.cn/unix/36841/why-is-number-of-open-files-limited-in-linux)
