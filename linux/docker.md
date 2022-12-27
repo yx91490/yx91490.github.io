@@ -37,7 +37,7 @@ sudo systemctl restart docker
 docker images [OPTIONS] [REPOSITORY[:TAG]]
 ```
 
-#### docker rimi
+#### docker rmi
 
 删除本地一个或多少镜像：
 
@@ -220,6 +220,7 @@ docker diff [OPTIONS] CONTAINER
 ### 参考
 
 - [Docker 教程](https://www.runoob.com/docker/docker-tutorial.html)
+- [Runtime options with Memory, CPUs, and GPUs](https://docs.docker.com/config/containers/resource_constraints/)
 
 ## Dockerfile配置
 
@@ -238,6 +239,13 @@ FROM [--platform=<platform>] <image>[:<tag>] [AS <name>]
 ```
 ENV <key>=<value> <key>=<value> <key>=<value> ...
 ```
+
+- 可以指定多个
+- 对所有用户有效
+- 使用`su`切换用户后失效
+- 从构建过程到最终镜像都可见
+
+参考：[Dockerfile: create ENV variable that a USER can see?](https://stackoverflow.com/questions/32574429/dockerfile-create-env-variable-that-a-user-can-see)
 
 ### COPY
 
@@ -274,8 +282,6 @@ CMD ["param1","param2"]
 >  注意：
 >
 > Docker容器中的应用都应该以前台执行，对于容器而言，其启动程序就是容器应用进程，容器就是为了主进程而存在的，主进程退出，容器就失去了存在的意义，从而退出，其它辅助进程不是它需要关心的东西。
-
-
 
 ### ENTRYPOINT
 
@@ -326,9 +332,61 @@ localectl set-locale LANG=zh_CN.UTF-8
 
 //TODO
 
+## 最佳实践
+
+### 通用建议
+
+使用多阶段 build
+
+不安装不必要的包
+
+解耦应用：将每个容器限制为一个进程。
+
+最小化layer 数
+
+将多行的参数排序
+
+利用缓存：
+
+- 从缓存中已经存在的父映像开始，将下一条指令与从该基本映像派生的所有子映像进行比较，以查看其中是否有一个子映像是使用完全相同的指令构建的。
+- ADD和COPY指令比较的是 checksum 而非修改时间。
+- 除了ADD和COPY，其他指令比较的是指令字符串。
+
+### Dockerfile 指令
+
+#### FROM
+
+使用Alpine image基础镜像。
+
+#### RUN
+
+`apt-get update` 和 `apt-get install` 总是一块使用。
+
+#### ADD or COPY
+
+COPY优先于 ADD，COPY 指令更透明。
+
+ADD 指令最佳用法：用于本地的tar 自动解压到 image 里。
+
+#### USER
+
+创建用户例子：
+
+```
+RUN groupadd -r postgres && useradd --no-log-init -r -g postgres postgres
+```
+
+#### WORKDIR
+
+为了可读性和准确性使用绝对路径。
+
+### 参考
+
+[Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
 ## 网络模式
 
-docker 提供给了4种网络模式：bridge（默认），none，host和自定义网络
+docker 提供给了4种网络模式：bridge（默认），none，host和自定义网络。
 
 当我们完成docker engine的安装以后会生成3种网络：bridge，none和host。
 
