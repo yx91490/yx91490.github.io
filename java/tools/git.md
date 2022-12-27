@@ -69,6 +69,28 @@ Git协议的缺点是缺少身份验证。它还需要防火墙访问端口9418�
 
 ## Git命令
 
+### 记住 HTTP 协议密码
+
+永久记住账号密码：
+
+```
+git config --global credential.helper store
+```
+
+账号密码会记录在`~/.git-credentials`文件中：
+
+```
+${PROTOCOL}://${USER}:${PASSWORD}@${HOST}
+```
+
+### diff
+
+显示 stage 区和HEAD 的 diff：
+
+```
+git diff --staged
+```
+
 ### clone单个分支
 
     git clone --single-branch -b "jdk/jdk" git@github.com:yx91490/openjdk.git openjdk2
