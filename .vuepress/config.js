@@ -22,6 +22,16 @@ module.exports = {
     smoothScroll: true,
     lastUpdated: '更新时间',
     sidebar: {
+    '/cs': [
+      {
+        title: '计算机科学',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          'cs/term.md',
+        ]
+      },
+    ],
     '/sql': [
       {
         title: 'SQL',
@@ -416,6 +426,7 @@ module.exports = {
           { text: 'Python', link: '/python/' },
           { text: '图示速查', link: '/diagram/' },
           { text: '资料收藏', link: '/collection/' },
+          { text: '计算机科学', link: '/cs/' },
           { text: 'Github', link: 'https://github.com/yx91490' },
           { text: '给我留言', link: 'https://github.com/yx91490/yx91490.github.io/issues/new' },
           // { text: '微信公众号', link: 'https://weixin.sogou.com/weixin?query=图解代码' },
