@@ -73,6 +73,32 @@ Required-by:
 
 Location是包的安装路径。
 
+### 常见问题
+
+#### 模块安装路径
+
+Python Cli里查看模块安装路径：
+
+```python
+print(itertools.__file__)
+# /home/python/env-gcc7.5.0/lib/python2.7/lib-dynload/itertools.so
+```
+
+#### incompatible architecture
+
+M1芯片 的Mac上的报错：
+
+```
+(mach-o file, but is an incompatible architecture (have 'arm64', need 'x86_64')), '/usr/lib/_bitarray.so' (no such file)
+```
+
+解决办法：
+
+```
+pip2 uninstall bitarray
+ARCHFLAGS="-arch arm64" pip2 install bitarray --compile --no-cache-dir
+```
+
 ## Python2语法
 
 ### 类
