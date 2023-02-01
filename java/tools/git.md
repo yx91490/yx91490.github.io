@@ -298,6 +298,12 @@ git submodule update
 git log -S <SearchString> [[--] <path>...]
 ```
 
+### 提交中保留可执行权限
+
+```
+git update-index --chmod=+x <file>
+```
+
 ## Git工作流
 
 ### Git flow
