@@ -357,7 +357,7 @@ mvn -rf
 | :----------- | :------------------------------------------------ |
 | 内置属性     | ${basedir}项目根目录${version}项目版本号          |
 | POM属性      | POM文件中对应元素的值，如${project.artifactId}    |
-| 自定义属性   | POM <properties>元素下定义                        |
+| 自定义属性   | POM \<properties>元素下定义                       |
 | Settings属性 | 引用Settings.xml文件中XML元素的值                 |
 | Java系统属性 | JVM启动的时候通过-D参数传入的属性，如${user.home} |
 | 环境变量属性 | 如${env.JAVA_HOME}                                |
