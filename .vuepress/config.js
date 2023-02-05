@@ -438,7 +438,6 @@ module.exports = {
   },
   plugins: [
     ['@vuepress/medium-zoom'],
-    ['@vuepress/plugin-google-analytics', { ga: 'UA-140404299-1' }],
     ['vuepress-plugin-right-anchor',
       {
         showDepth: 3,
