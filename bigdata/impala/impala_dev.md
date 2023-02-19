@@ -263,6 +263,34 @@ ${IMPALA_HOME}/bin/bootstrap_toolchain.py
 ./buildall.sh -upgrade_metastore_db
 ```
 
+### 组件默认端口
+
+| 组件            | 端口              | 描述           |
+| --------------- | ----------------- | -------------- |
+| KMS             | 9600              | Web UI 端口    |
+| NameNode        | 5070              | Web UI 端口    |
+| NameNode        | 20500             | 服务端口       |
+| ResourceManager | 8088              | Web UI 端口    |
+| PostgreSQL      | 5432              | 服务端口       |
+| HiveServer2     | 10001             | HTTP JDBC 端口 |
+| HiveServer2     | 10002             |                |
+| HiveServer2     | 11050             | JDBC端口       |
+| HiveServer2     | 30020             | JVM调试端口    |
+| HiveMetaStore   | 9083              | 服务端口       |
+| HiveMetaStore   | 30010             | JVM调试端口    |
+| Ranger          | 6080              | Web UI 端口    |
+| Ranger          | 6085              |                |
+| Ranger          | 30130             | JVM调试端口    |
+| HRegionServer   | 16030,16032,16033 | Web UI 端口    |
+| ZooKeeper       | 2181              | 服务端口       |
+| ZooKeeper       | 8080              |                |
+| kudu master     | 7051              | 服务端口       |
+| kudu master     | 8051              | Web UI 端口    |
+
+#### 参考
+
+[Ranger service ports](https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.0/administration/content/ranger-ports.html)
+
 ### 编译时间优化
 
 #### 编译展开分析
@@ -307,10 +335,15 @@ set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 
 ### 术语表
 
-| 术语     | 说明                                |
-| -------- | ----------------------------------- |
-| lhs, rhs | Left-side-hand, right-side-hand缩写 |
-| c'tor    | constructor缩写                     |
+| 术语        | 说明                                       |
+| ----------- | ------------------------------------------ |
+| lhs, rhs    | Left-side-hand, right-side-hand缩写        |
+| c'tor       | constructor缩写                            |
+| localViews_ | a view definition in this analyzer's scope |
+|             |                                            |
+|             |                                            |
+|             |                                            |
+|             |                                            |
 
 ### bootstrap_system.sh
 
