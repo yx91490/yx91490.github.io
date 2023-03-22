@@ -294,3 +294,62 @@ python2 -c 'from urllib2 import urlopen; urlopen("https://mirrors.tuna.tsinghua.
 
 [Old Let’s Encrypt Root Certificate Expiration and OpenSSL 1.0.2](https://www.openssl.org/blog/blog/2021/09/13/LetsEncryptRootCertExpire/)
 
+## 一个JDBC的loginTimeout超时问题
+
+线上的Impala遇到一个Socket超时问题，报错堆栈如下：
+
+```
+org.apache.hive.jdbc.HiveConnection []: Error opening session
+org.apache.thrift.transport.TTransportException: java.net.SocketTimeoutException: Read timed out
+        at org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:129)
+        at org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)
+        at org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:429)
+        at org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:318)
+        at org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:219)
+        at org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:77)
+        at org.apache.hive.service.cli.thrift.TCLIService$Client.recv_OpenSession(TCLIService.java:156)
+        at org.apache.hive.service.cli.thrift.TCLIService$Client.OpenSession(TCLIService.java:143)
+        at org.apache.hive.jdbc.HiveConnection.openSession(HiveConnection.java:464)
+        at org.apache.hive.jdbc.HiveConnection.<init>(HiveConnection.java:181)
+        at org.apache.hive.jdbc.HiveDriver.connect(HiveDriver.java:105)
+        at java.sql.DriverManager.getConnection(DriverManager.java:664)
+        at java.sql.DriverManager.getConnection(DriverManager.java:270)
+Caused by: java.net.SocketTimeoutException: Read timed out
+        at java.net.SocketInputStream.socketRead0(Native Method)
+        at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+```
+
+看了下日志，大约30s就超时了，通常来说Impala的查询的执行时间有可能是分钟级别的，这么短的超时时间明显不对劲，咨询了下大佬Java的Socket超时有可能提前结束吗，大佬的答案是否定的。因为我们用的是Hive JDBC Driver，看了一下Socket超时时间是在thrift的TSocket构造函数里设置的：
+
+https://github.com/apache/hive/blob/rel/release-3.1.3/common/src/java/org/apache/hadoop/hive/common/auth/HiveAuthUtils.java#L45
+
+而 loginTimeout 的取值就有点二了，是从DriverManager的静态方法获取的：
+
+https://github.com/apache/hive/blob/rel/release-3.1.3/jdbc/src/java/org/apache/hive/jdbc/HiveConnection.java#L806
+
+这也就意味着 loginTimeout 的设置没法做到很好的隔离性。用 arthas 看了一下DriverManager.logintimeout的值，还真的是 30s：
+
+```
+[arthas@21070]$ getstatic java.sql.DriverManager loginTimeout
+field: loginTimeout
+@Integer[30]
+Affect(row-cnt:1) cost in 19ms
+```
+
+而这30s的始作俑者猜一下也大概是跟JDBC有关的其他Driver或者连接池，最终发现是连接MySQL用的HikariCP连接池里做的手脚：
+
+https://github.com/brettwooldridge/HikariCP/blob/HikariCP-4.0.3/src/main/java/com/zaxxer/hikari/pool/PoolBase.java#L114
+
+ https://github.com/brettwooldridge/HikariCP/blob/HikariCP-4.0.3/src/main/java/com/zaxxer/hikari/pool/PoolBase.java#L343
+
+  https://github.com/brettwooldridge/HikariCP/blob/HikariCP-4.0.3/src/main/java/com/zaxxer/hikari/pool/PoolBase.java#L624
+
+   https://github.com/brettwooldridge/HikariCP/blob/HikariCP-4.0.3/src/main/java/com/zaxxer/hikari/util/DriverDataSource.java#L154
+
+这可能算是 JDBC 设计上的一个缺陷吧，全局的静态变量就没法做到线程隔离了，至于 HikariCP 也遵循这个规则的原因就不得而知了。
+
+Hive 的 master 分支其实已经修复了这个问题，修复的方式是由一个新增的 sessionVar 变量来控制，但是Hive JDBC迟迟没有发布正式的版本，最后的修复方法只能是backports了[HIVE-12371](https://github.com/apache/hive/pull/1611)的 patch了。
+
+### 参考
+
+[HIVE-12371 Adding a timeout connection parameter for JDBC](https://issues.apache.org/jira/browse/HIVE-12371)
