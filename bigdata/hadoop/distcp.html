@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Distcp命令 | yx91490的博客</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/logo.png">
+    <script async="true" src="https://www.googletagmanager.com/gtag/js?id=G-QQHZM2VLM0"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QQHZM2VLM0');</script>
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6781d2ac2dff1f3b278518419b4d4deb";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <meta name="description" content="java, 大数据(hadoop, sqoop, kylin, zeppelin)相关技术, 工作经验记录">
+    <meta name="google-site-verification" content="j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ">
+    <meta name="baidu-site-verification" content="4z2bGbjYMB">
+    
+    <link rel="preload" href="/assets/css/0.styles.ac35885f.css" as="style"><link rel="preload" href="/assets/js/app.1e53dc46.js" as="script"><link rel="preload" href="/assets/js/2.99cff144.js" as="script"><link rel="preload" href="/assets/js/50.5dd5aa3e.js" as="script"><link rel="prefetch" href="/assets/js/10.2e6f6cac.js"><link rel="prefetch" href="/assets/js/100.a22a82d1.js"><link rel="prefetch" href="/assets/js/101.dd5654d1.js"><link rel="prefetch" href="/assets/js/102.81e2ed3f.js"><link rel="prefetch" href="/assets/js/103.bc11697d.js"><link rel="prefetch" href="/assets/js/104.cd446f21.js"><link rel="prefetch" href="/assets/js/105.3000be41.js"><link rel="prefetch" href="/assets/js/106.1dafe77b.js"><link rel="prefetch" href="/assets/js/107.66ad33be.js"><link rel="prefetch" href="/assets/js/108.f6a10341.js"><link rel="prefetch" href="/assets/js/109.94c04265.js"><link rel="prefetch" href="/assets/js/11.b8ec46f9.js"><link rel="prefetch" href="/assets/js/110.424ae526.js"><link rel="prefetch" href="/assets/js/111.7f6ef304.js"><link rel="prefetch" href="/assets/js/112.90461111.js"><link rel="prefetch" href="/assets/js/113.714ec8c7.js"><link rel="prefetch" href="/assets/js/114.e0e94452.js"><link rel="prefetch" href="/assets/js/115.5ec07b0b.js"><link rel="prefetch" href="/assets/js/116.cddb17ff.js"><link rel="prefetch" href="/assets/js/117.9dbf79c5.js"><link rel="prefetch" href="/assets/js/118.8ce93325.js"><link rel="prefetch" href="/assets/js/119.81506776.js"><link rel="prefetch" href="/assets/js/12.688cb1a2.js"><link rel="prefetch" href="/assets/js/120.2e39007c.js"><link rel="prefetch" href="/assets/js/121.cc198b06.js"><link rel="prefetch" href="/assets/js/122.95658a62.js"><link rel="prefetch" href="/assets/js/123.3e544c71.js"><link rel="prefetch" href="/assets/js/124.9c342bb2.js"><link rel="prefetch" href="/assets/js/125.7e0a35da.js"><link rel="prefetch" href="/assets/js/126.3693dbf2.js"><link rel="prefetch" href="/assets/js/127.f5eb75c1.js"><link rel="prefetch" href="/assets/js/128.08340856.js"><link rel="prefetch" href="/assets/js/129.e3f23b6e.js"><link rel="prefetch" href="/assets/js/13.2b5116ee.js"><link rel="prefetch" href="/assets/js/130.8ba3518e.js"><link rel="prefetch" href="/assets/js/131.0dc4eda3.js"><link rel="prefetch" href="/assets/js/132.62f0807a.js"><link rel="prefetch" href="/assets/js/133.6ff90a1c.js"><link rel="prefetch" href="/assets/js/134.73a14c12.js"><link rel="prefetch" href="/assets/js/135.d6229d6c.js"><link rel="prefetch" href="/assets/js/136.78e677a7.js"><link rel="prefetch" href="/assets/js/137.0247ffa3.js"><link rel="prefetch" href="/assets/js/138.9542edff.js"><link rel="prefetch" href="/assets/js/139.ef48c41d.js"><link rel="prefetch" href="/assets/js/14.fa2c4751.js"><link rel="prefetch" href="/assets/js/140.783af06e.js"><link rel="prefetch" href="/assets/js/141.920c1af6.js"><link rel="prefetch" href="/assets/js/142.abe42aa7.js"><link rel="prefetch" href="/assets/js/143.22b893a1.js"><link rel="prefetch" href="/assets/js/144.aecd07a6.js"><link rel="prefetch" href="/assets/js/145.bf3c3857.js"><link rel="prefetch" href="/assets/js/146.702d9e59.js"><link rel="prefetch" href="/assets/js/147.3e16c1ae.js"><link rel="prefetch" href="/assets/js/148.1e2d495d.js"><link rel="prefetch" href="/assets/js/149.25f366c1.js"><link rel="prefetch" href="/assets/js/15.61450c6c.js"><link rel="prefetch" href="/assets/js/150.4df8a3e2.js"><link rel="prefetch" href="/assets/js/151.9a1a55b8.js"><link rel="prefetch" href="/assets/js/152.bce81aef.js"><link rel="prefetch" href="/assets/js/153.a4004d1f.js"><link rel="prefetch" href="/assets/js/154.74c9544e.js"><link rel="prefetch" href="/assets/js/155.2772165a.js"><link rel="prefetch" href="/assets/js/156.4db64b1a.js"><link rel="prefetch" href="/assets/js/157.d026dfa3.js"><link rel="prefetch" href="/assets/js/158.9c88a816.js"><link rel="prefetch" href="/assets/js/159.fdf4aded.js"><link rel="prefetch" href="/assets/js/16.1d130686.js"><link rel="prefetch" href="/assets/js/160.e8827095.js"><link rel="prefetch" href="/assets/js/161.d25f263a.js"><link rel="prefetch" href="/assets/js/162.dc57d648.js"><link rel="prefetch" href="/assets/js/163.8e5cf89f.js"><link rel="prefetch" href="/assets/js/164.1499da75.js"><link rel="prefetch" href="/assets/js/165.f47ed972.js"><link rel="prefetch" href="/assets/js/166.ed02995d.js"><link rel="prefetch" href="/assets/js/167.6eccab0b.js"><link rel="prefetch" href="/assets/js/168.05945269.js"><link rel="prefetch" href="/assets/js/169.d971393a.js"><link rel="prefetch" href="/assets/js/17.ac85a90e.js"><link rel="prefetch" href="/assets/js/170.2844886f.js"><link rel="prefetch" href="/assets/js/171.96756a2c.js"><link rel="prefetch" href="/assets/js/172.aa96de13.js"><link rel="prefetch" href="/assets/js/173.b0e50875.js"><link rel="prefetch" href="/assets/js/174.9375f82a.js"><link rel="prefetch" href="/assets/js/175.8426f5b3.js"><link rel="prefetch" href="/assets/js/176.d4ce002a.js"><link rel="prefetch" href="/assets/js/177.e769006a.js"><link rel="prefetch" href="/assets/js/178.fbd5d87f.js"><link rel="prefetch" href="/assets/js/179.10999b4e.js"><link rel="prefetch" href="/assets/js/18.10ae4742.js"><link rel="prefetch" href="/assets/js/180.88939e6a.js"><link rel="prefetch" href="/assets/js/181.d83a6218.js"><link rel="prefetch" href="/assets/js/182.a26f3a6f.js"><link rel="prefetch" href="/assets/js/183.b90b446e.js"><link rel="prefetch" href="/assets/js/184.694fa9fb.js"><link rel="prefetch" href="/assets/js/185.c8c09908.js"><link rel="prefetch" href="/assets/js/186.38cf9b47.js"><link rel="prefetch" href="/assets/js/187.2d58aed4.js"><link rel="prefetch" href="/assets/js/188.1ddd0b5c.js"><link rel="prefetch" href="/assets/js/189.6188cc51.js"><link rel="prefetch" href="/assets/js/19.a985c110.js"><link rel="prefetch" href="/assets/js/190.46342dfc.js"><link rel="prefetch" href="/assets/js/191.5ebf257c.js"><link rel="prefetch" href="/assets/js/192.423d63a5.js"><link rel="prefetch" href="/assets/js/193.189a3ed2.js"><link rel="prefetch" href="/assets/js/194.13113db9.js"><link rel="prefetch" href="/assets/js/195.5194567c.js"><link rel="prefetch" href="/assets/js/196.a4325ad0.js"><link rel="prefetch" href="/assets/js/197.78c3b457.js"><link rel="prefetch" href="/assets/js/198.4d1e278e.js"><link rel="prefetch" href="/assets/js/199.7894911d.js"><link rel="prefetch" href="/assets/js/20.1bf24d02.js"><link rel="prefetch" href="/assets/js/200.4d898dce.js"><link rel="prefetch" href="/assets/js/201.cf78074e.js"><link rel="prefetch" href="/assets/js/202.75930198.js"><link rel="prefetch" href="/assets/js/203.85593214.js"><link rel="prefetch" href="/assets/js/21.86a0ee2b.js"><link rel="prefetch" href="/assets/js/22.e10cf528.js"><link rel="prefetch" href="/assets/js/23.f8853a91.js"><link rel="prefetch" href="/assets/js/24.07b190b1.js"><link rel="prefetch" href="/assets/js/25.2621f902.js"><link rel="prefetch" href="/assets/js/26.03658136.js"><link rel="prefetch" href="/assets/js/27.2edb7903.js"><link rel="prefetch" href="/assets/js/28.9f8b2495.js"><link rel="prefetch" href="/assets/js/29.2aaa7998.js"><link rel="prefetch" href="/assets/js/3.0d64ad29.js"><link rel="prefetch" href="/assets/js/30.cc4a6488.js"><link rel="prefetch" href="/assets/js/31.18cdecc9.js"><link rel="prefetch" href="/assets/js/32.7e299828.js"><link rel="prefetch" href="/assets/js/33.9937f980.js"><link rel="prefetch" href="/assets/js/34.81a1ad27.js"><link rel="prefetch" href="/assets/js/35.c47c53a4.js"><link rel="prefetch" href="/assets/js/36.e065285e.js"><link rel="prefetch" href="/assets/js/37.31778531.js"><link rel="prefetch" href="/assets/js/38.eeb4817a.js"><link rel="prefetch" href="/assets/js/39.121f5d23.js"><link rel="prefetch" href="/assets/js/4.9df7ee13.js"><link rel="prefetch" href="/assets/js/40.c7739eaf.js"><link rel="prefetch" href="/assets/js/41.1335a703.js"><link rel="prefetch" href="/assets/js/42.4a1fa4e1.js"><link rel="prefetch" href="/assets/js/43.224badb8.js"><link rel="prefetch" href="/assets/js/44.3ed4993f.js"><link rel="prefetch" href="/assets/js/45.b8ba8190.js"><link rel="prefetch" href="/assets/js/46.6a8cd8a8.js"><link rel="prefetch" href="/assets/js/47.700c5a49.js"><link rel="prefetch" href="/assets/js/48.d9f92129.js"><link rel="prefetch" href="/assets/js/49.fa95901e.js"><link rel="prefetch" href="/assets/js/5.17fe1f29.js"><link rel="prefetch" href="/assets/js/51.fa3417be.js"><link rel="prefetch" href="/assets/js/52.938d0144.js"><link rel="prefetch" href="/assets/js/53.44be4705.js"><link rel="prefetch" href="/assets/js/54.5d681983.js"><link rel="prefetch" href="/assets/js/55.413ed0b5.js"><link rel="prefetch" href="/assets/js/56.c1b3cc62.js"><link rel="prefetch" href="/assets/js/57.5f4269ae.js"><link rel="prefetch" href="/assets/js/58.c39f412f.js"><link rel="prefetch" href="/assets/js/59.1edfe919.js"><link rel="prefetch" href="/assets/js/6.31e25ebb.js"><link rel="prefetch" href="/assets/js/60.42668219.js"><link rel="prefetch" href="/assets/js/61.49560f3f.js"><link rel="prefetch" href="/assets/js/62.4eb84f47.js"><link rel="prefetch" href="/assets/js/63.19b3be2e.js"><link rel="prefetch" href="/assets/js/64.144fdf4f.js"><link rel="prefetch" href="/assets/js/65.e093ef6c.js"><link rel="prefetch" href="/assets/js/66.cdb4a8e5.js"><link rel="prefetch" href="/assets/js/67.ddee0ee3.js"><link rel="prefetch" href="/assets/js/68.b7288484.js"><link rel="prefetch" href="/assets/js/69.6b4b7e75.js"><link rel="prefetch" href="/assets/js/7.9ae8e381.js"><link rel="prefetch" href="/assets/js/70.33ff848d.js"><link rel="prefetch" href="/assets/js/71.20104d66.js"><link rel="prefetch" href="/assets/js/72.a527e809.js"><link rel="prefetch" href="/assets/js/73.27dd5aba.js"><link rel="prefetch" href="/assets/js/74.fef7b540.js"><link rel="prefetch" href="/assets/js/75.331c1d75.js"><link rel="prefetch" href="/assets/js/76.140a006a.js"><link rel="prefetch" href="/assets/js/77.eff94a4d.js"><link rel="prefetch" href="/assets/js/78.66f60976.js"><link rel="prefetch" href="/assets/js/79.bf3a73e7.js"><link rel="prefetch" href="/assets/js/8.dd5ed609.js"><link rel="prefetch" href="/assets/js/80.f7a0ec45.js"><link rel="prefetch" href="/assets/js/81.a191849e.js"><link rel="prefetch" href="/assets/js/82.7775a32e.js"><link rel="prefetch" href="/assets/js/83.ee76678f.js"><link rel="prefetch" href="/assets/js/84.f2f7f7b3.js"><link rel="prefetch" href="/assets/js/85.744f9d33.js"><link rel="prefetch" href="/assets/js/86.59a14df0.js"><link rel="prefetch" href="/assets/js/87.39bb4288.js"><link rel="prefetch" href="/assets/js/88.2bd36905.js"><link rel="prefetch" href="/assets/js/89.226119ca.js"><link rel="prefetch" href="/assets/js/9.89f0a151.js"><link rel="prefetch" href="/assets/js/90.2a5fd1ea.js"><link rel="prefetch" href="/assets/js/91.d27f0058.js"><link rel="prefetch" href="/assets/js/92.84edd8e2.js"><link rel="prefetch" href="/assets/js/93.87b68a4f.js"><link rel="prefetch" href="/assets/js/94.ef1fce20.js"><link rel="prefetch" href="/assets/js/95.78b8f3c2.js"><link rel="prefetch" href="/assets/js/96.1a5e2e40.js"><link rel="prefetch" href="/assets/js/97.480a096c.js"><link rel="prefetch" href="/assets/js/98.2a9dda11.js"><link rel="prefetch" href="/assets/js/99.661fb906.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ac35885f.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">yx91490的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/java/" class="nav-link">
+  Java开发
+</a></div><div class="nav-item"><a href="/bigdata/" class="nav-link router-link-active">
+  大数据
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contactMe" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="contactMe" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/sql/" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/linux/" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/clang/" class="nav-link">
+  C语言
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/diagram/" class="nav-link">
+  图示速查
+</a></li><li class="dropdown-item"><!----> <a href="/collection/" class="nav-link">
+  资料收藏
+</a></li><li class="dropdown-item"><!----> <a href="/cs/" class="nav-link">
+  计算机科学
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490/yx91490.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  给我留言
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/java/" class="nav-link">
+  Java开发
+</a></div><div class="nav-item"><a href="/bigdata/" class="nav-link router-link-active">
+  大数据
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contactMe" class="dropdown-title"><span class="title">其他</span> <span class="arrow down"></span></button> <button type="button" aria-label="contactMe" class="mobile-dropdown-title"><span class="title">其他</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/sql/" class="nav-link">
+  SQL
+</a></li><li class="dropdown-item"><!----> <a href="/linux/" class="nav-link">
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/clang/" class="nav-link">
+  C语言
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/diagram/" class="nav-link">
+  图示速查
+</a></li><li class="dropdown-item"><!----> <a href="/collection/" class="nav-link">
+  资料收藏
+</a></li><li class="dropdown-item"><!----> <a href="/cs/" class="nav-link">
+  计算机科学
+</a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li><li class="dropdown-item"><!----> <a href="https://github.com/yx91490/yx91490.github.io/issues/new" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  给我留言
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Zeppelin</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/zeppelin/heart_diease_dataset.html" class="sidebar-link">心脏病预测数据</a></li><li><a href="/bigdata/zeppelin/zeppelin_bugs.html" class="sidebar-link">zeppelin使用趟坑</a></li><li><a href="/bigdata/zeppelin/zeppelin_sharding.html" class="sidebar-link">Zeppelin v0.8分片方案</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Waterdrop</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/waterdrop/waterdrop.html" class="sidebar-link">Waterdrop学习笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Kylin</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/kylin/awesome_kylin.html" class="sidebar-link">Kylin学习资料汇总</a></li><li><a href="/bigdata/kylin/read_kylin_source.html" class="sidebar-link">阅读Kylin源码</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Sqoop</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/sqoop/sqoop_usage.html" class="sidebar-link">代码调试</a></li><li><a href="/bigdata/sqoop/sqoop_hcatalog.html" class="sidebar-link">sqoopHCatalog使用</a></li><li><a href="/bigdata/sqoop/sqoop_mysql_temp_file.html" class="sidebar-link">sqoop导入导致MySQL产生大临时文件问题排查</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>ZooKeeper</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/zookeeper/zookeeper.html" class="sidebar-link">ZooKeeper笔记</a></li><li><a href="/bigdata/zookeeper/zookeeper_user.html" class="sidebar-link">ZooKeeper管理员指南</a></li><li><a href="/bigdata/zookeeper/zk_distribute_lock.html" class="sidebar-link">zookeeper实现分布式锁</a></li><li><a href="/bigdata/zookeeper/isbn9787111524311_note.html" class="sidebar-link">《ZooKeeper分布式过程协同技术详解》笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Hadoop</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/hadoop/hadoop_interview.html" class="sidebar-link">Hadoop面试题</a></li><li><a href="/bigdata/hadoop/port.html" class="sidebar-link">Hadoop默认端口</a></li><li><a href="/bigdata/hadoop/hdfs_user.html" class="sidebar-link">HDFS命令笔记</a></li><li><a href="/bigdata/hadoop/hdfs_issue.html" class="sidebar-link">HDFS Issue</a></li><li><a href="/bigdata/hadoop/distcp.html" aria-current="page" class="active sidebar-link">Distcp命令</a></li><li><a href="/bigdata/hadoop/columnar_storage_parquet_orc.html" class="sidebar-link">列式存储（parquet,orc）</a></li><li><a href="/bigdata/hadoop/avro_specification_1.8.1.html" class="sidebar-link">avro格式规范1.8.1翻译</a></li><li><a href="/bigdata/hadoop/yarn.html" class="sidebar-link">Yarn</a></li><li><a href="/bigdata/hadoop/yarn_cli.html" class="sidebar-link">Yarn Cli命令</a></li><li><a href="/bigdata/hadoop/mapreduce.html" class="sidebar-link">MapReduce</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Hive</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/hive/hive_cli.html" class="sidebar-link">Beeline命令行</a></li><li><a href="/bigdata/hive/hive_src.html" class="sidebar-link">Hive源码分析</a></li><li><a href="/bigdata/hive/hive_ql.html" class="sidebar-link">HiveQL</a></li><li><a href="/bigdata/hive/hive_data_type.html" class="sidebar-link">Hive数据类型</a></li><li><a href="/bigdata/hive/hive_bucket.html" class="sidebar-link">Hive分桶</a></li><li><a href="/bigdata/hive/hive_principle.html" class="sidebar-link">Hive原理</a></li><li><a href="/bigdata/hive/hive_optimize.html" class="sidebar-link">Hive优化</a></li><li><a href="/bigdata/hive/hive_parse_json.html" class="sidebar-link">Hive解析json数组</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>OLAP</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/olap/olap.html" class="sidebar-link">OLAP笔记</a></li><li><a href="/bigdata/olap/data_analyze.html" class="sidebar-link">数据分析笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>ClickHouse</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/clickhouse/clickhouse.html" class="sidebar-link">ClickHouse学习笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Doris</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/doris/doris.html" class="sidebar-link">Doris笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Kudu</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/kudu/kudu.html" class="sidebar-link">Kudu</a></li><li><a href="/bigdata/kudu/kudu_paper.html" class="sidebar-link">Kudu: Storage for Fast Analytics on Fast Data</a></li><li><a href="/bigdata/kudu/kudu_paper_translation.html" class="sidebar-link">【译】Kudu论文</a></li><li><a href="/bigdata/kudu/kudu_note.html" class="sidebar-link">Kudu笔记</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Impala</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/impala/cup.html" class="sidebar-link">CUP学习笔记</a></li><li><a href="/bigdata/impala/impala.html" class="sidebar-link">Impala</a></li><li><a href="/bigdata/impala/impala_admin.html" class="sidebar-link">Impala运维</a></li><li><a href="/bigdata/impala/impala_dev.html" class="sidebar-link">Impala开发笔记</a></li><li><a href="/bigdata/impala/impala_community.html" class="sidebar-link">Impala社区</a></li><li><a href="/bigdata/impala/impala_issues.html" class="sidebar-link">Impala问题记录</a></li><li><a href="/bigdata/impala/impala_paper_translation.html" class="sidebar-link">【转】【译】Impala：Hadoop上的一个现代开源SQL引擎</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Spark</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/spark/spark.html" class="sidebar-link">Spark</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>HBase</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/hbase/hbase_interview.html" class="sidebar-link">HBase</a></li><li><a href="/bigdata/hbase/hbase_user.html" class="sidebar-link">HBase使用</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>笔记</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/bigdata/note/oss_note.html" class="sidebar-link">《快手短视频打造高稳定千亿级别对象存储平台》笔记</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="distcp命令"><a href="#distcp命令" class="header-anchor">$</a> Distcp命令</h1> <p>usage：</p> <div class="language- extra-class"><pre class="language-text"><code>usage: distcp OPTIONS [source_path...] &lt;target_path&gt;
+                            OPTIONS
+ -append                       Reuse existing data in target files and
+                               append new data to them if possible
+ -async                        Should distcp execution be blocking
+ -atomic                       Commit all changes or none
+ -bandwidth &lt;arg&gt;              Specify bandwidth per map in MB
+ -blocksperchunk &lt;arg&gt;         If set to a positive value, fileswith more
+                               blocks than this value will be split into
+                               chunks of &lt;blocksperchunk&gt; blocks to be
+                               transferred in parallel, and reassembled on
+                               the destination. By default,
+                               &lt;blocksperchunk&gt; is 0 and the files will be
+                               transmitted in their entirety without
+                               splitting. This switch is only applicable
+                               when the source file system implements
+                               getBlockLocations method and the target
+                               file system implements concat method
+ -copybuffersize &lt;arg&gt;         Size of the copy buffer to use. By default
+                               &lt;copybuffersize&gt; is 8192B.
+ -delete                       Delete from target, files missing in source
+ -diff &lt;arg&gt;                   Use snapshot diff report to identify the
+                               difference between source and target
+ -f &lt;arg&gt;                      List of files that need to be copied
+ -filelimit &lt;arg&gt;              (Deprecated!) Limit number of files copied
+                               to &lt;= n
+ -filters &lt;arg&gt;                The path to a file containing a list of
+                               strings for paths to be excluded from the
+                               copy.
+ -i                            Ignore failures during copy
+ -log &lt;arg&gt;                    Folder on DFS where distcp execution logs
+                               are saved
+ -m &lt;arg&gt;                      Max number of concurrent maps to use for
+                               copy
+ -mapredSslConf &lt;arg&gt;          Configuration for ssl config file, to use
+                               with hftps://. Must be in the classpath.
+ -numListstatusThreads &lt;arg&gt;   Number of threads to use for building file
+                               listing (max 40).
+ -overwrite                    Choose to overwrite target files
+                               unconditionally, even if they exist.
+ -p &lt;arg&gt;                      preserve status (rbugpcaxt)(replication,
+                               block-size, user, group, permission,
+                               checksum-type, ACL, XATTR, timestamps). If
+                               -p is specified with no &lt;arg&gt;, then
+                               preserves replication, block size, user,
+                               group, permission, checksum type and
+                               timestamps. raw.* xattrs are preserved when
+                               both the source and destination paths are
+                               in the /.reserved/raw hierarchy (HDFS
+                               only). raw.* xattrpreservation is
+                               independent of the -p flag. Refer to the
+                               DistCp documentation for more details.
+ -rdiff &lt;arg&gt;                  Use target snapshot diff report to identify
+                               changes made on target
+ -sizelimit &lt;arg&gt;              (Deprecated!) Limit number of files copied
+                               to &lt;= n bytes
+ -skipcrccheck                 Whether to skip CRC checks between source
+                               and target paths.
+ -strategy &lt;arg&gt;               Copy strategy to use. Default is dividing
+                               work based on file sizes
+ -tmp &lt;arg&gt;                    Intermediate work path to be used for
+                               atomic commit
+ -update                       Update target, copying only missingfiles or
+                               directories
+</code></pre></div><h3 id="注意事项"><a href="#注意事项" class="header-anchor">$</a> 注意事项</h3> <ol><li>使用有权限的用户（hdfs）</li> <li>在源集群运行命令</li> <li>目的集群使用active namenode地址。</li></ol> <p><strong>尝试一</strong></p> <p>命令：</p> <div class="language- extra-class"><pre class="language-text"><code>hadoop distcp -atomic hdfs://nameservice1/user/58box/ hdfs://10.9.15.227:9000/home/hdp_mis_yxzn/resultdata/58box/online
+</code></pre></div><p>报错：</p> <div class="language- extra-class"><pre class="language-text"><code>Caused by: java.io.IOException: Couldn't run retriable-command: Copying hdfs://nameservice1/user/58box/2011010815591950f73e6a/1055776356865953793 to hdfs://10.9.15.227:9000/home/hdp_mis_yxzn/resultdata/58box/._WIP_online-342047731/2011010815591950f73e6a/1055776356865953793
+	at org.apache.hadoop.tools.util.RetriableCommand.execute(RetriableCommand.java:101)
+	at org.apache.hadoop.tools.mapred.CopyMapper.copyFileWithRetry(CopyMapper.java:304)
+	... 11 more
+Caused by: java.io.IOException: Check-sum mismatch between hdfs://nameservice1/user/58box/2011010815591950f73e6a/1055776356865953793 and hdfs://10.9.15.227:9000/home/hdp_mis_yxzn/resultdata/58box/._WIP_online-342047731/.distcp.tmp.attempt_local1251455226_0001_m_000000_0. Source and target differ in block-size. Use -pb to preserve block-sizes during copy. Alternatively, skip checksum-checks altogether, using -skipCrc. (NOTE: By skipping checksums, one runs the risk of masking data-corruption during file-transfer.)
+	at org.apache.hadoop.tools.mapred.RetriableFileCopyCommand.compareCheckSums(RetriableFileCopyCommand.java:221)
+	at org.apache.hadoop.tools.mapred.RetriableFileCopyCommand.doCopy(RetriableFileCopyCommand.java:134)
+	at org.apache.hadoop.tools.mapred.RetriableFileCopyCommand.doExecute(RetriableFileCopyCommand.java:100)
+	at org.apache.hadoop.tools.util.RetriableCommand.execute(RetriableCommand.java:87)
+	... 12 more
+</code></pre></div><p><strong>尝试二</strong></p> <p>命令：</p> <div class="language- extra-class"><pre class="language-text"><code>hadoop distcp -pb -atomic -log /tmp/box_distcp.log hdfs://nameservice1/user/58box/ hdfs://10.9.15.227:9000/home/hdp_mis_yxzn/resultdata/58box/online
+</code></pre></div><p>报错：</p> <div class="language- extra-class"><pre class="language-text"><code>java.io.IOException: Failed on local exception: java.io.IOException: Connection reset by peer; Host Details : local host is: &quot;tjtx148-14-137.58os.org/10.148.14.137&quot;; destination host is: &quot;bjm6-15-227.58os.org&quot;:9000; 
+	at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:772)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1508)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1441)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:230)
+	at com.sun.proxy.$Proxy10.addBlock(Unknown Source)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.addBlock(ClientNamenodeProtocolTranslatorPB.java:425)
+	at sun.reflect.GeneratedMethodAccessor7.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:258)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:104)
+	at com.sun.proxy.$Proxy11.addBlock(Unknown Source)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.locateFollowingBlock(DFSOutputStream.java:1860)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.nextBlockOutputStream(DFSOutputStream.java:1656)
+	at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:790)
+Caused by: java.io.IOException: Connection reset by peer
+	at sun.nio.ch.FileDispatcherImpl.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:39)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:197)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at org.apache.hadoop.net.SocketInputStream$Reader.performIO(SocketInputStream.java:57)
+	at org.apache.hadoop.net.SocketIOWithTimeout.doIO(SocketIOWithTimeout.java:142)
+	at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:161)
+	at org.apache.hadoop.net.SocketInputStream.read(SocketInputStream.java:131)
+	at java.io.FilterInputStream.read(FilterInputStream.java:133)
+	at java.io.FilterInputStream.read(FilterInputStream.java:133)
+	at org.apache.hadoop.ipc.Client$Connection$PingInputStream.read(Client.java:553)
+	at java.io.BufferedInputStream.fill(BufferedInputStream.java:246)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:265)
+	at java.io.DataInputStream.readInt(DataInputStream.java:387)
+	at org.apache.hadoop.ipc.Client$Connection.receiveRpcResponse(Client.java:1113)
+	at org.apache.hadoop.ipc.Client$Connection.run(Client.java:1006)
+19/03/27 16:51:33 ERROR util.RetriableCommand: Failure in Retriable command: Copying hdfs://nameservice1/user/58box/2011010815591950f73e6a/1055384719614566400 to hdfs://10.9.15.227:9000/home/hdp_mis_yxzn/resultdata/58box/._WIP_online-1811973567/2011010815591950f73e6a/1055384719614566400
+java.net.ConnectException: Call From tjtx148-14-137.58os.org/10.148.14.137 to bjm6-15-227.58os.org:9000 failed on connection exception: java.net.ConnectException: 拒绝连接; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.apache.hadoop.net.NetUtils.wrapWithMessage(NetUtils.java:791)
+	at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:731)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1508)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1441)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Invoker.invoke(ProtobufRpcEngine.java:230)
+	at com.sun.proxy.$Proxy10.getFileInfo(Unknown Source)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolTranslatorPB.getFileInfo(ClientNamenodeProtocolTranslatorPB.java:788)
+	at sun.reflect.GeneratedMethodAccessor3.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invokeMethod(RetryInvocationHandler.java:258)
+	at org.apache.hadoop.io.retry.RetryInvocationHandler.invoke(RetryInvocationHandler.java:104)
+	at com.sun.proxy.$Proxy11.getFileInfo(Unknown Source)
+	at org.apache.hadoop.hdfs.DFSClient.getFileInfo(DFSClient.java:2168)
+	at org.apache.hadoop.hdfs.DistributedFileSystem$20.doCall(DistributedFileSystem.java:1266)
+	at org.apache.hadoop.hdfs.DistributedFileSystem$20.doCall(DistributedFileSystem.java:1262)
+	at org.apache.hadoop.fs.FileSystemLinkResolver.resolve(FileSystemLinkResolver.java:81)
+	at org.apache.hadoop.hdfs.DistributedFileSystem.getFileStatus(DistributedFileSystem.java:1262)
+	at org.apache.hadoop.fs.FileSystem.exists(FileSystem.java:1418)
+	at org.apache.hadoop.tools.mapred.RetriableFileCopyCommand.doCopy(RetriableFileCopyCommand.java:148)
+	at org.apache.hadoop.tools.mapred.RetriableFileCopyCommand.doExecute(RetriableFileCopyCommand.java:100)
+	at org.apache.hadoop.tools.util.RetriableCommand.execute(RetriableCommand.java:87)
+	at org.apache.hadoop.tools.mapred.CopyMapper.copyFileWithRetry(CopyMapper.java:304)
+	at org.apache.hadoop.tools.mapred.CopyMapper.map(CopyMapper.java:267)
+	at org.apache.hadoop.tools.mapred.CopyMapper.map(CopyMapper.java:52)
+	at org.apache.hadoop.mapreduce.Mapper.run(Mapper.java:145)
+	at org.apache.hadoop.mapred.MapTask.runNewMapper(MapTask.java:793)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:341)
+	at org.apache.hadoop.mapred.LocalJobRunner$Job$MapTaskRunnable.run(LocalJobRunner.java:270)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.net.ConnectException: 拒绝连接
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:717)
+	at org.apache.hadoop.net.SocketIOWithTimeout.connect(SocketIOWithTimeout.java:206)
+	at org.apache.hadoop.net.NetUtils.connect(NetUtils.java:530)
+	at org.apache.hadoop.net.NetUtils.connect(NetUtils.java:494)
+	at org.apache.hadoop.ipc.Client$Connection.setupConnection(Client.java:648)
+	at org.apache.hadoop.ipc.Client$Connection.setupIOstreams(Client.java:744)
+	at org.apache.hadoop.ipc.Client$Connection.access$3000(Client.java:396)
+	at org.apache.hadoop.ipc.Client.getConnection(Client.java:1557)
+	at org.apache.hadoop.ipc.Client.call(Client.java:1480)
+	... 31 more
+</code></pre></div><blockquote><p><a href="https://www.cloudera.com/documentation/enterprise/5-12-x/topics/cdh_admin_distcp_data_cluster_migrate.html#concept_yjz_2wn_bbb" target="_blank" rel="noopener noreferrer">Using DistCp with Highly Available Remote Clusters<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote> <ol><li><p>新建一个distcpConf目录，把本集群的/etc/hadoop/conf内容拷贝到里面</p></li> <li><p>修改distcpConf/hdfs-site.xml，把远程集群的nameservice ID加入dfs.nameservices属性中，如果nameservice一样则重新命名：</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;property&gt;
+ &lt;name&gt;dfs.nameservices&lt;/name&gt;
+ &lt;value&gt;nameservice1,externalnameservice&lt;/value&gt;
+ &lt;/property&gt;
+</code></pre></div></li> <li><p>把远程集群hdfs-site.xml中相关属性加入到distcpConf/hdfs-site.xml中，nameserviceID要和第二步中的保持一致：</p> <div class="language- extra-class"><pre class="language-text"><code>dfs.ha.namenodes.&lt;nameserviceID&gt;
+dfs.client.failover.proxy.provider.&lt;remote nameserviceID&gt;
+dfs.ha.automatic-failover.enabled.&lt;remote nameserviceID&gt;
+dfs.namenode.rpc-address.&lt;nameserviceID&gt;.&lt;namenode1&gt;
+dfs.namenode.servicerpc-address.&lt;nameserviceID&gt;.&lt;namenode1&gt;
+dfs.namenode.http-address.&lt;nameserviceID&gt;.&lt;namenode1&gt;
+dfs.namenode.https-address.&lt;nameserviceID&gt;.&lt;namenode1&gt;
+dfs.namenode.rpc-address.&lt;nameserviceID&gt;.&lt;namenode2&gt;
+dfs.namenode.servicerpc-address.&lt;nameserviceID&gt;.&lt;namenode2&gt;
+dfs.namenode.http-address.&lt;nameserviceID&gt;.&lt;namenode2&gt;
+dfs.namenode.https-address.&lt;nameserviceID&gt;.&lt;namenode2&gt;
+</code></pre></div></li> <li><p>运行distcp命令：</p> <div class="language- extra-class"><pre class="language-text"><code>#不安全集群
+hadoop --config distcpConf distcp hdfs://&lt;nameservice&gt;/&lt;source_directory&gt; &lt;target directory&gt;
+#安全集群
+hadoop --config distcpConf distcp -Dmapreduce.job.hdfs-servers.token-renewal.exclude=&lt;nameservice&gt;  hdfs://&lt;nameservice&gt;/&lt;source_directory&gt; &lt;target directory&gt;
+</code></pre></div></li></ol> <blockquote><p><a href="https://hadoop.apache.org/docs/current/hadoop-distcp/DistCp.html" target="_blank" rel="noopener noreferrer">DistCp Version2 Guide<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></blockquote></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">更新时间:</span> <span class="time">10/2/2019, 11:34:34 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/bigdata/hadoop/hdfs_issue.html" class="prev">
+        HDFS Issue
+      </a></span> <span class="next"><a href="/bigdata/hadoop/columnar_storage_parquet_orc.html">
+        列式存储（parquet,orc）
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.1e53dc46.js" defer></script><script src="/assets/js/2.99cff144.js" defer></script><script src="/assets/js/50.5dd5aa3e.js" defer></script>
+  </body>
+</html>
