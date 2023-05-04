@@ -8,14 +8,22 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: "Step1: Checkout Code"
+    - name: "Step1: Checkout"
       uses: actions/checkout@v1
 
-    - name: "Step2: Build And Deploy"
-      uses: JamesIves/github-pages-deploy-action@releases/v2
-      env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BASE_BRANCH: gh-pages
-        BRANCH: master
-        FOLDER: .vuepress/dist
-        BUILD_SCRIPT: npm -v && rm -rf ./node_modules && npm cache clean --force && npm install && npm run build || cat /github/home/.npm/_logs/*-debug.log
+    - name: "Step2: Setup Node"
+      uses: actions/setup-node@v2
+      with:
+        node-version: '12'
+
+    - name: "Step3: Build"
+      run: |
+        npm -v
+        npm install
+        npm run build
+
+    - name: "Step4: Deploy"
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        folder: .vuepress/dist
+        branch: master
