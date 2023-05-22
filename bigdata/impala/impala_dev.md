@@ -631,6 +631,67 @@ org.apache.impala.catalog.ScalarType
 | UseStmt                             |        |      |
 | ValuesStmt                          |        |      |
 
+### Backend
+
+#### be/src/rpc/TAcceptQueueServer.cc
+
+Impala中所有Thrift Server处理连接的逻辑都在这个类里，包括HiverServer2 Server，Beeswax Server等。
+
+在TAcceptQueueServer构造函数中进行一些初始化：
+
+| 参数                | 描述                                 |
+| ------------------- | ------------------------------------ |
+| processor           | Thrift框架相关                       |
+| serverTransport     | Thrift框架相关                       |
+| transportFactory    | Thrift框架相关                       |
+| protocolFactory     | Thrift框架相关                       |
+| threadFactory       | 用于创建task线程                     |
+| name                | 服务名                               |
+| maxTasks            | 处理连接逻辑的最大task数             |
+| queue_timeout_ms    | 在accept之后，建立task之前的超时时间 |
+| idle_poll_period_ms | 等待客户端socket超时的时间           |
+
+Thrift Server的启动和接受请求以及停止逻辑都在TAcceptQueueServer::serve()中：
+
+1. 启动端口监听
+2. 创建用于accept请求的线程池connection_setup_pool，并调用Init()方法进行初始化。
+3. 当没有stop时，在循环中执行：
+   1. 接受一个client的请求，并封装为TAcceptQueueEntry
+   2. 调用connection_setup_pool.Offer()入队
+4. 当stop时，关闭serverTransport_和连接池connection_setup_pool，等待tasks队列中所有任务执行完毕。
+
+一个客户端请求被accept之后，主流程就会启动一个服务线程异步地处理客户端的请求，主要逻辑在TAcceptQueueServer::SetupConnection()中：
+
+1. 创建TAcceptQueueServer::Task，并创建一个对应的线程
+2. 当task数量超过maxTasks限制时，出让时间片等待；如果等待超时则清理资源并退出。
+3. 当task数量没有超过maxTasks限制，或者提前被唤醒时，则将task加入tasks列表，并启动线程。
+
+服务线程的的主要逻辑在TAcceptQueueServer::Task::run()中：
+
+1. 调用eventHandler->processContext()处理上下文
+2. 处理客户端的请求，或者调用peek()阻塞等待客户端的请求
+
+可以看出这个类里主要有两个线程池/线程集：
+
+| 名称       | connection_setup_pool                                       | maxTasks             |
+| ---------- | ----------------------------------------------------------- | -------------------- |
+| 描述       | 负责接受请求并分配服务线程                                  | 负责处理客户端的请求 |
+| 线程最大数 | 由FLAGS_accepted_cnxn_setup_thread_pool_size设置，默认值是2 | 由构造函数参数传入   |
+| 队列长度   | 由FLAGS_accepted_cnxn_queue_depth设置，默认值是10000        | 无限制               |
+
+Impala之所以要自定义一个TServer，就是想将accept线程和setupConnection线程解耦，从而提高accept的吞吐量。FLAGS_accepted_cnxn_queue_depth默认值是10000，也解释了21050端口的连接数量超过fe_service_thread后为什么会阻塞而不会报错的原因。
+
+其中还记录了一些metric：
+
+| 名称                        | 类型      | key                            | 描述                          |
+| --------------------------- | --------- | ------------------------------ | ----------------------------- |
+| queue_size_metric_          | Gauge     | ".connection-setup-queue-size" | connection_setup_pool队列大小 |
+| timedout_cnxns_metric_      | Gauge     | ".timedout-cnxn-requests"      | 建立连接超时的请求数量        |
+| cnxns_setup_time_us_metric_ | Histogram | ".connection-setup-time"       | 建立连接的时间统计            |
+| thread_wait_time_us_metric_ | Histogram | ".svc-thread-wait-time"        | 建立连接到处理请求的时间统计  |
+
+参考：[IMPALA-4135](https://issues.apache.org/jira/browse/IMPALA-4135)
+
 ## UDF开发
 
 ### 内存申请
