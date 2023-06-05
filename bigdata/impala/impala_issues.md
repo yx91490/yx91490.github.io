@@ -353,3 +353,51 @@ Hive 的 master 分支其实已经修复了这个问题，修复的方式是由�
 ### 参考
 
 [HIVE-12371 Adding a timeout connection parameter for JDBC](https://issues.apache.org/jira/browse/HIVE-12371)
+
+## 一个Catalog内存泄露问题
+
+一个线上环境的catalogd JVM的最大堆内存已经配置了20G，还是会发生OOM，虽然表很多但是不至于占这么大内存，怀疑是不是哪里有内存泄露。这个环境的Impala版本是3.2，由于JVM参数配置了`X:+HeapDumpOnOutOfMemoryError`，于是便把dump文件拿下来分析了一下。
+
+![img](./impala_issues.assets/image2023-6-5_20-56-44.png)
+
+按Retained Heap看Histogram，占比大的主要还是HdfsTable和HdfsPartition这两个类：
+
+![image-20230605233143221](./impala_issues.assets/image-20230605233143221.png)
+
+Leak报告如下：
+
+![image-20230605233416053](./impala_issues.assets/image-20230605233416053.png)
+
+![image-20230605233555594](./impala_issues.assets/image-20230605233555594.png)
+
+可以看出CatalogUsageMonitor引用的内存占用很大，直观地怀疑内存泄露发生在CatalogUsageMonitor里面的PriorityQueue里，但是CatalogUsageMonitor里面的PriorityQueue长度最大只有 25，感觉无从下手。
+
+后来看Histogram发现一个可疑的地方是，org.apache.impala.catalog.Db的实例一共有 25 个，其中有 9 个org.apache.impala.catalog.Db对象都是同一个库的不同版本的实例：
+
+![img](./impala_issues.assets/image2023-6-5_20-57-52.png)
+
+![img](./impala_issues.assets/image2023-6-1_18-25-48.png)
+
+同一个 Db 的旧版本的 org.apache.impala.catalog.Db 实例没有被 gc 掉，这可能就是问题的原因。每个引用的内存约在 2G，也解释了JVM 内存的主要来源。
+
+查看旧版本org.apache.impala.catalog.Db到 GCRoot 的引用终于找到了gc不掉的原因：
+
+![img](./impala_issues.assets/image2023-6-1_18-55-13.png)
+
+从上图可以看出，虽然其他地方已经没有引用了，但是旧版本org.apache.impala.catalog.Db还通过 Table 被CatalogUsageMonitor里的 TopNCache 引用了。
+
+临时解决方式：将下面的参数添加到 catalogd 的 JVM 参数里：
+
+```
+-Dorg.apache.impala.catalog.CatalogUsageMonitor.NUM_TABLES_TRACKED=1
+```
+
+再次手动执行dump命令(jmap -dump:live,format=b)，分析下dump文件，可以看到总堆内存降到 1G 以下：
+
+![img](./impala_issues.assets/image2023-6-5_12-28-35.png)
+
+org.apache.impala.catalog.Db实例总数下降，没有多余版本的 org.apache.impala.catalog.Db：
+
+![img](./impala_issues.assets/image2023-6-5_12-27-39.png)
+
+搜了一下，其实社区里早就有人提出了这个问题：https://issues.apache.org/jira/browse/IMPALA-6876，只是一直没人解决。
