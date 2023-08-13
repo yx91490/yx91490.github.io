@@ -138,3 +138,12 @@ Java 编程语言不允许创建参数化类型的数组。
 [JAVA8 官网笔记教程-泛型](https://zq99299.github.io/java-tutorial/java/generics/)
 
 [The Java™ Tutorials-Generics](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
+
+## 注解
+
+### @SuppressWarnings
+
+### 参考
+
+[What is SuppressWarnings ("unchecked") in Java?](https://stackoverflow.com/questions/1129795/what-is-suppresswarnings-unchecked-in-java)
+

@@ -570,3 +570,6 @@ mvn install -pl $module1[,$module2] -am
 
 > [maven build后Downloading maven-metadata.xml 的解决方法](https://blog.csdn.net/Joze_3/article/details/75402398)
 
+https://maven.apache.org/settings.html
+
+https://stackoverflow.com/questions/16421454/why-is-maven-downloading-the-maven-metadata-xml-every-time

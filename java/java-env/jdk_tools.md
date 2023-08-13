@@ -1,6 +1,22 @@
 # JDK命令工具
 
-### Jcmd命令
+## jar//TODO
+
+## java//TODO
+
+## javac//TODO
+
+参考
+
+https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html
+
+[javac's -Xlint Options](https://www.infoworld.com/article/2073587/javac-s--xlint-options.html)
+
+## javadoc//TODO
+
+## javap//TODO
+
+## jcmd
 
 查看help：
 
@@ -80,7 +96,15 @@ jcmd 24684 VM.flags
 jinfo -flag UseXMMForArrayCopy 24500
 ```
 
-### jmap命令
+## jconsole//TODO
+
+## jdb//TODO
+
+## jhat//TODO
+
+## jinfo//TODO
+
+## jmap
 
 | 选项   | 功能                                                         |
 | ------ | ------------------------------------------------------------ |
@@ -99,7 +123,15 @@ jmap -dump:format=b,file=<dumpfile> <pid>
 1. 启动 Memory Analyzer tool , 选择菜单项 File -> Open Heap Dump 来加载需要分析的堆转储文件。
 2. 点击工具栏上的 Leak Suspects 菜单项来生成内存泄露分析报告
 
-### jstat命令
+## jps//TODO
+
+
+
+## jstack//TODO
+
+
+
+## jstat
 
 ```
 jstat -gc pid
@@ -164,3 +196,6 @@ java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005 myPac
 ```
 
 `suspend=y`使进程等待连接。
+## jstatd//TODO
+
+## keytool//TODO

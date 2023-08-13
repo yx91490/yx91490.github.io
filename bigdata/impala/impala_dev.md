@@ -508,6 +508,50 @@ setup_report_build_error函数功能：如果接收到错误，打印行号。
 
 ### run-all-tests.sh
 
+### CMakeLists.txt
+
+`cmake_minimum_required`指定了 CMake 版本。
+
+`set(NO_TESTS 1)`禁掉kudu 的一些测试的 target。
+
+| 变量                          | 类型 | 描述                                                         |
+| ----------------------------- | ---- | ------------------------------------------------------------ |
+| NO_TESTS                      |      |                                                              |
+| BUILD_SHARED_LIBS             |      | 全局flag，控制add_library()默认创建 shared 库                |
+| IMPALA_BUILD_SHARED_LIBS      |      |                                                              |
+| CMAKE_EXPORT_COMPILE_COMMANDS |      | 生成compile_commands.json                                    |
+| CMAKE_MODULE_PATH             | 内置 | cmake modules加载的目录，分号分隔                            |
+| CMAKE_BUILD_TYPE              |      | 指定构建类型，如Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel...大小写敏感 |
+| Boost_NO_BOOST_CMAKE          |      | 禁用boost-cmake                                              |
+| Boost_USE_STATIC_LIBS         |      |                                                              |
+| Boost_USE_STATIC_RUNTIME      |      |                                                              |
+| Boost_USE_MULTITHREADED       |      |                                                              |
+| Boost_NO_SYSTEM_PATHS         |      |                                                              |
+| BOOST_LIBRARYDIR              |      |                                                              |
+| BOOST_INCLUDEDIR              |      |                                                              |
+| Boost_INCLUDE_DIR             |      |                                                              |
+| Boost_DEBUG                   |      |                                                              |
+| CMAKE_DEBUG                   |      |                                                              |
+| CMAKE_SYSTEM_PROCESSOR        |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+
+
+
 ### Frontend
 
 impalad服务端接收请求入口：`impala-beeswax-server.cc#ImpalaServer::query()`
@@ -630,6 +674,69 @@ org.apache.impala.catalog.ScalarType
 | UpdateStmt                          |        |      |
 | UseStmt                             |        |      |
 | ValuesStmt                          |        |      |
+
+### Backend
+
+#### be/src/statestore/statestore-subscriber.cc
+
+`StatestoreSubscriber`向 statestore 发送的请求包括：
+
+- AddTopic() ： 注册 topic
+
+
+statestore 向 subscriber 发送的请求包括：
+
+- UpdateState() ： topic更新
+- Heartbeat() ： 定期向 subscriber 发送心跳
+
+AddTopic()：
+
+- 必须在Start()之前调用
+
+Start()：
+
+- 启动用于接收statestored心跳请求的thrift server
+- 向statestored发送注册请求
+- 启动检测恢复模式的RecoveryModeChecker线程
+
+Register()：
+
+- 发送 RPC 请求，记录返回值中的registration_id_（用于心跳时候的检查）
+- 启动 heartbeat_interval_timer_
+- topic_registrations_一次注册所有的 topic
+
+所有私有方法都对`boost::shared_mutex lock_`加锁。
+
+```c++
+StatestoreSubscriber(
+  const std::string& subscriber_id,
+  const TNetworkAddress& heartbeat_address,
+  const TNetworkAddress& statestore_address,
+  MetricGroup* metrics
+);
+Start();
+Status AddTopic(
+  const Statestore::TopicId& topic_id,
+  bool is_transient,
+  bool populate_min_subscriber_topic_version,
+  std::string filter_prefix,
+  const UpdateCallback& callback
+);
+bool IsInPostRecoveryGracePeriod() const;
+Status UpdateState(
+  const TopicDeltaMap& incoming_topic_deltas,
+  const RegistrationId& registration_id,
+  std::vector<TTopicDelta>* subscriber_topic_updates,
+  bool* skipped
+);
+void Heartbeat(const RegistrationId& registration_id);
+void RecoveryModeChecker();
+Status Register();
+Status CheckRegistrationId(const RegistrationId& registration_id);
+int64_t MilliSecondsSinceLastRegistration() const;
+```
+
+
 
 ## UDF开发
 

@@ -1,5 +1,27 @@
 # Spring
 
+## Spring常用注解
+
+@Bean
+
+@Autowired
+
+@Configration 注解将该类声明为一个配置类。
+
+@ConditionalOnBean：当容器里有指定Bean的条件下
+
+@ConditionalOnMissingBean：当容器里没有指定Bean的情况下
+
+@ConditionalOnMissingClass：当容器里没有指定类的情况下
+
+@ConditionalOnProperty：指定的属性是否有指定的值
+
+@EnableConfigurationProperties的作用: 使@ConfigurationProperties 注解的类生效。
+
+@Scope("prototype") 表示每次获得bean都会生成一个新的对象
+
+@AutoConfigureAfter 在加载配置的类之后再加载当前类
+
 ## Spring Boot官方文档
 
 参考：

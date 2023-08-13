@@ -349,3 +349,95 @@ Exception in thread "main"
 
 [添加PMD插件扫描潜在的bug](https://www.cnblogs.com/woshimrf/p/using-pmd.html)
 
+## maven-surefire-plugin
+
+### 配置
+
+#### 跳过执行
+
+```xml
+<project>
+    <properties>
+        <!--跳过编译测试类-->
+        <maven.test.skip>true</maven.test.skip>
+        <!--编译测试类，但不执行-->
+        <skipTests>true</skipTests>
+    </properties>
+</project>
+```
+
+#### 包含与排除
+
+默认包含以下的模式：
+
+- `**/Test*.java`
+- `**/*Test.java`
+- `**/*Tests.java`
+- `**/*TestCase.java`
+
+可以在配置中覆盖：
+
+```xml
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M6</version>
+        <configuration>
+          <includes>
+            <include>Sample.java</include>
+            <!--支持正则表达式-->
+            <include>%regex[.*(Cat|Dog).*Test.*]</include>
+            <!--2.19.1之后支持全限定类名-->
+            <include>my.package.*, another.package.*</include>
+            <!--可以在单个参数使用多种匹配格式-->
+            <include>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</include>
+          </includes>
+          <excludes>
+            <!--支持ant风格的路径-->
+            <exclude>**/TestCircle.java</exclude>
+            <exclude>**/TestSquare.java</exclude>
+            <!--可以在单个参数使用多种匹配格式-->
+            <exclude>%regex[pkg.*Slow.*.class], Unstable*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+正则表达式需要注意：
+
+- 正则表达式匹配是通过`*.class`文件而不是`*.java`文件
+- 正则表达式匹配包含斜杠（“ `/`”）路径，而不包含点（“ `.`”）的包名称
+- 结尾的`.class`按照字面意思解释，而不应使用`\.class`
+
+#### 失败后策略
+
+主要由两个参数控制：
+
+| 参数名                 | 默认值 | 用户属性                        | 描述                                                         |
+| ---------------------- | ------ | ------------------------------- | ------------------------------------------------------------ |
+| skipAfterFailureCount  | 0      | surefire.skipAfterFailureCount  | 在N个测试失败或错误后跳过余下的测试                          |
+| rerunFailingTestsCount | 0      | surefire.rerunFailingTestsCount | 失败后重跑次数。如果一个测试重跑后通过，则被标记为flake，但是失败数会被记录。 |
+
+分组执行测试用例：
+
+执行失败后的策略：
+
+失败重试：
+
+并发执行
+
+查看测试报告
+
+### 运行
+
+手动执行测试用例：
+
+参考
+
+[Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/index.html)
