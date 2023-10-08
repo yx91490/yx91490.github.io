@@ -692,6 +692,113 @@ Impala之所以要自定义一个TServer，就是想将accept线程和setupConne
 
 参考：[IMPALA-4135](https://issues.apache.org/jira/browse/IMPALA-4135)
 
+#### be/src/statestore/statestore.cc
+
+#### be/src/statestore/statestore-subscriber.cc
+
+ `Statestored`类似于一个在内存中维护着一组 `Topic`的消息队列，但是和常见消息队列的客户端有`Producer`和`Consumer`不同的是，它的客户端只有一个`Subscriber`角色。
+
+如下图所示，`Subscriber`通过交换`Topic`更新消息定期与`Statestored`通信：`Subscriber`首先向`Statestored`d注册`Topic`，`Statestored`向`Subscriber`发送其订阅的`Topic`列表的更新，`Subscriber`返回`Topic`的变更。`Statestored`还会频繁地发送心跳信息以确认连接是有效。如果`Subscriber`一段时间没有收到`Statestored`的心跳信息会进入"恢复模式"，不断尝试向`Statestored`重新注册。
+
+![image-20231008231411236](./impala_dev.assets/image-20231008231411236.png)
+
+`Statestored`内部维护的数据结构如下图所示：
+
+![image-20231008231755739](./impala_dev.assets/image-20231008231755739.png)
+
+##### StatestoreSubscriber的注册流程
+
+StatestoreSubscriber的[构造函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.h#L76-L79)主要指明了`Statestored`的地址和`Statestored`向`Subscriber`发送心跳的地址，参数如下：
+
+1. subscriber_id：`Subscriber`编号
+2. heartbeat_address：`Statestored`向`Subscriber`发送心跳的地址
+3. statestore_address：`Statestored`的地址
+
+`Subscriber`在[AddTopic()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L158-L177)中将`Topic`相关信息添加到内部的topic_registrations_结构中，AddTopic()参数跟[TTopicRegistration](https://github.com/apache/impala/blob/4.2.0/common/thrift/StatestoreService.thrift#L161-L180)的结构基本是一一对应的：
+
+1. topic_id：`Topic`编号
+2. is_transient：`Subscriber`断开连接后Statestored需要删除的消息
+3. populate_min_subscriber_topic_version：在`Statestored`发送给`Subscriber`的`Topic`更新中填充min_subscriber_topic_version字段，用于需要确定所有的`Subscriber`都处理完了某个特定更新的场景
+4. filter_prefix：只接收匹配该前缀的消息
+5. callback：`Subscriber`接收到`Statestored`发送的`Topic`更新后执行的回调函数
+
+AddTopic()之后就可以调用StatestoreSubscriber的Start()函数了，主要完成三件事：
+
+- 启动用于接收`Statestored`心跳请求的Thrift Server
+- 调用Register()函数向`Statestored`发送注册请求
+- 启动检测恢复模式的RecoveryModeChecker线程
+
+`StatestoreSubscriber`在[Register()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L179-L224)中向 `Statestored` 发送注册`Topic`的请求[TRegisterSubscriberRequest](https://github.com/apache/impala/blob/4.2.0/common/thrift/StatestoreService.thrift#L182-L194)，将AddTopic()函数中保存的`Topic`信息topic_registrations发送到`Statestored`。其中TRegisterSubscriberRequest结构如下：
+
+1. protocol_version：协议版本号
+2. subscriber_id：集群唯一的`Subscriber`编号
+3. subscriber_location：`Statestored`向`Subscriber`发送心跳的地址
+4. topic_registrations：`Topic`的描述
+
+注册请求会返回给客户端一个registration_id用于维持与`Statestored`心跳时候的校验。
+
+##### Statestored接收Subscriber注册的流程
+
+当`Statestored` 接收到`Subscriber`注册请求时：
+
+1. 首先依次检查`Topic`是否存在，不存在则创建
+2. 如果`Subscriber`已经注册过，则取消之前的注册，包括清除之前`Subscriber`关联的连接，failure_detector_，metric以及所有的transient记录。
+3. 把subscriber_id，registration_id封装成`ScheduledSubscriberUpdate`，放入三个线程池队列中进行调度。
+
+`Statestored`中分了三个独立的线程池来保证互相之间不会阻塞：
+
+- subscriber_topic_update_threadpool_：负责`Topic`更新
+- subscriber_priority_topic_update_threadpool_：优先`Topic`更新，优先`Topic`指的是数据量很小但是对延迟很敏感的`Topic`
+- subscriber_heartbeat_threadpool_：用于维持心跳检测
+
+如何实现三个线程池周期性调度的呢？后面的流程可以看到每次执行任务之后又会往线程池队列中提交一个新的任务。
+
+##### Statestored向Subscriber发送Heartbeat请求
+
+`Subscriber`注册后相关任务放入`Statestored`线程池中，线程池立即会向`Subscriber`发送一个Heartbeat请求，具体的处理逻辑在[DoSubscriberUpdate()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L884-L1011)中：
+
+1. 检查`Statestored`侧的`Subscriber`结构是否存在，不存在意味着`Subscriber`已经重新发送了注册请求，此次心跳对应的旧`Subscriber`结构已经被删除
+2. 每次的`ScheduledSubscriberUpdate`记录了一个deadline时间点，执行线程通过sleep达到延迟相应时间段的目的
+3. 向`Subscriber`发送Heartbeat请求：
+   1. 如果成功则记录timestamp用于监测，同时计算下一次heartbeat的dealine，封装成ScheduledSubscriberUpdate，放入线程池的队列
+   2. 如果失败了则取消注册的`Subscriber`
+
+##### Subscriber的失败检查和恢复流程
+
+在`StatestoreSubscriber`的构造函数中初始化了一个[TimeoutFailureDetector](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L131)，TimeoutFailureDetector中维护了StatestoreSubscriber[最近一次收到心跳请求的时间](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L357-L366)，同时StatestoreSubscriber会启动线程周期性地（每5秒）检查最后一次收到心跳请求的时间间隔，如果超过一定的阈值（默认30秒）则认为与`Statestored`的连接已经断开并进入恢复模式，恢复线程会在此过程中加锁，同时在死循环中不断地重试注册过程，流程见[RecoveryModeChecker()](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L288-L339) 。
+
+##### Statestored向Subscriber发送UpdateState请求
+
+整体流程和`Statestored`向`Subscriber`发送Heartbeat请求的流程类似，其中`Statestored`是如何构建发送给`Subscriber`的增量更新呢？
+
+在[Statestore::Topic::BuildDelta()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L242-L292)中实现了`Statestored`侧构建增量更新的逻辑：
+
+1. 将记录的last_processed_version设置到TTopicDelta的from_version字段
+2. `topic_update_log_`中按版本号记录了消息，在`topic_update_log_`中首先定位到last_processed_version的条目，然后依次将剩余的消息条目加入增量更新TTopicDelta列表中。如果是全量更新的话则忽略标记为删除的消息，前缀匹配也是在这一步完成的。
+2. 设置TTopicDelta的to_version字段
+
+在[GatherTopicUpdates()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L771-L812)中进行了TTopicDelta的min_subscriber_topic_version字段的处理。
+
+##### Subscriber的接收UpdateState请求流程
+
+在[UpdateState()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore-subscriber.cc#L368-L493)中对`Statestored`发来的更新请求进行了处理：
+
+1. 首先对lock_尝试加锁，如果加锁失败则略过本次更新。
+2. 然后依次对所有`Topic`对应的update_lock尝试加锁，加锁失败同样会略过本次更新。
+3. 之后依次校验`Statestored`期望的`Topic`版本号是否能对应上，如果对应不上则标记该`Topic`一个from_version，等待`Statestored`下次发送一个正确的`Topic`版本范围。同时依次调用callback函数对增量更新进行处理，收集增量的更新并返回给`Statestored`。
+
+这块代码在设计的时候着重考虑了处理的轻量化，以避免造成消息发送的延迟过高。
+
+##### Statestored处理Subscriber对UpdateState请求的响应
+
+在[SendTopicUpdate函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L666-L769)中主要流程如下：
+
+1. 更新`Subscriber`的last_processed_version，以便于下次发送UpdateState请求的时候构建增量更新
+2. 如果`Subscriber`发送的消息中设置了from_version，则将last_processed_version重置为from_version
+3. 如果`Subscriber`发送的消息中标记了clear_topic_entries，则清空`Topic`
+4. 将`Subscriber`发送的消息添加到`Statestored`本地维护的数据结构中
+
+
 ## UDF开发
 
 ### 内存申请
