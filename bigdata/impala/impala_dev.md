@@ -798,6 +798,10 @@ AddTopic()之后就可以调用StatestoreSubscriber的Start()函数了，主要�
 3. 如果`Subscriber`发送的消息中标记了clear_topic_entries，则清空`Topic`
 4. 将`Subscriber`发送的消息添加到`Statestored`本地维护的数据结构中
 
+##### 参考
+
+[Impala源码之订阅发布系统的实现](https://blog.csdn.net/yu616568/article/details/58642789)
+
 
 ## UDF开发
 
