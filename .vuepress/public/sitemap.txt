@@ -21,8 +21,14 @@ https://yx91490.github.io/bigdata/hive/hive_optimize.html
 https://yx91490.github.io/bigdata/hive/hive_parse_json.html
 https://yx91490.github.io/bigdata/hive/hive_principle.html
 https://yx91490.github.io/bigdata/hive/hive_ql.html
+https://yx91490.github.io/bigdata/hive/hive_src.html
+https://yx91490.github.io/bigdata/impala/cup.html
 https://yx91490.github.io/bigdata/impala/impala.html
 https://yx91490.github.io/bigdata/impala/impala_admin.html
+https://yx91490.github.io/bigdata/impala/impala_community.html
+https://yx91490.github.io/bigdata/impala/impala_dev.html
+https://yx91490.github.io/bigdata/impala/impala_issues.html
+https://yx91490.github.io/bigdata/impala/impala_paper_translation.html
 https://yx91490.github.io/bigdata/kudu/kudu.html
 https://yx91490.github.io/bigdata/kudu/kudu_note.html
 https://yx91490.github.io/bigdata/kudu/kudu_paper.html
@@ -68,7 +74,7 @@ https://yx91490.github.io/java/architecture/ddd_note.html
 https://yx91490.github.io/java/architecture/design_pattern.html
 https://yx91490.github.io/java/architecture/distribute_transaction.html
 https://yx91490.github.io/java/architecture/distributed_delay_queue.html
-https://yx91490.github.io/java/architecture/features_in_architecture.html
+https://yx91490.github.io/java/architecture/great_code_features.html
 https://yx91490.github.io/java/architecture/redis_distributelock.html
 https://yx91490.github.io/java/architecture/refactoring_note.html
 https://yx91490.github.io/java/architecture/short_url_design.html
@@ -103,6 +109,7 @@ https://yx91490.github.io/java/jdk/red_black_tree.html
 https://yx91490.github.io/java/jdk/resource_close.html
 https://yx91490.github.io/java/jdk/thread.html
 https://yx91490.github.io/java/jdk/thread_pool.html
+https://yx91490.github.io/java/jdk/unicode.html
 https://yx91490.github.io/java/jdk/unsafe.html
 https://yx91490.github.io/java/jdk/urlencode.html
 https://yx91490.github.io/java/jvm/arthas.html
@@ -123,10 +130,11 @@ https://yx91490.github.io/java/maven/maven.html
 https://yx91490.github.io/java/maven/maven_archetype.html
 https://yx91490.github.io/java/maven/maven_assembly_spi.html
 https://yx91490.github.io/java/maven/maven_cli.html
-https://yx91490.github.io/java/maven/maven_lifecycle.html
 https://yx91490.github.io/java/maven/maven_modules.html
 https://yx91490.github.io/java/maven/maven_plugin.html
+https://yx91490.github.io/java/maven/maven_principle.html
 https://yx91490.github.io/java/maven/maven_release_jar.html
+https://yx91490.github.io/java/maven/maven_share.html
 https://yx91490.github.io/java/redis/cache.html
 https://yx91490.github.io/java/redis/redis.html
 https://yx91490.github.io/java/spring/proguard.html
@@ -150,6 +158,7 @@ https://yx91490.github.io/linux/centos6_centos7_diff.html
 https://yx91490.github.io/linux/docker.html
 https://yx91490.github.io/linux/kill_signal.html
 https://yx91490.github.io/linux/linux_desktop.html
+https://yx91490.github.io/linux/locale.html
 https://yx91490.github.io/linux/netstat.html
 https://yx91490.github.io/linux/network.html
 https://yx91490.github.io/linux/rpm_yum.html
@@ -167,5 +176,6 @@ https://yx91490.github.io/sql/mysql.html
 https://yx91490.github.io/sql/mysql_installation.html
 https://yx91490.github.io/sql/mysql_princerple.html
 https://yx91490.github.io/sql/oracle_db_data_type.html
+https://yx91490.github.io/sql/postgresql.html
 https://yx91490.github.io/sql/sql_join.html
 https://yx91490.github.io/sql/transaction.html
