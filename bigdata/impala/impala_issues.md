@@ -354,7 +354,7 @@ Hive 的 master 分支其实已经修复了这个问题，修复的方式是由�
 
 [HIVE-12371 Adding a timeout connection parameter for JDBC](https://issues.apache.org/jira/browse/HIVE-12371)
 
-## 一个Catalog内存泄露问题
+## IMPALA-6876：一个Catalog内存泄露问题
 
 一个线上环境的catalogd JVM的最大堆内存已经配置了20G，还是会发生OOM，虽然表很多但是不至于占这么大内存，怀疑是不是哪里有内存泄露。这个环境的Impala版本是3.2，由于JVM参数配置了`X:+HeapDumpOnOutOfMemoryError`，于是便把dump文件拿下来分析了一下。
 
@@ -401,3 +401,176 @@ org.apache.impala.catalog.Db实例总数下降，没有多余版本的 org.apach
 ![img](./impala_issues.assets/image2023-6-5_12-27-39.png)
 
 搜了一下，其实社区里早就有人提出了这个问题：https://issues.apache.org/jira/browse/IMPALA-6876，只是一直没人解决。
+
+## Join优化
+
+| Issues      | 描述       |
+| ----------- | ---------- |
+| IMPALA-5022 | 外连接化简 |
+|             |            |
+|             |            |
+|             |            |
+|             |            |
+
+## IMPALA-12362：服务管理脚本改进
+
+由于社区版Apache Impala并没有提供现成的二进制包构建方式，我相信大部分公司使用Impala是依赖于Cloudera公司的CDH发行版的。“社区苦Impala无包久矣”。
+
+好在这件事情将成为历史，在千呼万唤之中，社区在Impala 4.3版本中补足了构建二进制包的能力（IMPALA-10262），这样社区用户就可以不依赖于CDH进行Impala的部署和升级。在4.4版本中对服务管理脚本又有了进一步的改进（IMPALA-12362）。今天就对打包和服务管理脚本的使用进行一个介绍。
+
+### 二进制包的构建
+
+二进制包的构建依赖于cmake的install命令和CPack命令，但是都被封装到buildall.sh脚本中了，只需要执行如下命令即可：
+
+```
+./buildall.sh -noclean -skiptests -release -package
+```
+
+脚本执行完成之后就会在`package/build`构建出来一个名字类似`apache-impala-4.4.0_hive-3.1.3-369-x86_64.deb`的DEB包或者RPM包，可以用于部署。
+
+### 二进制包的部署
+
+二进制包的目录结构如下：
+
+```
+.
+|-- LICENSE
+|-- NOTICE
+|-- bin
+|   `-- impala.sh                                   # 服务管理脚本
+|-- conf
+|   |-- core-site.xml.template                      # core-site.xml配置文件的模板，需要根据集群环境进行修改
+|   |-- hdfs-site.xml.template                      # hdfs-site.xml配置文件的模板，需要根据集群环境进行修改
+|   |-- hive-site.xml.template                      # hive-site.xml配置文件的模板，需要根据集群环境进行修改
+|   |-- llama-site.xml.template                     # llama-site.xml配置文件的模板
+|   |-- fair-scheduler.xml.template                 # fair-scheduler.xml配置文件的模板
+|   |-- impala-env.sh                               # impala.sh依赖的环境变量配置
+|   |-- impalad_flags                               # impalad的flag文件
+|   |-- catalogd_flags                              # catalogd的flag文件
+|   |-- admissiond_flags                            # admissiond的flag文件
+|   `-- statestored_flags                           # statestored的flag文件
+|-- lib
+|   |-- jars                                        # fe的jar包及其依赖
+|   `-- native                                      # be依赖的native库
+|-- sbin
+|   |-- admissiond -> impalad
+|   |-- catalogd -> impalad
+|   |-- impalad                                     # be的二进制文件
+|   `-- statestored -> impalad
+|-- shell                                           # impala-shell及其依赖
+|-- util
+|   `-- impala-profile-tool                         # 用于反解析profile的工具
+`-- www                                             # WebUI依赖的静态js,css文件
+```
+
+Impala相关配置文件都在`conf`目录下，在OS上安装完二进制包之后，需要根据Hive和Hadoop集群的环境修改下对应配置文件，包括添加`conf/core-site.xml`，`conf/hdfs-site.xml`和`conf/hive-site.xml`这三个文件，如果需要对`admission control`进行配置，还需要添加`conf/fair-scheduler.xml`和`conf/llama-site.xml`这两个文件。
+
+Impala服务的flag配置文件也都在conf目录下，文件名为`$service_flags`。默认配置可以启动，但是建议根据需要进行修改，比如日志目录的配置项：`-log_dir`，minidump文件目录：`-minidump_path`。
+
+最后一个比较重要的配置文件是`conf/impala-env.sh`，用于指定impala.sh脚本用到的环境变量。其中最重要的环境变量是`JAVA_HOME`。建议对其中配置pid文件，标准输出文件，标准错误文件位置的环境变量进行修改。
+
+为了实现可以通过命令行进行覆盖，impala-env.sh中的环境变量都通过下面的格式配置：
+
+```
+: ${FOO:="bar"}
+```
+
+或者：
+
+```
+# 将环境变量导出
+export FOO=${FOO:-"bar"}
+```
+
+### 服务管理
+
+服务管理主要依赖于`bin/impala.sh`脚本，通过执行`bin/impala.sh --help`可以看到使用帮助，主要分为如下几个子命令：
+
+| 子命令    | 说明             | 完整格式                                  |
+| --------- | ---------------- | ----------------------------------------- |
+| --help    | 显示使用帮助     | `--help`                                  |
+| --version | 显示版本号       | `--version`                               |
+| status    | 查询进程状态     | `status <service> `                       |
+| health    | 查询服务是否可用 | `health [<options>] <service>`            |
+| stop      | 停止服务         | `stop [<options>] <service>`              |
+| start     | 启动服务         | `start [<options>] <service> [<flags>]`   |
+| restart   | 重启服务         | `restart [<options>] <service> [<flags>]` |
+
+如果命令正常执行，退出码为0，否则为非0。
+
+#### help子命令
+
+help子命令用来显示使用帮助。
+
+#### version子命令
+
+version子命令用来显示版本号。
+
+#### status子命令
+
+status子命令用来查询服务的进程（进程号记录在pid文件中）是否存活，如果进程存活则退出码为0，否则为非0。
+
+#### health子命令
+
+health子命令用来查询服务是否可用，服务可用的判断依据是Web接口`/healthz`返回`OK`。默认情况下health命令会轮询直到服务可用，或者等待超时。轮询的时间间隔（秒）可以通过`-p`选项指定，轮询的最大次数可以通过`-c`选项指定。如果服务可用则立即返回，退出码为0；如果服务的进程退出，或者等待超时则退出码为非0。
+
+#### start子命令
+
+start子命令用于启动服务，完整格式为：
+
+```
+start <options> <service> [<flags>]
+
+options:
+  -c: maximum count of checks, defaults to 20.
+  -p: seconds of period between checks, defaults to 2.
+
+service: {impalad|catalogd|admissiond|statestored}
+```
+
+start子命令会调用`status`子命令和`health`子命令轮询启动后的进程状态和服务可用状态，直到进程退出，服务可用或者等待超时。轮询的时间间隔（秒）可以通过`-p`选项指定，轮询的最大次数可以通过`-c`选项指定。可以通过指定`-c 0`选项实现不检查服务可用状态。
+
+服务启动的时候会写三个文件，包括：pid文件，标准输出文件，标准错误文件，这三个文件的位置通过环境变量控制，比如Impalad的三个环境变量名分别是：`IMPALAD_PIDFILE`，`IMPALAD_STDOUTFILE`和`IMPALAD_STDERRFILE`。默认配置在`conf/impala-env.sh`中。
+
+服务启动的时候会读取`conf/$service_flags`文件中的配置项，可以通过在service名的后面追加配置项进行覆盖。这在某些情况下比较有用，比如想要在同一台机器上的同一个目录中启动多个`Impalad`实例，默认情况下启动第二个服务实例的时候会因为端口已经被占用而报错，这个时候可以通过在service名后面指定端口解决，比如：
+
+```shell
+IMPALAD_PIDFILE=/var/run/impalad2.pid \
+IMPALAD_STDOUTFILE=/var/log/impalad2.out \
+IMPALAD_STDERRFILE=/var/log/impalad2.err \
+/opt/impala/bin/impala.sh \
+restart impalad \
+-log_filename=impalad2 \
+--beeswax_port=21002 \
+--hs2_port=21052 \
+--state_store_subscriber_port=23002 \
+--webserver_port=25002 \
+--krpc_port=27002 \
+--hs2_http_port=28002
+```
+
+#### stop子命令
+
+start子命令用于停止服务，完整格式为：
+
+```
+stop [<options>] <service>
+
+options:
+  -c: maximum count of checks, defaults to 20.
+  -f: force kill a daemon service.
+  -g: graceful shutdown the impalad service.
+  -p: seconds of period between checks, defaults to 2.
+
+service: {impalad|catalogd|admissiond|statestored}
+```
+
+stop子命令同样会调用`status`子命令轮询进程状态直到进程退出或者等待超时。轮询的时间间隔（秒）可以通过`-p`选项指定，轮询的最大次数可以通过`-c`选项指定。
+
+默认stop命令会给进程发送SIGTERM信号，如果指定了`-f`选项则会发送SIGKILL信号以强制终止进程（[IMPALA-13001](http://issues.apache.org/jira/browse/IMPALA-13001)）。
+
+通过指定`-g`选项可以实现优雅停机（[IMPALA-13001](http://issues.apache.org/jira/browse/IMPALA-13001)）。需要注意的是`-f`选项和`-g`选项不能同时使用。
+
+#### restart子命令
+
+restart子命令用于重启服务，内部实现是依次调用stop子命令和start子命令。完整格式与start子命令相同。
