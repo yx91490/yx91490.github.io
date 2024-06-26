@@ -15,6 +15,6 @@ title: yx91490的博客
 
 ### 微信公众号
 
-<div style="align:left" ><img src="/our_code.png" alt="图解代码" style="zoom: 20%;align:left" /></div>
+<div style="align:left" ><img src="/our_code.webp" width="1710" height="624" loading="lazy" alt="公众号：图解代码" style="zoom: 20%;align:left" /></div>
 
 <a style="color:white" href="/fun/">有趣</a>

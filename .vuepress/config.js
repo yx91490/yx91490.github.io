@@ -2,11 +2,11 @@ module.exports = {
   title: "yx91490的博客",
   description: 'java, 大数据(hadoop, sqoop, kylin, zeppelin)相关技术, 工作经验记录',
   head: [
+    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1'}],
     ['meta', { name: 'google-site-verification', content: 'j1Gm2ZeMV3D7mPiI08fpx91dEOSlhCAJjD4vy_pSroQ'}],
     ['meta', { name: 'baidu-site-verification', content: '4z2bGbjYMB'}],
-    ['link', { rel: 'icon', href: '/logo.png' }],
-    [ 'script', { async: true, src: 'https://www.googletagmanager.com/gtag/js?id=G-QQHZM2VLM0'}],
-    [ 'script', {}, ["window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-QQHZM2VLM0');"]],
+    ['link', { rel: 'icon', href: '/logo.webp' }],
+    [ 'script', {}, ["window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-QQHZM2VLM0');\nwindow.addEventListener('load', function(){ var s = document.createElement('script'); s.src = \"https://www.googletagmanager.com/gtag/js?id=G-QQHZM2VLM0\"; document.body.appendChild(s); });"]],
     ['script', {},
     `
     var _hmt = _hmt || [];
