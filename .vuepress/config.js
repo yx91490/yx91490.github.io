@@ -262,6 +262,14 @@ module.exports = {
         ]
       },
       {
+        title: 'DataX',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/datax/datax',
+        ]
+      },
+      {
         title: 'Waterdrop',
         collapsable: false,
         sidebarDepth: 0,
