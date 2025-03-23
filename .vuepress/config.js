@@ -223,6 +223,7 @@ module.exports = {
           '/java/architecture/redis_distributelock',
           '/java/architecture/short_url_design',
           '/java/architecture/three_layer',
+          '/java/architecture/year_based_week',
         ]
       },
       {
