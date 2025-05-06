@@ -29,6 +29,7 @@ module.exports = {
         sidebarDepth: 0,
         children: [
           'cs/term.md',
+          'cs/papers.md',
         ]
       },
     ],

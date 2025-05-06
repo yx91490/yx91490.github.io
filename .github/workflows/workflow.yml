@@ -5,7 +5,7 @@ on:
       - gh-pages
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: "Step1: Checkout"
