@@ -813,9 +813,10 @@ AddTopic()之后就可以调用StatestoreSubscriber的Start()函数了，主要�
 
 在[Statestore::Topic::BuildDelta()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L242-L292)中实现了`Statestored`侧构建增量更新的逻辑：
 
-1. 将记录的last_processed_version设置到TTopicDelta的from_version字段
-2. `topic_update_log_`中按版本号记录了消息，在`topic_update_log_`中首先定位到last_processed_version的条目，然后依次将剩余的消息条目加入增量更新TTopicDelta列表中。如果是全量更新的话则忽略标记为删除的消息，前缀匹配也是在这一步完成的。
-2. 设置TTopicDelta的to_version字段
+1. 设置TTopicDelta的is_delta字段标记是否为全量更新，如果last_processed_version为0则为全量更新
+2. 将记录的last_processed_version设置到TTopicDelta的from_version字段
+3. `topic_update_log_`中按版本号记录了消息，在`topic_update_log_`中首先定位到last_processed_version的条目，然后依次将剩余的消息条目加入增量更新TTopicDelta列表中。如果是全量更新的话则忽略标记为删除的消息，前缀匹配也是在这一步完成的。
+4. 设置TTopicDelta的to_version字段
 
 在[GatherTopicUpdates()函数](https://github.com/apache/impala/blob/4.2.0/be/src/statestore/statestore.cc#L771-L812)中进行了TTopicDelta的min_subscriber_topic_version字段的处理。
 
