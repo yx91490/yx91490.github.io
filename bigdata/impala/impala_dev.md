@@ -1,5 +1,21 @@
 # Impala开发笔记
 
+## 模块组件
+
+- Frontend:
+  - Lexer, Parser, Analyzer, Planner
+  - 资源预估
+- Backend:
+  - UDF Executor
+  - Join Executor
+  - Exchange
+  - Admission Controller
+  - Thrift Server
+- Statestored, Catalogd, Impalad
+- Test:  MiniCluster，FE Test, BE Test, EE Test，TPC-DS Test，TPC-H Test，Data Generator
+- QuickStart：Docker
+- Client
+
 ## 编译构建
 
 ### 先决条件
