@@ -548,6 +548,50 @@ setup_report_build_error函数功能：如果接收到错误，打印行号。
 
 ### run-all-tests.sh
 
+### CMakeLists.txt
+
+`cmake_minimum_required`指定了 CMake 版本。
+
+`set(NO_TESTS 1)`禁掉kudu 的一些测试的 target。
+
+| 变量                          | 类型 | 描述                                                         |
+| ----------------------------- | ---- | ------------------------------------------------------------ |
+| NO_TESTS                      |      |                                                              |
+| BUILD_SHARED_LIBS             |      | 全局flag，控制add_library()默认创建 shared 库                |
+| IMPALA_BUILD_SHARED_LIBS      |      |                                                              |
+| CMAKE_EXPORT_COMPILE_COMMANDS |      | 生成compile_commands.json                                    |
+| CMAKE_MODULE_PATH             | 内置 | cmake modules加载的目录，分号分隔                            |
+| CMAKE_BUILD_TYPE              |      | 指定构建类型，如Debug`, `Release`, `RelWithDebInfo`, `MinSizeRel...大小写敏感 |
+| Boost_NO_BOOST_CMAKE          |      | 禁用boost-cmake                                              |
+| Boost_USE_STATIC_LIBS         |      |                                                              |
+| Boost_USE_STATIC_RUNTIME      |      |                                                              |
+| Boost_USE_MULTITHREADED       |      |                                                              |
+| Boost_NO_SYSTEM_PATHS         |      |                                                              |
+| BOOST_LIBRARYDIR              |      |                                                              |
+| BOOST_INCLUDEDIR              |      |                                                              |
+| Boost_INCLUDE_DIR             |      |                                                              |
+| Boost_DEBUG                   |      |                                                              |
+| CMAKE_DEBUG                   |      |                                                              |
+| CMAKE_SYSTEM_PROCESSOR        |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+|                               |      |                                                              |
+
+
+
 ### Frontend
 
 impalad服务端接收请求入口：`impala-beeswax-server.cc#ImpalaServer::query()`
