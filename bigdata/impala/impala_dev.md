@@ -323,6 +323,46 @@ set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 
 [C++服务编译耗时优化原理及实践](https://tech.meituan.com/2020/12/10/apache-kylin-practice-in-meituan.html)
 
+## IDE配置
+
+### VSCode配置
+
+#### 配置clangd lsp server
+
+1. centos7的glibc版本比较旧，clangd依赖新版本的glibc，需要先下载glibc-2.18：
+
+   ```
+   wget --no-check-certificate https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/glibc-2.18.tar.gz
+   ```
+
+2. 解压glibc压缩包：
+
+   ```
+   tar -zxvf glibc-2.18.tar.gz
+   ```
+
+3. 编译并安装glibc：
+
+   ```
+   cd glibc-2.18
+   mkdir build
+   cd build/
+   sudo ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+   sudo make -j 8
+   sudo make install
+   ```
+
+4. 在Server 端下载clangd-linux-13.0.0.zip文件，并解压到目录 /opt/impala/clangd：
+
+   ```
+   wget https://github.com/clangd/clangd/releases/download/13.0.0/clangd-linux-13.0.0.zip
+   jar xvf clangd-linux-13.0.0.zip
+   mv clangd_13.0.0 /opt/impala/clangd
+   chmod a+x /opt/impala/clangd/bin/clangd
+   ```
+
+5. 安装clangd插件，并配置clangd命令路径
+
 ## 代码调试
 
 ### 参考
