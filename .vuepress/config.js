@@ -264,6 +264,14 @@ module.exports = {
         ]
       },
       {
+        title: 'Calcite',
+        collapsable: false,
+        sidebarDepth: 0,
+        children: [
+          '/bigdata/calcite/calcite',
+        ]
+      },
+      {
         title: 'DataX',
         collapsable: false,
         sidebarDepth: 0,
